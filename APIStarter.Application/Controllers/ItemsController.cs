@@ -62,6 +62,7 @@ namespace APIStarter.Application.Controllers
         public async Task<IActionResult> Get([FromRoute] Guid itemId) => Ok(await _mediator.SendQuery(new GetItem { Id = itemId }));
 
         [HttpGet]
+        [Route("getbyname")]
         public async Task<IActionResult> GetByName([FromQuery] string name) => Ok(await _mediator.SendQuery(new GetItemByName { Name = name }));
     }
 }
