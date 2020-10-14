@@ -48,24 +48,20 @@ namespace APIStarter.Application
                 .AddScoped<IMediator, Mediator>()
                 .AddScoped(typeof(ISession<>), typeof(Session<>))
                 .AddScoped(typeof(ISession<,>), typeof(Session<,>))
-                // Pour l'example, il faudra les redéfinir.
                 .AddScoped<IUnitOfWork, GenericUnitOfWork>()
                 .AddScoped(typeof(IRepository<>), typeof(GenericRepository<>))
-                // Register authentification context.
+                // Register Audit & Authentification Context :
+                .AddSingleton(_configuration.GetSection("Audit").Get<AuditConfiguration>())
+                .AddScoped<IAuditSerializer, AuditSerializer>()
+                .AddScoped<IDatabaseChangesAuditService, GenericsDatabaseChangesAuditService>()
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddScoped<IRequestContext, RequestContext>()
                 .AddScoped<IAuthentificationContext, AuthentificationContext>()
-                // Audit
-                .AddSingleton(_configuration.GetSection("Audit").Get<AuditConfiguration>())
-                .AddScoped<IAuditSerializer, AuditSerializer>()
-                // Pour l'example, il faudra les redéfinir.
-                .AddScoped<IDatabaseChangesAuditService, GenericsDatabaseChangesAuditService>()
                 // Register Db context.
                 .AddDbContextPool<AuditDbContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Audit;Trusted_Connection=True;MultipleActiveResultSets=true", builder => builder.MigrationsHistoryTable("MigrationHistory", "dbo")))
                 .AddDbContextPool<YourDbContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AggregateRoot;Trusted_Connection=True;MultipleActiveResultSets=true", builder => builder.MigrationsHistoryTable("MigrationHistory", "dbo")))
-                // Exemple : il faudra créer une nouvelle implémentation de IAuthentificationContextUserProvider.
-                .AddScoped<IAuthentificationContextUserProvider, FakeAuthentificationContextUserProvider>()
                 // Ces injections sont juste là pour l'exemple, il faudra les supprimer
+                .AddScoped<IAuthentificationContextUserProvider, FakeAuthentificationContextUserProvider>()
                 .AddScoped<IItemViewMapper, ItemViewMapper>()
                 .AddScoped<IItemRepository, ItemRepository>();
         }
@@ -77,7 +73,6 @@ namespace APIStarter.Application
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                // Il faudra mettre votre DbContext ici.
                 serviceScope.ServiceProvider.GetRequiredService<YourDbContext>().Database.Migrate();
                 serviceScope.ServiceProvider.GetRequiredService<AuditDbContext>().Database.Migrate();
             }

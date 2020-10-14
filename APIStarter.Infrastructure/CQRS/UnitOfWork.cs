@@ -27,7 +27,7 @@ namespace APIStarter.Infrastructure.CQRS
             var aggregateTypeName = typeof(TAggregate).Name;
 
             if (!_repositories.ContainsKey(aggregateTypeName))
-                _repositories.Add(aggregateTypeName, Activator.CreateInstance(typeof(GenericRepository<>).MakeGenericType(typeof(TAggregate)), _dbContext));
+                _repositories.Add(aggregateTypeName, Activator.CreateInstance(typeof(IRepository<>).MakeGenericType(typeof(TAggregate)), _dbContext));
 
             return (IRepository<TAggregate>)_repositories[aggregateTypeName];
         }

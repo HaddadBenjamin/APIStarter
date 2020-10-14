@@ -9,7 +9,7 @@ using APIStarter.Domain.CQRS.Interfaces;
 namespace APIStarter.Domain.Audit.Aggregates
 {
     /// <summary>
-    /// Permet d'auditer toutes les évènements envoyés par votre Médiateur.
+    /// Permet d'auditer tous les évènements envoyés par votre Médiateur.
     /// </summary>
     public class AuditEvent
     {
