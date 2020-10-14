@@ -23,7 +23,7 @@ namespace APIStarter.Infrastructure.Audit.Services
         private readonly AuditConfiguration _auditConfiguration;
 
         public DatabaseChangesAuditService(
-            IAuthentificationContext authentificationContext, 
+            IAuthentificationContext authentificationContext,
             IAuditSerializer auditSerializer,
             AuditConfiguration auditConfiguration,
             AuditDbContext auditDbContext,
@@ -45,7 +45,7 @@ namespace APIStarter.Infrastructure.Audit.Services
                 .Where(entry => entry.Metadata.ClrType.ShouldAudit())
                 .Select(entry =>
                 {
-                    if (new[] {EntityState.Added, EntityState.Deleted}.Contains(entry.State))
+                    if (entry.State == EntityState.Added || entry.State == EntityState.Deleted)
                     {
                         var changes = entry.Properties
                             .Where(property => property.IsTemporary || property.Metadata.PropertyInfo.ShouldAudit())
@@ -61,7 +61,7 @@ namespace APIStarter.Infrastructure.Audit.Services
                             PreviousState = propertiesToAudit.ToDictionary(property => property.Metadata.Name, property => property.OriginalValue),
                             NewState = propertiesToAudit.ToDictionary(property => property.Metadata.Name, property => property.CurrentValue),
                         };
-                     
+
                         return propertiesToAudit.Any() ? BuildAuditDatabaseChange(entry, changes) : null;
                     }
 
