@@ -11,12 +11,12 @@ namespace APIStarter.Domain.Audit.Aggregates
     public class AuditRequest
     {
         public Guid Id { get; set; }
-        public string Method { get; set; }
+        public string HttpMethod { get; set; }
         public string Uri { get; set; }
-        public string Headers { get; set; }
-        public string Body { get; set; }
-        public int Status { get; set; }
-        public string Message { get; set; }
+        public string RequestHeaders { get; set; }
+        public string RequestBody { get; set; }
+        public int HttpStatus { get; set; }
+        public string ResponseBody { get; set; }
         public TimeSpan Duration { get; set; }
         public Guid CorrelationId { get; set; }
         public DateTime Date { get; set; }
@@ -26,12 +26,12 @@ namespace APIStarter.Domain.Audit.Aggregates
         public static AuditRequest Create(CreateAuditRequest command, IAuthentificationContext authentificationContext, IAuditSerializer auditSerializer) => new AuditRequest
         {
             Id = Guid.NewGuid(),
-            Method = command.Method,
+            HttpMethod = command.Method,
             Uri = command.Uri,
-            Headers = auditSerializer.Serialize(command.Headers),
-            Body = command.Body,
-            Status = command.Status,
-            Message = command.Message,
+            RequestHeaders = auditSerializer.Serialize(command.Headers),
+            RequestBody = command.Body,
+            HttpStatus = command.Status,
+            ResponseBody = command.Message,
             Duration = command.Duration,
             CorrelationId = authentificationContext.CorrelationId,
             Date = DateTime.UtcNow,

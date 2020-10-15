@@ -4,6 +4,7 @@ using APIStarter.Infrastructure.Audit.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace APIStarter.Infrastructure.Migrations
 {
@@ -215,9 +216,6 @@ namespace APIStarter.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Body")
-                        .HasColumnType("text");
-
                     b.Property<Guid>("CorrelationId")
                         .HasColumnType("uniqueidentifier");
 
@@ -227,21 +225,24 @@ namespace APIStarter.Infrastructure.Migrations
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
-                    b.Property<string>("Headers")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("HttpMethod")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<int>("HttpStatus")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("ImpersonatedUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Message")
+                    b.Property<string>("RequestBody")
                         .HasColumnType("text");
 
-                    b.Property<string>("Method")
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                    b.Property<string>("RequestHeaders")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("ResponseBody")
+                        .HasColumnType("text");
 
                     b.Property<string>("Uri")
                         .HasColumnType("nvarchar(500)")
@@ -258,13 +259,13 @@ namespace APIStarter.Infrastructure.Migrations
 
                     b.HasIndex("Duration");
 
-                    b.HasIndex("Headers");
+                    b.HasIndex("HttpMethod");
 
                     b.HasIndex("Id");
 
                     b.HasIndex("ImpersonatedUserId");
 
-                    b.HasIndex("Method");
+                    b.HasIndex("RequestHeaders");
 
                     b.HasIndex("Uri");
 

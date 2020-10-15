@@ -56,8 +56,7 @@ namespace APIStarter.Application
                 .AddSingleton(_configuration.GetSection("Audit").Get<AuditConfiguration>())
                 .AddScoped<IAuditSerializer, AuditSerializer>()
                 .AddScoped<IDatabaseChangesAuditService, GenericsDatabaseChangesAuditService>()
-                .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
-                .AddScoped<IRequestContext, RequestContext>()
+                .AddScoped<IRequestHeaders, RequestHeaders>()
                 .AddScoped<IAuthentificationContext, AuthentificationContext>()
                 // Register Db context.
                 .AddDbContextPool<AuditDbContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Audit;Trusted_Connection=True;MultipleActiveResultSets=true", builder => builder.MigrationsHistoryTable("MigrationHistory", "dbo")))
@@ -71,7 +70,8 @@ namespace APIStarter.Application
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<AuditRequestMiddleware>();
-           
+            app.UseMiddleware<RequestHeadersMiddleware>();
+
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 

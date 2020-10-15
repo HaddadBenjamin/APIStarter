@@ -5,16 +5,16 @@ namespace APIStarter.Infrastructure.AuthentificationContext
 {
     public class AuthentificationContext : IAuthentificationContext
     {
-        public AuthentificationContext(IRequestContext requestContext, IAuthentificationContextUserProvider userProvider)
+        public AuthentificationContext(IRequestHeaders requestHeaders, IAuthentificationContextUserProvider userProvider)
         {
-            CorrelationId = requestContext.CorrelationId;
+            CorrelationId = requestHeaders.CorrelationId;
 
-            if (requestContext.ImpersonatedUserEmail != null)
-                User = ImpersonatedUser = userProvider.Get(requestContext.ImpersonatedUserEmail);
+            if (requestHeaders.ImpersonatedUserEmail != null)
+                User = ImpersonatedUser = userProvider.Get(requestHeaders.ImpersonatedUserEmail);
 
-            if (requestContext.UserEmail != null)
+            if (requestHeaders.UserEmail != null)
             {
-                User = userProvider.Get(requestContext.UserEmail);
+                User = userProvider.Get(requestHeaders.UserEmail);
 
                 if (ImpersonatedUser is null)
                     ImpersonatedUser = User;

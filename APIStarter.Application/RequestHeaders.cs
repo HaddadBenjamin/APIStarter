@@ -1,0 +1,15 @@
+using System;
+using APIStarter.Domain.AuthentificationContext;
+
+namespace APIStarter.Application
+{
+    public class RequestHeaders : IRequestHeaders
+    {
+        public string ImpersonatedUserEmail { get; set; }
+        public string UserEmail { get; set; }
+        public Guid CorrelationId { get; set; }
+        public string ClientApplication { get; set; }
+        public string ReadVersion { get; set; }
+        public string WriteVersion { get; set; }
+    }
+}

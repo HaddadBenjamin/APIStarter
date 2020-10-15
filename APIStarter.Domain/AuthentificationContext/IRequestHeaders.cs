@@ -5,7 +5,7 @@ namespace APIStarter.Domain.AuthentificationContext
     /// <summary>
     /// Contient des informations sur l'appelant qui proviennent des en-têtes de la requête HTTP.
     /// </summary>
-    public interface IRequestContext
+    public interface IRequestHeaders
     {
         string ImpersonatedUserEmail { get; set; }
         string UserEmail { get; set; }
