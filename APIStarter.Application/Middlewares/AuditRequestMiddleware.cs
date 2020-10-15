@@ -27,7 +27,10 @@ namespace APIStarter.Application.Middlewares
         public async Task Invoke(HttpContext httpContext, IMediator mediator)
         {
             if (!_auditConfiguration.AuditRequests)
+            {
+                await _requestDelegate(httpContext);
                 return;
+            }
 
             var startTime = DateTime.UtcNow;
             var request = httpContext.Request;
