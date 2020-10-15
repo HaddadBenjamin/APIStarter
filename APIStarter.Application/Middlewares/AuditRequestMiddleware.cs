@@ -15,7 +15,7 @@ namespace APIStarter.Application.Middlewares
         private readonly RequestDelegate _requestDelegate;
         private readonly AuditConfiguration _auditConfiguration;
         private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
-        private static readonly string[] HeadersToIgnore = { "Cookie", "Authorization", "Content-Length", "Accept" };
+        private static readonly string[] HeadersToIgnore = { "Cookie", "Authorization", "Content-Length", "Accept", "Host", "User-Agent" };
 
         public AuditRequestMiddleware(RequestDelegate requestDelegate, AuditConfiguration auditConfiguration)
         {

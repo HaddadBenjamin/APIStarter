@@ -4,7 +4,7 @@ using APIStarter.Domain.CQRS.Interfaces;
 
 namespace APIStarter.Domain.Audit.Commands
 {
-    [ShallNotAudit]
+    [ShallNotAuditCommand]
     public class CreateAuditRequest : ICommand
     {
         public string Method { get; set; }
