@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using APIStarter.Domain.Audit.Services;
 using APIStarter.Domain.CQRS;
 using APIStarter.Domain.CQRS.Interfaces;
-using APIStarter.Infrastructure.ExampleToRedefine.CQRS;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace APIStarter.Infrastructure.CQRS

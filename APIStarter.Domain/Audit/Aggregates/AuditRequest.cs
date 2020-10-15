@@ -6,7 +6,7 @@ using APIStarter.Domain.AuthentificationContext;
 namespace APIStarter.Domain.Audit.Aggregates
 {
     /// <summary>
-    /// Permet d'auditer tous les requêtes faite à votre API.
+    /// Permet d'auditer toutes les requêtes faite à votre API.
     /// </summary>
     public class AuditRequest
     {
@@ -29,14 +29,12 @@ namespace APIStarter.Domain.Audit.Aggregates
             Method = command.Method,
             Uri = command.Uri,
             Headers = auditSerializer.Serialize(command.Headers),
-            Body = auditSerializer.Serialize(command.Body),
+            Body = command.Body,
             Status = command.Status,
             Message = command.Message,
             Duration = command.Duration,
             CorrelationId = authentificationContext.CorrelationId,
             Date = DateTime.UtcNow,
-            ImpersonatedUserId = authentificationContext.ImpersonatedUser.Id,
-            UserId = authentificationContext.User.Id
         };
     }
 }
