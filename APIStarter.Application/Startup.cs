@@ -1,5 +1,4 @@
 using APIStarter.Application.Filters;
-using APIStarter.Application.Middlewares;
 using APIStarter.Domain.Audit.Configuration;
 using APIStarter.Domain.Audit.Services;
 using APIStarter.Domain.AuthentificationContext;

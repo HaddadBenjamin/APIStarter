@@ -6,5 +6,6 @@
         public bool AuditQueries { get; set; }
         public bool AuditEvents { get; set; }
         public bool AuditDatabaseChanges { get; set; }
+        public bool AuditRequests { get; set; }
     }
 }
