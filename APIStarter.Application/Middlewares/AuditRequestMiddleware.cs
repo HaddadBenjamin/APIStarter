@@ -84,8 +84,6 @@ namespace APIStarter.Application.Middlewares
             
             await responseStream.CopyToAsync(response.Body);
 
-            response.Body.Seek(0, SeekOrigin.Begin);
-
             return responseBody == "" ? null : responseBody;
         }
 
