@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using APIStarter.Domain.Audit.Attributes;
 using APIStarter.Domain.Audit.Commands;
 using APIStarter.Domain.Audit.Configuration;
+using APIStarter.Domain.AuthentificationContext;
 using APIStarter.Domain.CQRS.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,12 +17,14 @@ namespace APIStarter.Infrastructure.CQRS
     public class Mediator : IMediator
     {
         private readonly AuditConfiguration _auditConfiguration;
+        private readonly IAuthentificationContext _authentificationContext;
         private readonly MediatR.IMediator _mediator;
         private readonly IServiceScope _serviceScope;
 
-        public Mediator(IServiceScopeFactory serviceScopeFactory, AuditConfiguration auditConfiguration)
+        public Mediator(IServiceScopeFactory serviceScopeFactory, AuditConfiguration auditConfiguration, IAuthentificationContext authentificationContext)
         {
             _auditConfiguration = auditConfiguration;
+            _authentificationContext = authentificationContext;
             _serviceScope = serviceScopeFactory.CreateScope();
             _mediator = _serviceScope.ServiceProvider.GetRequiredService<MediatR.IMediator>();
         }
@@ -33,7 +36,7 @@ namespace APIStarter.Infrastructure.CQRS
 
             await _mediator.Send(command);
 
-            if (_auditConfiguration.AuditCommands && command.GetType().ShouldAudit())
+            if (_auditConfiguration.AuditCommands && command.GetType().ShouldAudit() && _authentificationContext.IsValid())
                 await _mediator.Send(new CreateAuditCommand { Command = command });
         }
 
@@ -44,7 +47,7 @@ namespace APIStarter.Infrastructure.CQRS
 
             var queryResult = await _mediator.Send(query);
 
-            if (_auditConfiguration.AuditQueries && query.GetType().ShouldAudit())
+            if (_auditConfiguration.AuditQueries && query.GetType().ShouldAudit() && _authentificationContext.IsValid())
                 await _mediator.Send(new CreateAuditQuery
                 {
                     Query = query,
@@ -61,7 +64,7 @@ namespace APIStarter.Infrastructure.CQRS
 
             await Task.WhenAll(events.Select(@event => _mediator.Publish(@event)));
 
-            if (_auditConfiguration.AuditEvents)
+            if (_auditConfiguration.AuditEvents && _authentificationContext.IsValid())
             {
                 var eventsToAudit = events.Where(@event => @event.GetType().ShouldAudit()).ToList();
 

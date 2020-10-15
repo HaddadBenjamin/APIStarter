@@ -50,6 +50,7 @@ namespace APIStarter.Application.Middlewares
             };
 
             await mediator.SendCommand(createAuditRequest);
+            
         }
 
         private async Task<string> GetRequestBody(HttpRequest request)

@@ -17,7 +17,7 @@ namespace APIStarter.Application.Controllers
         public ItemsController(IMediator mediator) => _mediator = mediator;
 
         [HttpPost]
-        public IActionResult Create([FromBody]CreateItemDto dto)
+        public async Task<IActionResult> Create([FromBody]CreateItemDto dto)
         {
             var command = new CreateItem
             {
@@ -25,14 +25,14 @@ namespace APIStarter.Application.Controllers
                 Locations = dto.Locations.Split(',')
             };
 
-            _mediator.SendCommand(command);
+            await _mediator.SendCommand(command);
 
             return Ok();
         }
 
         [HttpPut]
         [Route("{itemId:guid}")]
-        public IActionResult Update(UpdateItemDto dto, [FromRoute] Guid itemId)
+        public async Task<IActionResult> Update(UpdateItemDto dto, [FromRoute] Guid itemId)
         {
             var command = new UpdateItem
             {
@@ -41,18 +41,18 @@ namespace APIStarter.Application.Controllers
                 Locations = dto.Locations.Split(',')
             };
 
-            _mediator.SendCommand(command);
+            await _mediator.SendCommand(command);
 
             return Ok();
         }
 
         [HttpDelete]
         [Route("{itemId:guid}")]
-        public IActionResult Delete([FromRoute] Guid itemId)
+        public async Task<IActionResult> Delete([FromRoute] Guid itemId)
         {
             var command = new DeleteItem { Id = itemId };
 
-            _mediator.SendCommand(command);
+            await _mediator.SendCommand(command);
 
             return Ok();
         }
