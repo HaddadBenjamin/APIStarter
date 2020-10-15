@@ -8,6 +8,7 @@ using APIStarter.Domain.AuthentificationContext;
 using APIStarter.Domain.CQRS;
 using APIStarter.Domain.CQRS.Exceptions;
 using APIStarter.Domain.CQRS.Interfaces;
+using APIStarter.Domain.Exceptions;
 
 namespace APIStarter.Infrastructure.CQRS
 {
@@ -63,8 +64,24 @@ namespace APIStarter.Infrastructure.CQRS
 
         public TAggregate Get(Guid id) => InternalGet(() => Repository.Get<TAggregate>(id), id);
         public TAggregate Get<TPropertyIncluded>(Guid id, params Expression<Func<TAggregate, IEnumerable<TPropertyIncluded>>>[] includes) => InternalGet(() => Repository.Get(id, includes), id);
-        public TAggregate GetActive(Guid id) => InternalGet(() => Repository.GetActive<TAggregate>(id), id);
-        public TAggregate GetActive<TPropertyIncluded>(Guid id, params Expression<Func<TAggregate, IEnumerable<TPropertyIncluded>>>[] includes) => InternalGet(() => Repository.GetActive(id, includes), id);
+        public TAggregate GetActive(Guid id) => InternalGet(() =>
+        {
+            var aggregate = Repository.GetActive<TAggregate>(id);
+
+            if (aggregate is null && Repository.Get<TAggregate>(id) != null)
+                throw new GoneException(id);
+
+            return aggregate;
+        }, id);
+        public TAggregate GetActive<TPropertyIncluded>(Guid id, params Expression<Func<TAggregate, IEnumerable<TPropertyIncluded>>>[] includes) => InternalGet(() =>
+        {
+            var aggregate = Repository.GetActive(id, includes);
+
+            if (aggregate is null && Repository.Get(id, includes) != null)
+                throw new GoneException(id);
+
+            return aggregate;
+        }, id);
 
         public IQueryable<TAggregate> Search() => Repository.Search();
         public IQueryable<TAggregate> Search<TPropertyIncluded>(params Expression<Func<TAggregate, IEnumerable<TPropertyIncluded>>>[] includes) => Repository.Search(includes);

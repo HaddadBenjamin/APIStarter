@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIStarter.Domain.Audit.Commands;
-using APIStarter.Domain.Audit.Configuration;
-using APIStarter.Domain.AuthentificationContext;
 using APIStarter.Domain.CQRS.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,15 +13,11 @@ namespace APIStarter.Infrastructure.CQRS
     /// </summary>
     public class Mediator : IMediator
     {
-        private readonly AuditConfiguration _auditConfiguration;
-        private readonly IAuthentificationContext _authentificationContext;
         private readonly MediatR.IMediator _mediator;
         private readonly IServiceScope _serviceScope;
 
-        public Mediator(IServiceScopeFactory serviceScopeFactory, AuditConfiguration auditConfiguration, IAuthentificationContext authentificationContext)
+        public Mediator(IServiceScopeFactory serviceScopeFactory)
         {
-            _auditConfiguration = auditConfiguration;
-            _authentificationContext = authentificationContext;
             _serviceScope = serviceScopeFactory.CreateScope();
             _mediator = _serviceScope.ServiceProvider.GetRequiredService<MediatR.IMediator>();
         }

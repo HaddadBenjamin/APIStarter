@@ -21,13 +21,15 @@ namespace APIStarter.Application.Controllers
         {
             var command = new CreateItem
             {
+                Id = Guid.NewGuid(),
                 Name = dto.Name,
                 Locations = dto.Locations.Split(',')
             };
 
             await _mediator.SendCommand(command);
 
-            return Ok();
+            return Ok(command.Id);
+            //return Created($"{HttpContext.Request.Host}{HttpContext.Request.Path}{HttpContext.Request.QueryString}/{command.Id}", command.Id);
         }
 
         [HttpPut]
