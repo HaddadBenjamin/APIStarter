@@ -12,7 +12,7 @@ namespace APIStarter.Infrastructure.Audit.DbContext
         public DbSet<AuditDatabaseChange> AuditDatabaseChanges { get; set; }
         public DbSet<AuditRequest> AuditRequests { get; set; }
 
-        public AuditDbContext(DbContextOptions<AuditDbContext> options) : base(options) => Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
+        public AuditDbContext(DbContextOptions<AuditDbContext> options) : base(options) {}//=> Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

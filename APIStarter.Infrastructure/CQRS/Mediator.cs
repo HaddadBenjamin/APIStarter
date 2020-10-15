@@ -36,7 +36,7 @@ namespace APIStarter.Infrastructure.CQRS
 
             await _mediator.Send(command);
 
-            if (_auditConfiguration.AuditCommands && command.GetType().ShouldAudit() && _authentificationContext.IsValid())
+           // if (_auditConfiguration.AuditCommands && command.GetType().ShouldAudit() && _authentificationContext.IsValid())
                 await _mediator.Send(new CreateAuditCommand { Command = command });
         }
 
@@ -47,7 +47,7 @@ namespace APIStarter.Infrastructure.CQRS
 
             var queryResult = await _mediator.Send(query);
 
-            if (_auditConfiguration.AuditQueries && query.GetType().ShouldAudit() && _authentificationContext.IsValid())
+            //if (_auditConfiguration.AuditQueries && query.GetType().ShouldAudit() && _authentificationContext.IsValid())
                 await _mediator.Send(new CreateAuditQuery
                 {
                     Query = query,
@@ -64,7 +64,7 @@ namespace APIStarter.Infrastructure.CQRS
 
             await Task.WhenAll(events.Select(@event => _mediator.Publish(@event)));
 
-            if (_auditConfiguration.AuditEvents && _authentificationContext.IsValid())
+           // if (_auditConfiguration.AuditEvents && _authentificationContext.IsValid())
             {
                 var eventsToAudit = events.Where(@event => @event.GetType().ShouldAudit()).ToList();
 

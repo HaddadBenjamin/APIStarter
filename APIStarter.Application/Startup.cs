@@ -41,7 +41,7 @@ namespace APIStarter.Application
             {
                 options.EnableEndpointRouting = false;
                 options.Filters.Add(new ExceptionHandlerFilter());
-            })// J'ai besoin d'appeler cette méthode pour fixer l'erreur JsonException: A possible object cycle was detected which is not supported.
+            })// J'ai besoin d'appeler cette méthode pour fixer l'erreur 
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services
@@ -56,6 +56,7 @@ namespace APIStarter.Application
                 .AddSingleton(_configuration.GetSection("Audit").Get<AuditConfiguration>())
                 .AddScoped<IAuditSerializer, AuditSerializer>()
                 .AddScoped<IDatabaseChangesAuditService, GenericsDatabaseChangesAuditService>()
+                .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddScoped<IRequestHeaders, RequestHeaders>()
                 .AddScoped<IAuthentificationContext, AuthentificationContext>()
                 // Register Db context.
@@ -70,8 +71,7 @@ namespace APIStarter.Application
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<AuditRequestMiddleware>();
-            app.UseMiddleware<RequestHeadersMiddleware>();
-
+           
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
