@@ -81,7 +81,7 @@ namespace APIStarter.Application.Middlewares
             var responseBody = await new StreamReader(response.Body).ReadToEndAsync();
 
             response.Body.Seek(0, SeekOrigin.Begin);
-            
+
             await responseStream.CopyToAsync(response.Body);
 
             return responseBody == "" ? null : responseBody;

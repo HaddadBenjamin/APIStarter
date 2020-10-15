@@ -28,8 +28,7 @@ namespace APIStarter.Application.Controllers
 
             await _mediator.SendCommand(command);
 
-            return Ok(Guid.NewGuid());
-            //return Created($"{HttpContext.Request.Host}{HttpContext.Request.Path}{HttpContext.Request.QueryString}/{command.Id}", command.Id);
+            return Created($"{HttpContext.Request.Host}{HttpContext.Request.Path}{HttpContext.Request.QueryString}/{command.Id}", command.Id);
         }
 
         [HttpPut]

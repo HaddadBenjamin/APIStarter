@@ -70,7 +70,6 @@ namespace APIStarter.Application
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<AuditRequestMiddleware>();
            
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -82,6 +81,7 @@ namespace APIStarter.Application
             }
 
             app.UseMvc();
+            app.UseMiddleware<AuditRequestMiddleware>();
         }
     }
 }
