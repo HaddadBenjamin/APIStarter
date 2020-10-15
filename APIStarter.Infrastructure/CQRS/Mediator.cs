@@ -65,7 +65,7 @@ namespace APIStarter.Infrastructure.CQRS
             {
                 var eventsToAudit = events.Where(@event => @event.GetType().ShouldAudit()).ToList();
 
-                await _mediator.Send(new CreateAuditEvents {Events = eventsToAudit });
+                await _mediator.Send(new CreateAuditEvents { Events = eventsToAudit });
             }
         }
     }

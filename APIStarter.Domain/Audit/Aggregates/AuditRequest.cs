@@ -35,6 +35,8 @@ namespace APIStarter.Domain.Audit.Aggregates
             Duration = command.Duration,
             CorrelationId = authentificationContext.CorrelationId,
             Date = DateTime.UtcNow,
+            ImpersonatedUserId = authentificationContext.ImpersonatedUser.Id,
+            UserId = authentificationContext.User.Id
         };
     }
 }

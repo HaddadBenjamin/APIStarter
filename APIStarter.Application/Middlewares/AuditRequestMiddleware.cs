@@ -23,7 +23,7 @@ namespace APIStarter.Application.Middlewares
             _recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
         }
 
-        public async Task Invoke(HttpContext httpContext)
+        public async Task Invoke(HttpContext httpContext, IMediator mediator)
         {
             if (!_auditConfiguration.AuditRequests)
                 return;
@@ -45,6 +45,8 @@ namespace APIStarter.Application.Middlewares
                 Status = response.StatusCode,
                 Uri = $"{request.Host}{request.Path}{request.QueryString}"
             };
+
+            await mediator.SendCommand(createAuditRequest);
         }
 
         private async Task<string> GetRequestBody(HttpRequest request)
