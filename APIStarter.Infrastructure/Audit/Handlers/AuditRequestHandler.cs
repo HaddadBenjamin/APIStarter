@@ -27,7 +27,7 @@ namespace APIStarter.Infrastructure.Audit.Handlers
 
         public async Task<Unit> Handle(CreateAuditRequest command, CancellationToken cancellationToken)
         {
-            if (!_auditConfiguration.AuditRequests)
+            if (!_auditConfiguration.AuditRequests || !_authentificationContext.IsValid())
                 return Unit.Value;
 
             var auditRequest = AuditRequest.Create(command, _authentificationContext, _auditSerializer);

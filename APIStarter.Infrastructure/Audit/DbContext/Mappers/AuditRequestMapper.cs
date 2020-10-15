@@ -13,7 +13,7 @@ namespace APIStarter.Infrastructure.Audit.DbContext.Mappers
 
             entity.Property(auditRequest => auditRequest.Message).HasColumnType("text");
             entity.Property(auditRequest => auditRequest.Body).HasColumnType("text");
-            entity.Property(auditRequest => auditRequest.Uri).HasMaxLength(200);
+            entity.Property(auditRequest => auditRequest.Uri).HasMaxLength(500);
             entity.Property(auditRequest => auditRequest.Method).HasMaxLength(10);
         
             entity.HasIndex(auditRequest => auditRequest.Id);

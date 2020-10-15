@@ -24,5 +24,7 @@ namespace APIStarter.Infrastructure.AuthentificationContext
         public AuthentificationContextUser User { get; set; }
         public AuthentificationContextUser ImpersonatedUser { get; set; }
         public Guid CorrelationId { get; set; }
+
+        public bool IsValid() => User != null && ImpersonatedUser != null;
     }
 }

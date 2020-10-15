@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using APIStarter.Domain.Audit.Attributes;
 using APIStarter.Domain.Audit.Commands;
@@ -15,6 +16,7 @@ namespace APIStarter.Application.Middlewares
         private readonly RequestDelegate _requestDelegate;
         private readonly AuditConfiguration _auditConfiguration;
         private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
+        private static readonly string[] HeadersToIgnore = { "Cookie", "Authorization" };
 
         public AuditRequestMiddleware(RequestDelegate requestDelegate, AuditConfiguration auditConfiguration)
         {
@@ -34,11 +36,12 @@ namespace APIStarter.Application.Middlewares
             var requestBody = await GetRequestBody(request);
             var responseBody = await GetResponseBody(httpContext, response);
 
-            // Ignore Command attribute à mettre sur mon service d'auddit et celui ci.
             var createAuditRequest = new CreateAuditRequest
             {
                 Body = requestBody,
-                Headers = request.Headers,
+                Headers = request.Headers
+                    .Where(h => !HeadersToIgnore.Contains(h.Key))
+                    .ToDictionary(h => h.Key, h => string.Join(",", h.Value.Select(v => v))),
                 Duration = DateTime.UtcNow - startTime,
                 Message = responseBody,
                 Method = request.Method,
@@ -60,7 +63,7 @@ namespace APIStarter.Application.Middlewares
 
             request.Body.Position = 0;
 
-            return requestBody;
+            return requestBody == "" ? null : requestBody;
         }
 
         private async Task<string> GetResponseBody(HttpContext httpContext, HttpResponse response)
@@ -79,7 +82,7 @@ namespace APIStarter.Application.Middlewares
             
             await responseStream.CopyToAsync(response.Body);
 
-            return responseBody;
+            return responseBody == "" ? null : responseBody;
         }
 
         private static string ReadStreamByChunks(Stream stream, int readChunkBufferLength = 4096)
