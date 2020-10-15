@@ -42,8 +42,8 @@ namespace APIStarter.Application
             {
                 options.EnableEndpointRouting = false;
                 options.Filters.Add(new ExceptionHandlerFilter());
-
-            }).AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            })// J'ai besoin d'appeler cette méthode pour fixer l'erreur JsonException: A possible object cycle was detected which is not supported.
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services
                 // Register CQRS : mediator / session / repository / unit of work.
