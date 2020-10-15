@@ -78,11 +78,13 @@ namespace APIStarter.Application.Middlewares
 
             response.Body.Seek(0, SeekOrigin.Begin);
 
-            var responseBody = await new StreamReader(httpContext.Response.Body).ReadToEndAsync();
+            var responseBody = await new StreamReader(response.Body).ReadToEndAsync();
 
             response.Body.Seek(0, SeekOrigin.Begin);
             
             await responseStream.CopyToAsync(response.Body);
+
+            response.Body.Seek(0, SeekOrigin.Begin);
 
             return responseBody == "" ? null : responseBody;
         }

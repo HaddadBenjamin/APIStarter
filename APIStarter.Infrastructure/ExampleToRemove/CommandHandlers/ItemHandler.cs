@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using APIStarter.Domain.CQRS.Interfaces;
 using APIStarter.Domain.ExampleToDelete.Aggregates;
 using APIStarter.Domain.ExampleToDelete.Commands;
+using APIStarter.Domain.Exceptions;
 using MediatR;
 
 namespace APIStarter.Infrastructure.ExampleToRemove.CommandHandlers
@@ -39,8 +40,11 @@ namespace APIStarter.Infrastructure.ExampleToRemove.CommandHandlers
 
         public async Task<Unit> Handle(DeleteItem command, CancellationToken cancellationToken)
         {
-            var aggregate = _session.GetActive(command.Id, _ => _.Locations);
+            var aggregate = _session.Get(command.Id, _ => _.Locations);
 
+            if (!aggregate.IsActive)
+                throw new GoneException(command.Id);
+            
             aggregate.Deactivate(command);
 
             await _session.SaveChangesAsync();
