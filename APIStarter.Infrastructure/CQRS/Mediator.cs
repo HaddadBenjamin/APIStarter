@@ -27,7 +27,8 @@ namespace APIStarter.Infrastructure.CQRS
             if (command is null)
                 throw new ArgumentNullException(nameof(command));
 
-            Task.WaitAll(_mediator.Send(command), _mediator.Send(new CreateAuditCommand { Command = command }));
+            await _mediator.Send(command);
+            await _mediator.Send(new CreateAuditCommand { Command = command });
         }
 
         public async Task<TQueryResult> SendQuery<TQueryResult>(IQuery<TQueryResult> query)

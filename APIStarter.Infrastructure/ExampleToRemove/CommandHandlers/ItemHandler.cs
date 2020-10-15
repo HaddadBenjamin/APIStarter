@@ -21,29 +21,29 @@ namespace APIStarter.Infrastructure.ExampleToRemove.CommandHandlers
             var aggregate = new Item().Create(command);
 
             _session.Add(aggregate);
-            await _session.SaveChanges();
+            await _session.SaveChangesAsync();
 
             return Unit.Value;
         }
 
         public async Task<Unit> Handle(UpdateItem command, CancellationToken cancellationToken)
         {
-            var aggregate = _session.Get(command.Id, _ => _.Locations);
+            var aggregate = _session.GetActive(command.Id, _ => _.Locations);
 
             aggregate.Update(command);
 
-            await _session.SaveChanges();
+            await _session.SaveChangesAsync();
 
             return Unit.Value;
         }
 
         public async Task<Unit> Handle(DeleteItem command, CancellationToken cancellationToken)
         {
-            var aggregate = _session.Get(command.Id, _ => _.Locations);
+            var aggregate = _session.GetActive(command.Id, _ => _.Locations);
 
             aggregate.Deactivate(command);
 
-            await _session.SaveChanges();
+            await _session.SaveChangesAsync();
 
             return Unit.Value;
         }

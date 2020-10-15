@@ -28,7 +28,7 @@ namespace APIStarter.Application.Controllers
 
             await _mediator.SendCommand(command);
 
-            return Ok(command.Id);
+            return Ok();
             //return Created($"{HttpContext.Request.Host}{HttpContext.Request.Path}{HttpContext.Request.QueryString}/{command.Id}", command.Id);
         }
 

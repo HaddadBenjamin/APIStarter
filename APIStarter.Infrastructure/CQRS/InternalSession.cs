@@ -125,7 +125,7 @@ namespace APIStarter.Infrastructure.CQRS
             Track(aggregate);
         }
 
-        public async Task<IReadOnlyCollection<IEvent>> SaveChanges()
+        public async Task<IReadOnlyCollection<IEvent>> SaveChangesAsync()
         {
             var aggregates = _trackedAggregates.Values.ToList();
             var events = aggregates.SelectMany(a => a.FlushEvents()).ToList();
