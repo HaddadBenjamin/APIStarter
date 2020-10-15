@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using APIStarter.Domain.CQRS.Exceptions;
@@ -17,10 +18,10 @@ namespace APIStarter.Application.Filters
 
         public override async Task OnExceptionAsync(ExceptionContext exceptionContext)
         {
-            var exception = exceptionContext.Exception;
+            var exception = exceptionContext.Exception.Demystify();
             var responseHttpStatus = ExceptionTypeToHttpStatus.GetValueOrDefault(exception.GetType(), HttpStatusCode.InternalServerError);
 
-            exceptionContext.Result = new JsonResult(exception) { StatusCode = (int)responseHttpStatus };
+            exceptionContext.Result = new JsonResult(exception.ToString()) { StatusCode = (int)responseHttpStatus };
 
             await Task.CompletedTask;
         }

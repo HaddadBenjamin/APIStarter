@@ -24,6 +24,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using IMediator = APIStarter.Domain.CQRS.Interfaces.IMediator;
 using Mediator = APIStarter.Infrastructure.CQRS.Mediator;
 
@@ -41,7 +42,8 @@ namespace APIStarter.Application
             {
                 options.EnableEndpointRouting = false;
                 options.Filters.Add(new ExceptionHandlerFilter());
-            });
+
+            }).AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services
                 // Register CQRS : mediator / session / repository / unit of work.
