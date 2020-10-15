@@ -1,4 +1,5 @@
 using APIStarter.Application.Filters;
+using APIStarter.Application.Middlewares;
 using APIStarter.Domain.Audit.Configuration;
 using APIStarter.Domain.Audit.Services;
 using APIStarter.Domain.AuthentificationContext;
@@ -68,6 +69,8 @@ namespace APIStarter.Application
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<AuditRequestMiddleware>();
+           
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
@@ -78,7 +81,6 @@ namespace APIStarter.Application
             }
 
             app.UseMvc();
-         //   app.UseMiddleware<AuditRequestMiddleware>();
         }
     }
 }
