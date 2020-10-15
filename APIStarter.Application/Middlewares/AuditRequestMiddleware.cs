@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using APIStarter.Domain.Audit.Attributes;
 using APIStarter.Domain.Audit.Commands;
 using APIStarter.Domain.Audit.Configuration;
 using APIStarter.Domain.CQRS.Interfaces;
@@ -16,7 +15,7 @@ namespace APIStarter.Application.Middlewares
         private readonly RequestDelegate _requestDelegate;
         private readonly AuditConfiguration _auditConfiguration;
         private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
-        private static readonly string[] HeadersToIgnore = { "Cookie", "Authorization" };
+        private static readonly string[] HeadersToIgnore = { "Cookie", "Authorization", "Content-Length", "Accept" };
 
         public AuditRequestMiddleware(RequestDelegate requestDelegate, AuditConfiguration auditConfiguration)
         {

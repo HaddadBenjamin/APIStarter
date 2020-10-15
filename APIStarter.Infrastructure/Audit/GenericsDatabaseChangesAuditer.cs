@@ -3,9 +3,9 @@ using APIStarter.Domain.Audit.Services;
 using APIStarter.Domain.AuthentificationContext;
 using APIStarter.Infrastructure.Audit.DbContext;
 using APIStarter.Infrastructure.Audit.Services;
-using APIStarter.Infrastructure.ExampleToRedefine.DbContext;
+using APIStarter.Infrastructure.DbContext;
 
-namespace APIStarter.Infrastructure.ExampleToRedefine.Audit
+namespace APIStarter.Infrastructure.Audit
 {
     public class GenericsDatabaseChangesAuditService : DatabaseChangesAuditService<YourDbContext>
     {

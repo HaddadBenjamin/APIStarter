@@ -2,8 +2,8 @@
 using APIStarter.Domain.CQRS.Interfaces;
 using APIStarter.Domain.ExampleToDelete.Aggregates;
 using APIStarter.Domain.ExampleToDelete.Repositories;
-using APIStarter.Infrastructure.ExampleToRedefine.CQRS;
-using APIStarter.Infrastructure.ExampleToRedefine.DbContext;
+using APIStarter.Infrastructure.CQRS;
+using APIStarter.Infrastructure.DbContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIStarter.Infrastructure.ExampleToRemove.Repositories

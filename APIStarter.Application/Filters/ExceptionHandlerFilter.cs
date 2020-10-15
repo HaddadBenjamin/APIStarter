@@ -18,10 +18,10 @@ namespace APIStarter.Application.Filters
 
         public override async Task OnExceptionAsync(ExceptionContext exceptionContext)
         {
-            var exception = exceptionContext.Exception.Demystify();
+            var exception = exceptionContext.Exception.Demystify().ToString();
             var responseHttpStatus = ExceptionTypeToHttpStatus.GetValueOrDefault(exception.GetType(), HttpStatusCode.InternalServerError);
 
-            exceptionContext.Result = new JsonResult(exception.ToString()) { StatusCode = (int)responseHttpStatus };
+            exceptionContext.Result = new JsonResult(exception) { StatusCode = (int)responseHttpStatus };
 
             await Task.CompletedTask;
         }
