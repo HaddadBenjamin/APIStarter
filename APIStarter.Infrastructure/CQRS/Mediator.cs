@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using APIStarter.Domain.Audit.Attributes;
 using APIStarter.Domain.Audit.Commands;
 using APIStarter.Domain.Audit.Configuration;
 using APIStarter.Domain.AuthentificationContext;
@@ -59,10 +58,7 @@ namespace APIStarter.Infrastructure.CQRS
                 throw new ArgumentNullException(nameof(events));
 
             await Task.WhenAll(events.Select(@event => _mediator.Publish(@event)));
-
-            var eventsToAudit = events.Where(@event => @event.GetType().ShouldAuditEvent()).ToList();
-
-            await _mediator.Send(new CreateAuditEvents { Events = eventsToAudit });
+            await _mediator.Send(new CreateAuditEvents { Events = events });
         }
     }
 }
