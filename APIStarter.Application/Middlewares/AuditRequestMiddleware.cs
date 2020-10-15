@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using APIStarter.Domain.Audit.Attributes;
 using APIStarter.Domain.Audit.Commands;
 using APIStarter.Domain.Audit.Configuration;
+using APIStarter.Domain.CQRS.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
 
@@ -85,7 +87,7 @@ namespace APIStarter.Application.Middlewares
             using var stringWriter = new StringWriter();
             using var stringReader = new StreamReader(stream);
             var readChunk = new char[readChunkBufferLength];
-            var readChunkLength = 0;
+            int readChunkLength;
 
             do
             {
@@ -95,17 +97,5 @@ namespace APIStarter.Application.Middlewares
 
             return stringWriter.ToString();
         }
-
-
-        //    public async Task Invoke(HttpContext httpContext)
-        //    {
-        //        
-        //        
-
-        //        
-        //        await _requestDelegate.Invoke(httpContext);
-
-        //    }
-        //}
     }
 }

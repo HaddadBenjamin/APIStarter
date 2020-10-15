@@ -1,8 +1,10 @@
 ﻿using System;
+using APIStarter.Domain.Audit.Attributes;
 using APIStarter.Domain.CQRS.Interfaces;
 
 namespace APIStarter.Domain.Audit.Commands
 {
+    [ShallNotAudit]
     public class CreateAuditRequest : ICommand
     {
         public string Method { get; set; }

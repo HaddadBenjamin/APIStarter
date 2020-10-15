@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using APIStarter.Domain.Audit.Attributes;
 using APIStarter.Domain.Audit.Commands;
 using APIStarter.Domain.Audit.Configuration;
 using APIStarter.Domain.CQRS.Interfaces;
@@ -32,7 +33,7 @@ namespace APIStarter.Infrastructure.CQRS
 
             await _mediator.Send(command);
 
-            if (_auditConfiguration.AuditCommands)
+            if (_auditConfiguration.AuditCommands && command.GetType().ShouldAudit())
                 await _mediator.Send(new CreateAuditCommand { Command = command });
         }
 
@@ -43,7 +44,7 @@ namespace APIStarter.Infrastructure.CQRS
 
             var queryResult = await _mediator.Send(query);
 
-            if (_auditConfiguration.AuditQueries)
+            if (_auditConfiguration.AuditQueries && query.GetType().ShouldAudit())
                 await _mediator.Send(new CreateAuditQuery
                 {
                     Query = query,
@@ -61,7 +62,11 @@ namespace APIStarter.Infrastructure.CQRS
             await Task.WhenAll(events.Select(@event => _mediator.Publish(@event)));
 
             if (_auditConfiguration.AuditEvents)
-                await _mediator.Send(new CreateAuditEvents { Events = events });
+            {
+                var eventsToAudit = events.Where(@event => @event.GetType().ShouldAudit()).ToList();
+
+                await _mediator.Send(new CreateAuditEvents {Events = eventsToAudit });
+            }
         }
     }
 }
