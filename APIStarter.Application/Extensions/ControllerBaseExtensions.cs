@@ -12,6 +12,5 @@ namespace APIStarter.Application.Extensions
 
             return controller.Created($"{request.Host}{request.Path}{request.QueryString}/{id}", new CreatedRestResource { Id = id });
         }
-
     }
 }

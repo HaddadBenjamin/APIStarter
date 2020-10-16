@@ -28,7 +28,7 @@ namespace APIStarter.Application.Controllers
                 Locations = dto.Locations.Split(',')
             };
 
-            await _mediator.SendCommand(command);
+            await _mediator.SendCommandAsync(command);
 
             return this.Created(command.Id);
         }
@@ -44,7 +44,7 @@ namespace APIStarter.Application.Controllers
                 Locations = dto.Locations.Split(',')
             };
 
-            await _mediator.SendCommand(command);
+            await _mediator.SendCommandAsync(command);
 
             return Ok();
         }
@@ -55,17 +55,17 @@ namespace APIStarter.Application.Controllers
         {
             var command = new DeleteItem { Id = itemId };
 
-            await _mediator.SendCommand(command);
+            await _mediator.SendCommandAsync(command);
 
             return Ok();
         }
 
         [HttpGet]
         [Route("{itemId:guid}")]
-        public async Task<IActionResult> Get([FromRoute] Guid itemId) => Ok(await _mediator.SendQuery(new GetItem { Id = itemId }));
+        public async Task<IActionResult> Get([FromRoute] Guid itemId) => Ok(await _mediator.SendQueryAsync(new GetItem { Id = itemId }));
 
         [HttpGet]
         [Route("getbyname")]
-        public async Task<IActionResult> GetByName([FromQuery] string name) => Ok(await _mediator.SendQuery(new GetItemByName { Name = name }));
+        public async Task<IActionResult> GetByName([FromQuery] string name) => Ok(await _mediator.SendQueryAsync(new GetItemByName { Name = name }));
     }
 }

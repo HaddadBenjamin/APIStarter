@@ -120,7 +120,7 @@ namespace APIStarter.Infrastructure.CQRS
             foreach (var @event in events)
                 @event.CorrelationId = _authentificationContext.CorrelationId;
 
-            await _mediator.PublishEvents(events);
+            await _mediator.PublishEventsAsync(events);
             await Repository.UnitOfWork.SaveChangesAsync();
 
             _trackedAggregates.Clear();

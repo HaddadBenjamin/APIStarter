@@ -51,7 +51,7 @@ namespace APIStarter.Application.Middlewares
                 Uri = $"{request.Host}{request.Path}{request.QueryString}"
             };
 
-            await mediator.SendCommand(createAuditRequest);
+            await mediator.SendCommandAsync(createAuditRequest);
         }
 
         private async Task<string> GetRequestBody(HttpRequest request)

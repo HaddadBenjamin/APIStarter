@@ -22,7 +22,7 @@ namespace APIStarter.Infrastructure.CQRS
             _mediator = _serviceScope.ServiceProvider.GetRequiredService<MediatR.IMediator>();
         }
 
-        public async Task SendCommand(ICommand command)
+        public async Task SendCommandAsync(ICommand command)
         {
             if (command is null)
                 throw new ArgumentNullException(nameof(command));
@@ -31,7 +31,7 @@ namespace APIStarter.Infrastructure.CQRS
             await _mediator.Send(new CreateAuditCommand { Command = command });
         }
 
-        public async Task<TQueryResult> SendQuery<TQueryResult>(IQuery<TQueryResult> query)
+        public async Task<TQueryResult> SendQueryAsync<TQueryResult>(IQuery<TQueryResult> query)
         {
             if (query is null)
                 throw new ArgumentNullException(nameof(query));
@@ -47,7 +47,7 @@ namespace APIStarter.Infrastructure.CQRS
             return queryResult;
         }
 
-        public async Task PublishEvents(IReadOnlyCollection<IEvent> events)
+        public async Task PublishEventsAsync(IReadOnlyCollection<IEvent> events)
         {
             if (events is null)
                 throw new ArgumentNullException(nameof(events));
