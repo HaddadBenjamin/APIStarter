@@ -79,6 +79,28 @@ namespace APIStarter.Infrastructure.Migrations
                     table.PrimaryKey("PK_AuditQueries", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AuditRequests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    HttpMethod = table.Column<string>(maxLength: 10, nullable: true),
+                    Uri = table.Column<string>(maxLength: 500, nullable: true),
+                    RequestHeaders = table.Column<string>(nullable: true),
+                    RequestBody = table.Column<string>(type: "text", nullable: true),
+                    HttpStatus = table.Column<int>(nullable: false),
+                    ResponseBody = table.Column<string>(type: "text", nullable: true),
+                    Duration = table.Column<TimeSpan>(nullable: false),
+                    CorrelationId = table.Column<Guid>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    ImpersonatedUserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditRequests", x => x.Id);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AuditCommands_CommandName",
                 table: "AuditCommands",
@@ -218,6 +240,51 @@ namespace APIStarter.Infrastructure.Migrations
                 name: "IX_AuditQueries_UserId",
                 table: "AuditQueries",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditRequests_CorrelationId",
+                table: "AuditRequests",
+                column: "CorrelationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditRequests_Date",
+                table: "AuditRequests",
+                column: "Date");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditRequests_Duration",
+                table: "AuditRequests",
+                column: "Duration");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditRequests_HttpMethod",
+                table: "AuditRequests",
+                column: "HttpMethod");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditRequests_Id",
+                table: "AuditRequests",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditRequests_ImpersonatedUserId",
+                table: "AuditRequests",
+                column: "ImpersonatedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditRequests_RequestHeaders",
+                table: "AuditRequests",
+                column: "RequestHeaders");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditRequests_Uri",
+                table: "AuditRequests",
+                column: "Uri");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditRequests_UserId",
+                table: "AuditRequests",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -233,6 +300,9 @@ namespace APIStarter.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AuditQueries");
+
+            migrationBuilder.DropTable(
+                name: "AuditRequests");
         }
     }
 }

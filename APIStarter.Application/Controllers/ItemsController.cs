@@ -4,7 +4,9 @@ using APIStarter.Application.Example.Dtos;
 using APIStarter.Domain.CQRS.Interfaces;
 using APIStarter.Domain.ExampleToDelete.Commands;
 using APIStarter.Domain.ExampleToDelete.Queries;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using APIStarter.Application.Extensions;
 
 namespace APIStarter.Application.Controllers
 {
@@ -17,22 +19,23 @@ namespace APIStarter.Application.Controllers
         public ItemsController(IMediator mediator) => _mediator = mediator;
 
         [HttpPost]
-        public IActionResult Create([FromBody]CreateItemDto dto)
+        public async Task<IActionResult> Create([FromBody]CreateItemDto dto)
         {
             var command = new CreateItem
             {
+                Id = Guid.NewGuid(),
                 Name = dto.Name,
                 Locations = dto.Locations.Split(',')
             };
 
-            _mediator.SendCommand(command);
+            await _mediator.SendCommandAsync(command);
 
-            return Ok();
+            return this.Created(command.Id);
         }
 
         [HttpPut]
         [Route("{itemId:guid}")]
-        public IActionResult Update(UpdateItemDto dto, [FromRoute] Guid itemId)
+        public async Task<IActionResult> Update(UpdateItemDto dto, [FromRoute] Guid itemId)
         {
             var command = new UpdateItem
             {
@@ -41,27 +44,28 @@ namespace APIStarter.Application.Controllers
                 Locations = dto.Locations.Split(',')
             };
 
-            _mediator.SendCommand(command);
+            await _mediator.SendCommandAsync(command);
 
             return Ok();
         }
 
         [HttpDelete]
         [Route("{itemId:guid}")]
-        public IActionResult Delete([FromRoute] Guid itemId)
+        public async Task<IActionResult> Delete([FromRoute] Guid itemId)
         {
             var command = new DeleteItem { Id = itemId };
 
-            _mediator.SendCommand(command);
+            await _mediator.SendCommandAsync(command);
 
             return Ok();
         }
 
         [HttpGet]
         [Route("{itemId:guid}")]
-        public async Task<IActionResult> Get([FromRoute] Guid itemId) => Ok(await _mediator.SendQuery(new GetItem { Id = itemId }));
+        public async Task<IActionResult> Get([FromRoute] Guid itemId) => Ok(await _mediator.SendQueryAsync(new GetItem { Id = itemId }));
 
         [HttpGet]
-        public async Task<IActionResult> GetByName([FromQuery] string name) => Ok(await _mediator.SendQuery(new GetItemByName { Name = name }));
+        [Route("getbyname")]
+        public async Task<IActionResult> GetByName([FromQuery] string name) => Ok(await _mediator.SendQueryAsync(new GetItemByName { Name = name }));
     }
 }

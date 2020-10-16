@@ -8,6 +8,7 @@ using APIStarter.Domain.AuthentificationContext;
 using APIStarter.Domain.CQRS;
 using APIStarter.Domain.CQRS.Exceptions;
 using APIStarter.Domain.CQRS.Interfaces;
+using APIStarter.Domain.Exceptions;
 
 namespace APIStarter.Infrastructure.CQRS
 {
@@ -108,7 +109,7 @@ namespace APIStarter.Infrastructure.CQRS
             Track(aggregate);
         }
 
-        public async Task<IReadOnlyCollection<IEvent>> SaveChanges()
+        public async Task<IReadOnlyCollection<IEvent>> SaveChangesAsync()
         {
             var aggregates = _trackedAggregates.Values.ToList();
             var events = aggregates.SelectMany(a => a.FlushEvents()).ToList();
@@ -119,7 +120,7 @@ namespace APIStarter.Infrastructure.CQRS
             foreach (var @event in events)
                 @event.CorrelationId = _authentificationContext.CorrelationId;
 
-            await _mediator.PublishEvents(events);
+            await _mediator.PublishEventsAsync(events);
             await Repository.UnitOfWork.SaveChangesAsync();
 
             _trackedAggregates.Clear();

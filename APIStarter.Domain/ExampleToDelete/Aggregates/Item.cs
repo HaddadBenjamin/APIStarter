@@ -15,7 +15,7 @@ namespace APIStarter.Domain.ExampleToDelete.Aggregates
 
         public Item Create(CreateItem command)
         {
-            Id = Guid.NewGuid();
+            Id = command.Id;
             Name = command.Name;
             Locations = command.Locations.Select(l => new ItemLocation
             {

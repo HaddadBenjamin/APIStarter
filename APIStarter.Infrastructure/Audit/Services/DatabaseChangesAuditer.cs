@@ -23,7 +23,7 @@ namespace APIStarter.Infrastructure.Audit.Services
         private readonly AuditConfiguration _auditConfiguration;
 
         public DatabaseChangesAuditService(
-            IAuthentificationContext authentificationContext, 
+            IAuthentificationContext authentificationContext,
             IAuditSerializer auditSerializer,
             AuditConfiguration auditConfiguration,
             AuditDbContext auditDbContext,
@@ -42,26 +42,26 @@ namespace APIStarter.Infrastructure.Audit.Services
                 return;
 
             var auditDatabaseChanges = _dbContextToAudit.ChangeTracker.Entries()
-                .Where(entry => entry.Metadata.ClrType.ShouldAudit())
+                .Where(entry => entry.Metadata.ClrType.ShouldAuditDatabaseChange())
                 .Select(entry =>
                 {
-                    if (new[] {EntityState.Added, EntityState.Deleted}.Contains(entry.State))
+                    if (entry.State == EntityState.Added || entry.State == EntityState.Deleted)
                     {
                         var changes = entry.Properties
-                            .Where(property => property.IsTemporary || property.Metadata.PropertyInfo.ShouldAudit())
+                            .Where(property => property.IsTemporary || property.Metadata.PropertyInfo.ShouldAuditDatabaseChange())
                             .ToDictionary(property => property.Metadata.Name, property => entry.State == EntityState.Deleted ? property.OriginalValue : property.CurrentValue);
 
                         return BuildAuditDatabaseChange(entry, changes);
                     }
                     if (entry.State == EntityState.Modified)
                     {
-                        var propertiesToAudit = entry.Properties.Where(property => property.IsModified && property.Metadata.PropertyInfo.ShouldAudit()).ToList();
+                        var propertiesToAudit = entry.Properties.Where(property => property.IsModified && property.Metadata.PropertyInfo.ShouldAuditDatabaseChange()).ToList();
                         var changes = new
                         {
                             PreviousState = propertiesToAudit.ToDictionary(property => property.Metadata.Name, property => property.OriginalValue),
                             NewState = propertiesToAudit.ToDictionary(property => property.Metadata.Name, property => property.CurrentValue),
                         };
-                     
+
                         return propertiesToAudit.Any() ? BuildAuditDatabaseChange(entry, changes) : null;
                     }
 

@@ -3,5 +3,5 @@
 namespace APIStarter.Domain.Audit.Attributes
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class)]
-    public class ShallNotAuditAttribute : Attribute { }
+    public class ShallNotAuditDatabaseChangeAttribute : Attribute { }
 }

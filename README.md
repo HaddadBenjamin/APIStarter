@@ -1,10 +1,15 @@
-Ce projet est un modèle de projet pour réaliser une API avec les options suivantes :
-- CQRS : Mediator / AggregateRoot / Session / Repository / Unit Of Work.
-- Audit : commandes, les queries, évènements, les changements effectués sur votre base de données, les performances de vos endpoints.
+Cette solution propose un modèle de projet pour réaliser des API architecturées en CQRS qui auditent toutes les requêtes HTTP réalisées sur votre API, tous les changements appliqués sur votre base de données, l'ensemble des commandes, des requêtes et des évènements lancés par le médiateur.
+
 
 Pour réutiliser ce projet il vous faut :
 - Choisir les options que votre aggregate root doit supporter, à savoir avec ou sans audit, suppression logique, event sourcing.
-- Modifier l'appsettings.json de sorte à définir le type d'audit que vous souhaitez supporter.
-- Supprimer les répertoires APIStarter.Domain.ExampleToDelete et APIStarter.ExampleToDelete.
-- Modifier le nom du fichier YourDbContext et adapter les fichiers présents dans APIStarter.ExampleToRedefine.
-- Modifier la chaîne de connection de votre DbContext dans le fichier Startup.cs.
+- Modifier l'appsettings.json de sorte à définir le type d'audit que vous souhaitez supporter, à savoir toutes les requêtes HTTP réalisées sur votre API, tous les changements appliqués sur votre base de données, l'ensemble des commandes, des requêtes et des évènements lancés par le médiateur.
+- Supprimer les répertoires Learning.AggregateRoot.Domain.ExampleToDelete et Learning.AggregateRoot.Infrastructure.ExampleToDelete.
+- Modifier le nom, le contenu et la chaîne de connection de votre DbContext.
+
+![Image of Yaktocat](https://imgur.com/1PCxn6x.png)
+![Image of Yaktocat](https://imgur.com/vHtTAOv.png)
+![Image of Yaktocat](https://imgur.com/dP5wgBz.png)
+![Image of Yaktocat](https://imgur.com/36EqePL.png)
+![Image of Yaktocat](https://imgur.com/DZ9HkoB.png)
+![Image of Yaktocat](https://imgur.com/DZ9HkoB.png)

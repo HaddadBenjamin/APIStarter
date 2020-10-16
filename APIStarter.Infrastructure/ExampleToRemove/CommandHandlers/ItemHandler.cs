@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using APIStarter.Domain.CQRS.Interfaces;
 using APIStarter.Domain.ExampleToDelete.Aggregates;
 using APIStarter.Domain.ExampleToDelete.Commands;
+using APIStarter.Domain.Exceptions;
 using MediatR;
 
 namespace APIStarter.Infrastructure.ExampleToRemove.CommandHandlers
@@ -21,18 +22,18 @@ namespace APIStarter.Infrastructure.ExampleToRemove.CommandHandlers
             var aggregate = new Item().Create(command);
 
             _session.Add(aggregate);
-            await _session.SaveChanges();
+            await _session.SaveChangesAsync();
 
             return Unit.Value;
         }
 
         public async Task<Unit> Handle(UpdateItem command, CancellationToken cancellationToken)
         {
-            var aggregate = _session.Get(command.Id, _ => _.Locations);
+            var aggregate = _session.GetActive(command.Id, _ => _.Locations);
 
             aggregate.Update(command);
 
-            await _session.SaveChanges();
+            await _session.SaveChangesAsync();
 
             return Unit.Value;
         }
@@ -41,9 +42,12 @@ namespace APIStarter.Infrastructure.ExampleToRemove.CommandHandlers
         {
             var aggregate = _session.Get(command.Id, _ => _.Locations);
 
+            if (!aggregate.IsActive)
+                throw new GoneException(command.Id);
+            
             aggregate.Deactivate(command);
 
-            await _session.SaveChanges();
+            await _session.SaveChangesAsync();
 
             return Unit.Value;
         }

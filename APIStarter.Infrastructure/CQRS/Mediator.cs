@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIStarter.Domain.Audit.Commands;
-using APIStarter.Domain.Audit.Configuration;
 using APIStarter.Domain.CQRS.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,54 +13,47 @@ namespace APIStarter.Infrastructure.CQRS
     /// </summary>
     public class Mediator : IMediator
     {
-        private readonly AuditConfiguration _auditConfiguration;
         private readonly MediatR.IMediator _mediator;
         private readonly IServiceScope _serviceScope;
 
-        public Mediator(IServiceScopeFactory serviceScopeFactory, AuditConfiguration auditConfiguration)
+        public Mediator(IServiceScopeFactory serviceScopeFactory)
         {
-            _auditConfiguration = auditConfiguration;
             _serviceScope = serviceScopeFactory.CreateScope();
             _mediator = _serviceScope.ServiceProvider.GetRequiredService<MediatR.IMediator>();
         }
 
-        public async Task SendCommand(ICommand command)
+        public async Task SendCommandAsync(ICommand command)
         {
             if (command is null)
                 throw new ArgumentNullException(nameof(command));
 
             await _mediator.Send(command);
-
-            if (_auditConfiguration.AuditCommands)
-                await _mediator.Send(new CreateAuditCommand { Command = command });
+            await _mediator.Send(new CreateAuditCommand { Command = command });
         }
 
-        public async Task<TQueryResult> SendQuery<TQueryResult>(IQuery<TQueryResult> query)
+        public async Task<TQueryResult> SendQueryAsync<TQueryResult>(IQuery<TQueryResult> query)
         {
             if (query is null)
                 throw new ArgumentNullException(nameof(query));
 
             var queryResult = await _mediator.Send(query);
 
-            if (_auditConfiguration.AuditQueries)
-                await _mediator.Send(new CreateAuditQuery
-                {
-                    Query = query,
-                    QueryResult = queryResult
-                });
+            await _mediator.Send(new CreateAuditQuery
+            {
+                Query = query,
+                QueryResult = queryResult
+            });
 
             return queryResult;
         }
 
-        public async Task PublishEvents(IReadOnlyCollection<IEvent> events)
+        public async Task PublishEventsAsync(IReadOnlyCollection<IEvent> events)
         {
             if (events is null)
                 throw new ArgumentNullException(nameof(events));
 
             await Task.WhenAll(events.Select(@event => _mediator.Publish(@event)));
-
-            if (_auditConfiguration.AuditEvents)
-                await _mediator.Send(new CreateAuditEvents { Events = events });
+            await _mediator.Send(new CreateAuditEvents { Events = events });
         }
     }
 }

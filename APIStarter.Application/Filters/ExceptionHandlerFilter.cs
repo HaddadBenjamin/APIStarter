@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using APIStarter.Domain.CQRS.Exceptions;
+using APIStarter.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -12,15 +14,19 @@ namespace APIStarter.Application.Filters
     {
         private static readonly Dictionary<Type, HttpStatusCode> ExceptionTypeToHttpStatus = new Dictionary<Type, HttpStatusCode>
         {
-            { typeof(AggregateNotFoundException), HttpStatusCode.NotFound }
+            { typeof(AggregateNotFoundException), HttpStatusCode.NotFound },
+            { typeof(NotFoundException), HttpStatusCode.NotFound },
+            { typeof(UnauthorizedException), HttpStatusCode.Unauthorized },
+            { typeof(GoneException), HttpStatusCode.Gone },
+            { typeof(BadRequestException), HttpStatusCode.BadRequest },
         };
 
         public override async Task OnExceptionAsync(ExceptionContext exceptionContext)
         {
-            var exception = exceptionContext.Exception;
+            var exception = exceptionContext.Exception.Demystify();
             var responseHttpStatus = ExceptionTypeToHttpStatus.GetValueOrDefault(exception.GetType(), HttpStatusCode.InternalServerError);
 
-            exceptionContext.Result = new JsonResult(exception) { StatusCode = (int)responseHttpStatus };
+            exceptionContext.Result = new JsonResult(exception.ToString()) { StatusCode = (int)responseHttpStatus };
 
             await Task.CompletedTask;
         }

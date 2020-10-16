@@ -18,7 +18,7 @@ namespace APIStarter.Domain.CQRS
     {
         #region Le minimum nécéssaire
         public Guid Id { get; set; }
-        [ShallNotAudit] public int Version { get; set; }
+        [ShallNotAuditDatabaseChange] public int Version { get; set; }
 
         private List<IEvent> _events { get; } = new List<IEvent>();
 
@@ -55,12 +55,12 @@ namespace APIStarter.Domain.CQRS
         #endregion
 
         #region Avec audit
-        [ShallNotAudit] public Guid CreatedBy { get; set; }
-        [ShallNotAudit] public Guid CreatedOnBehalfOf { get; set; }
-        [ShallNotAudit] public DateTime CreatedAt { get; set; }
-        [ShallNotAudit] public Guid LastUpdatedBy { get; set; }
-        [ShallNotAudit] public Guid LastUpdatedOnBehalfOf { get; set; }
-        [ShallNotAudit] public DateTime LastUpdatedAt { get; set; }
+        [ShallNotAuditDatabaseChange] public Guid CreatedBy { get; set; }
+        [ShallNotAuditDatabaseChange] public Guid CreatedOnBehalfOf { get; set; }
+        [ShallNotAuditDatabaseChange] public DateTime CreatedAt { get; set; }
+        [ShallNotAuditDatabaseChange] public Guid LastUpdatedBy { get; set; }
+        [ShallNotAuditDatabaseChange] public Guid LastUpdatedOnBehalfOf { get; set; }
+        [ShallNotAuditDatabaseChange] public DateTime LastUpdatedAt { get; set; }
 
         public void MarkAsCreated(IAuthentificationContext authentificationContext)
         {

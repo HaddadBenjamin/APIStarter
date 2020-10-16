@@ -2,7 +2,7 @@
 using APIStarter.Infrastructure.ExampleToRemove.DbContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace APIStarter.Infrastructure.ExampleToRedefine.DbContext
+namespace APIStarter.Infrastructure.DbContext
 {
     public class YourDbContext : Microsoft.EntityFrameworkCore.DbContext
     {

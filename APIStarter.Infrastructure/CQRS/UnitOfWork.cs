@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using APIStarter.Domain.Audit.Services;
 using APIStarter.Domain.CQRS;
 using APIStarter.Domain.CQRS.Interfaces;
-using APIStarter.Infrastructure.ExampleToRedefine.CQRS;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace APIStarter.Infrastructure.CQRS
@@ -27,7 +26,7 @@ namespace APIStarter.Infrastructure.CQRS
             var aggregateTypeName = typeof(TAggregate).Name;
 
             if (!_repositories.ContainsKey(aggregateTypeName))
-                _repositories.Add(aggregateTypeName, Activator.CreateInstance(typeof(GenericRepository<>).MakeGenericType(typeof(TAggregate)), _dbContext));
+                _repositories.Add(aggregateTypeName, Activator.CreateInstance(typeof(IRepository<>).MakeGenericType(typeof(TAggregate)), _dbContext));
 
             return (IRepository<TAggregate>)_repositories[aggregateTypeName];
         }

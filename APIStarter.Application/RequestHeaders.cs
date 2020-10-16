@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace APIStarter.Application
 {
-    public class RequestContext : IRequestContext
+    public class RequestHeaders : IRequestHeaders
     {
-        public RequestContext(IHttpContextAccessor httpContextAccessor)
+        public RequestHeaders(IHttpContextAccessor httpContextAccessor)
         {
             var request = httpContextAccessor.HttpContext.Request;
 

@@ -10,5 +10,7 @@ namespace APIStarter.Domain.AuthentificationContext
         AuthentificationContextUser User { get; set; }
         AuthentificationContextUser ImpersonatedUser { get; set; }
         Guid CorrelationId { get; set; }
+
+        bool IsValid();
     }
 }

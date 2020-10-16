@@ -27,6 +27,6 @@ namespace APIStarter.Domain.CQRS.Interfaces
         IRepository<TAggregate>
         where TAggregate : AggregateRoot
     {
-        Task<IReadOnlyCollection<IEvent>> SaveChanges();
+        Task<IReadOnlyCollection<IEvent>> SaveChangesAsync();
     }
 }

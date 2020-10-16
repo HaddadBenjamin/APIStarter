@@ -10,6 +10,7 @@ namespace APIStarter.Infrastructure.Audit.DbContext
         public DbSet<AuditQuery> AuditQueries { get; set; }
         public DbSet<AuditEvent> AuditEvents { get; set; }
         public DbSet<AuditDatabaseChange> AuditDatabaseChanges { get; set; }
+        public DbSet<AuditRequest> AuditRequests { get; set; }
 
         public AuditDbContext(DbContextOptions<AuditDbContext> options) : base(options) {}//=> Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
 
@@ -19,6 +20,7 @@ namespace APIStarter.Infrastructure.Audit.DbContext
             new AuditQueryMapper().Map(modelBuilder);
             new AuditEventMapper().Map(modelBuilder);
             new AuditDatabaseChangeMapper().Map(modelBuilder);
+            new AuditRequestMapper().Map(modelBuilder);
         }
     }
 }
