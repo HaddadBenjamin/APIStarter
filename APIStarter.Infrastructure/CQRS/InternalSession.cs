@@ -8,7 +8,6 @@ using APIStarter.Domain.AuthentificationContext;
 using APIStarter.Domain.CQRS;
 using APIStarter.Domain.CQRS.Exceptions;
 using APIStarter.Domain.CQRS.Interfaces;
-using APIStarter.Domain.Exceptions;
 
 namespace APIStarter.Infrastructure.CQRS
 {

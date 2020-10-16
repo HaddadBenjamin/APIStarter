@@ -4,7 +4,6 @@ using APIStarter.Application.Example.Dtos;
 using APIStarter.Domain.CQRS.Interfaces;
 using APIStarter.Domain.ExampleToDelete.Commands;
 using APIStarter.Domain.ExampleToDelete.Queries;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using APIStarter.Application.Extensions;
 
