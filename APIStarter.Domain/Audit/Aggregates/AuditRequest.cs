@@ -26,12 +26,12 @@ namespace APIStarter.Domain.Audit.Aggregates
         public static AuditRequest Create(CreateAuditRequest command, IAuthentificationContext authentificationContext, IAuditSerializer auditSerializer) => new AuditRequest
         {
             Id = Guid.NewGuid(),
-            HttpMethod = command.Method,
+            HttpMethod = command.HttpMethod,
             Uri = command.Uri,
-            RequestHeaders = auditSerializer.Serialize(command.Headers),
-            RequestBody = command.Body,
-            HttpStatus = command.Status,
-            ResponseBody = command.Message,
+            RequestHeaders = auditSerializer.Serialize(command.RequestHeaders),
+            RequestBody = command.RequestBody,
+            HttpStatus = command.HttpStatus,
+            ResponseBody = command.ResponseBody,
             Duration = command.Duration,
             CorrelationId = authentificationContext.CorrelationId,
             Date = DateTime.UtcNow,

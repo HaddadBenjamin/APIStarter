@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using APIStarter.Domain.Audit.Attributes;
 using APIStarter.Domain.Audit.Commands;
 using APIStarter.Domain.Audit.Services;
 using APIStarter.Domain.AuthentificationContext;
@@ -20,6 +21,7 @@ namespace APIStarter.Domain.Audit.Aggregates
         public DateTime Date { get; set; }
         public Guid UserId { get; set; }
         public Guid ImpersonatedUserId { get; set; }
+        public int AggregateRootVersion { get; set; }
 
         public static List<AuditEvent> Create(CreateAuditEvents command, IAuthentificationContext authentificationContext, IAuditSerializer auditSerializer) =>
             command.Events.Select(@event => ToAuditEvent(@event, authentificationContext, auditSerializer)).ToList();
@@ -28,11 +30,14 @@ namespace APIStarter.Domain.Audit.Aggregates
         {
             Id = Guid.NewGuid(),
             EventName = @event.GetType().UnderlyingSystemType.Name,
-            Event = auditSerializer.Serialize(@event),
+            Event = auditSerializer.Serialize(@event.GetType().GetFields()
+                .Where(fieldInfo => fieldInfo.ShouldAuditEvent())
+                .ToDictionary(fieldInfo => fieldInfo.Name, fieldInfo => fieldInfo.GetValue(@event))),
             CorrelationId = authentificationContext.CorrelationId,
             Date = DateTime.UtcNow,
             ImpersonatedUserId = authentificationContext.ImpersonatedUser.Id,
-            UserId = authentificationContext.User.Id
+            UserId = authentificationContext.User.Id,
+            AggregateRootVersion = @event.Version
         };
     }
 }

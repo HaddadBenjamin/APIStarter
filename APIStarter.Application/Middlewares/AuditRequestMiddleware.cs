@@ -40,14 +40,14 @@ namespace APIStarter.Application.Middlewares
 
             var createAuditRequest = new CreateAuditRequest
             {
-                Body = requestBody,
-                Headers = request.Headers
+                RequestBody = requestBody,
+                RequestHeaders = request.Headers
                     .Where(h => !HeadersToIgnore.Contains(h.Key))
                     .ToDictionary(h => h.Key, h => string.Join(",", h.Value.Select(v => v))),
                 Duration = DateTime.UtcNow - startTime,
-                Message = responseBody,
-                Method = request.Method,
-                Status = response.StatusCode,
+                ResponseBody = responseBody,
+                HttpMethod = request.Method,
+                HttpStatus = response.StatusCode,
                 Uri = $"{request.Host}{request.Path}{request.QueryString}"
             };
 

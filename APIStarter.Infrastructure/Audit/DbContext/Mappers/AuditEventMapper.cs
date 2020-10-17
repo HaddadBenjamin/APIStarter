@@ -20,6 +20,7 @@ namespace APIStarter.Infrastructure.Audit.DbContext.Mappers
             entity.HasIndex(auditCommand => auditCommand.Date);
             entity.HasIndex(auditCommand => auditCommand.UserId);
             entity.HasIndex(auditCommand => auditCommand.ImpersonatedUserId);
+            entity.HasIndex(auditCommand => auditCommand.AggregateRootVersion);
         }
     }
 }

@@ -2,6 +2,6 @@
 
 namespace APIStarter.Domain.Audit.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class)]
     public class ShallNotAuditEventAttribute : Attribute { }
 }

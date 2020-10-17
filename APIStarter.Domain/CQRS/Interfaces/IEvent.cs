@@ -1,4 +1,5 @@
 ﻿using System;
+using APIStarter.Domain.Audit.Attributes;
 using MediatR;
 
 namespace APIStarter.Domain.CQRS.Interfaces
@@ -6,8 +7,8 @@ namespace APIStarter.Domain.CQRS.Interfaces
     public interface IEvent : INotification
     {
         Guid Id { get; set; }
-        Guid CorrelationId { get; set; }
-        int Version { get; set; }
-        DateTime Date { get; set; }
+        [ShallNotAuditEvent] Guid CorrelationId { get; set; }
+        [ShallNotAuditEvent] int Version { get; set; }
+        [ShallNotAuditEvent] DateTime Date { get; set; }
     }
 }
