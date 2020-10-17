@@ -30,9 +30,9 @@ namespace APIStarter.Domain.Audit.Aggregates
         {
             Id = Guid.NewGuid(),
             EventName = @event.GetType().UnderlyingSystemType.Name,
-            Event = auditSerializer.Serialize(@event.GetType().GetFields()
-                .Where(fieldInfo => fieldInfo.ShouldAuditEvent())
-                .ToDictionary(fieldInfo => fieldInfo.Name, fieldInfo => fieldInfo.GetValue(@event))),
+            Event = auditSerializer.Serialize(@event.GetType().GetProperties()
+                .Where(propertyInfo => propertyInfo.ShouldAuditEvent())
+                .ToDictionary(propertyInfo => propertyInfo.Name, propertyInfo => propertyInfo.GetValue(@event))),
             CorrelationId = authentificationContext.CorrelationId,
             Date = DateTime.UtcNow,
             ImpersonatedUserId = authentificationContext.ImpersonatedUser.Id,
