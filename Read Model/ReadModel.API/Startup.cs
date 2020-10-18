@@ -1,10 +1,8 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ReadModel.ElasticSearch;
 
 namespace ReadModel.API
 {
@@ -18,7 +16,6 @@ namespace ReadModel.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            IPlayWithNest.Map();
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
