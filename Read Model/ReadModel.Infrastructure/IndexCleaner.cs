@@ -17,7 +17,7 @@ namespace ReadModel.Infrastructure
         {
             switch (indexType)
             {
-                case IndexType.AuditRequest: await CleanIndexAsync<AuditRequest>(); break;
+                case IndexType.HttpRequest: await CleanIndexAsync<HttpRequest>(); break;
                 case IndexType.Item: await CleanIndexAsync<Item>(); break;
                 default: throw new NotImplementedException();
             }

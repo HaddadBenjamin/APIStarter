@@ -3,6 +3,6 @@
     public enum IndexType
     {
         Item,
-        AuditRequest
+        HttpRequest
     }
 }

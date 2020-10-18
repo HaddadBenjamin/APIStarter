@@ -2,7 +2,7 @@
 
 namespace ReadModel.Domain.Models
 {
-    public class AuditRequest
+    public class HttpRequest
     {
         public Guid Id { get; set; }
         public string HttpMethod { get; set; }
@@ -11,6 +11,8 @@ namespace ReadModel.Domain.Models
         public string RequestBody { get; set; }
         public int HttpStatus { get; set; }
         public string ResponseBody { get; set; }
+        //TODO : FILL IT.
+        public string ClientApplication { get; set; }
         public TimeSpan Duration { get; set; }
         public Guid CorrelationId { get; set; }
         public DateTime Date { get; set; }
