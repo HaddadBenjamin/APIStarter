@@ -18,12 +18,7 @@ namespace ReadModel.ElasticSearch.Infrastructure
         public CreateIndexDescriptor Map(IndexType indexType, CreateIndexDescriptor createIndexDescriptor) => Mappers[indexType](createIndexDescriptor);
 
         public static CreateIndexDescriptor ItemMapper(CreateIndexDescriptor createIndexDescriptor) => createIndexDescriptor
-            .Map<Item>(typeMappingDescriptor => typeMappingDescriptor
-                .AutoMap()
-                .Properties(propertiesDescriptor => propertiesDescriptor
-                    .Text(textPropertyDescriptor => textPropertyDescriptor.Name(item => item.Name))
-                )
-            );
+            .Map<Item>(typeMappingDescriptor => typeMappingDescriptor.AutoMap());
 
         public static CreateIndexDescriptor AuditRequestMapper(CreateIndexDescriptor createIndexDescriptor) =>
             createIndexDescriptor.Map<AuditRequest>(typeMappingDescriptor => typeMappingDescriptor.AutoMap());
