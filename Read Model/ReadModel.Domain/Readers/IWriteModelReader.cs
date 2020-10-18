@@ -6,7 +6,7 @@ namespace ReadModel.Domain.Readers
 {
     public interface IWriteModelReader
     {
-        Task<IReadOnlyCollection<TEntityView>> GetAll<TEntityView>(IndexType indexType);
-        Task<TEntityView> GetById<TEntityView>(IndexType indexType, Guid id);
+        Task<IReadOnlyCollection<dynamic>> GetAll(IndexType indexType);
+        Task<dynamic> GetById(IndexType indexType, Guid id);
     }
 }

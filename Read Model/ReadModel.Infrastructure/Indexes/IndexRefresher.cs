@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Nest;
 using ReadModel.Domain;
-using ReadModel.Domain.Clients;
 using ReadModel.Domain.Indexes;
+using ReadModel.Domain.Readers;
 
 namespace ReadModel.Infrastructure.Indexes
 {
     public class IndexRefresher : IIndexRefresher
     {
-        private readonly IIndexName _indexName;
         private readonly IIndexCleaner _indexCleaner;
-        private readonly IIndexRefresher _indexRefresher;
-        private readonly ElasticClient _client;
+        private readonly IWriteModelReader _writeModelReader;
 
-        public IndexRefresher(IIndexName indexName, IReadModelClient readModelClient, IIndexCleaner indexCleaner, IIndexRefresher indexRefresher)
+        public IndexRefresher(IIndexCleaner indexCleaner, IWriteModelReader writeModelReader)
         {
-            _indexName = indexName;
             _indexCleaner = indexCleaner;
-            _indexRefresher = indexRefresher;
-            _client = readModelClient.ElasticClient;
+            _writeModelReader = writeModelReader;
         }
 
         public async Task RefreshAllIndexesAsync()
@@ -34,7 +29,7 @@ namespace ReadModel.Infrastructure.Indexes
         {
             await _indexCleaner.CleanIndexAsync(indexType);
 
-            // get elements from write model
+            var views = await _writeModelReader.GetAll(indexType);
             // map views to indexes
             // update data from index
 
@@ -45,7 +40,7 @@ namespace ReadModel.Infrastructure.Indexes
         {
             await _indexCleaner.CleanIndexAsync(indexType, id);
 
-            // get element from write model
+            var view = await _writeModelReader.GetById(indexType, id);
             // map view to index
             // update data from index
 

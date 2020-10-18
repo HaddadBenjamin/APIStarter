@@ -18,7 +18,7 @@ namespace ReadModel.Infrastructure.Readers
             _httpRequestReader = httpRequestReader;
         }
 
-        public async Task<IReadOnlyCollection<TEntityView>> GetAll<TEntityView>(IndexType indexType)
+        public async Task<IReadOnlyCollection<dynamic>> GetAll(IndexType indexType)
         {
             switch (indexType)
             {
@@ -30,7 +30,7 @@ namespace ReadModel.Infrastructure.Readers
             throw new NotImplementedException();
         }
 
-        public async Task<TEntityView> GetById<TEntityView>(IndexType indexType, Guid id)
+        public async Task<dynamic> GetById(IndexType indexType, Guid id)
         {
             switch (indexType)
             {
