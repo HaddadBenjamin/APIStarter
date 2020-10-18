@@ -12,7 +12,7 @@ namespace ReadModel.Infrastructure
         private static readonly Dictionary<IndexType, Func<CreateIndexDescriptor, CreateIndexDescriptor>> Mappers = new Dictionary<IndexType, Func<CreateIndexDescriptor, CreateIndexDescriptor>>
         {
             { IndexType.Item, ItemMapper },
-            { IndexType.HttpRequest, AuditRequestMapper }
+            { IndexType.HttpRequest, HttpRequestMapper }
         };
 
         public CreateIndexDescriptor Map(IndexType indexType, CreateIndexDescriptor createIndexDescriptor) => Mappers[indexType](createIndexDescriptor);
@@ -20,7 +20,7 @@ namespace ReadModel.Infrastructure
         public static CreateIndexDescriptor ItemMapper(CreateIndexDescriptor createIndexDescriptor) => createIndexDescriptor
             .Map<Item>(typeMappingDescriptor => typeMappingDescriptor.AutoMap());
 
-        public static CreateIndexDescriptor AuditRequestMapper(CreateIndexDescriptor createIndexDescriptor) =>
+        public static CreateIndexDescriptor HttpRequestMapper(CreateIndexDescriptor createIndexDescriptor) =>
             createIndexDescriptor.Map<HttpRequest>(typeMappingDescriptor => typeMappingDescriptor.AutoMap());
     }
 }
