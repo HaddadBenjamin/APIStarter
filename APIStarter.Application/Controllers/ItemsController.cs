@@ -18,7 +18,7 @@ namespace APIStarter.Application.Controllers
         public ItemsController(IMediator mediator) => _mediator = mediator;
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateItemDto dto)
+        public async Task<IActionResult> Create(CreateItemDto dto)
         {
             var command = new CreateItem
             {
