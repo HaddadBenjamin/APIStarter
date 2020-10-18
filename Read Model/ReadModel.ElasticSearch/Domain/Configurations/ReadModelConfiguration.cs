@@ -1,6 +1,6 @@
 ﻿namespace ReadModel.ElasticSearch.Domain.Configurations
 {
-    public class ReadModelClientConfiguration
+    public class ReadModelConfiguration
     {
         public string Uri { get; set; }
         public string Username { get; set; }

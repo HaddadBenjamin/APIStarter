@@ -60,8 +60,8 @@ namespace APIStarter.Application
                 .AddScoped<IRequestHeaders, RequestHeaders>()
                 .AddScoped<IAuthentificationContext, AuthentificationContext>()
                 // Register Db context.
-                .AddDbContextPool<AuditDbContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Audit;Trusted_Connection=True;MultipleActiveResultSets=true", builder => builder.MigrationsHistoryTable("MigrationHistory", "dbo")))
-                .AddDbContextPool<YourDbContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AggregateRoot;Trusted_Connection=True;MultipleActiveResultSets=true", builder => builder.MigrationsHistoryTable("MigrationHistory", "dbo")))
+                .AddDbContextPool<AuditDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("Audit"), builder => builder.MigrationsHistoryTable("MigrationHistory", "dbo")))
+                .AddDbContextPool<YourDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("WriteModel"), builder => builder.MigrationsHistoryTable("MigrationHistory", "dbo")))
                 // Ces injections sont juste là pour l'exemple, il faudra les supprimer
                 .AddScoped<IAuthentificationContextUserProvider, FakeAuthentificationContextUserProvider>()
                 .AddScoped<IItemViewMapper, ItemViewMapper>()

@@ -7,10 +7,10 @@ namespace ReadModel.ElasticSearch.Infrastructure
 {
     public class ReadModelClient : IReadModelClient
     {
-        public ReadModelClient(ReadModelClientConfiguration clientConfiguration)
+        public ReadModelClient(ReadModelConfiguration readModelConfiguration)
         {
-            var settings = new ConnectionSettings(new Uri(clientConfiguration.Uri));
-            settings.BasicAuthentication(clientConfiguration.Username, clientConfiguration.Password);
+            var settings = new ConnectionSettings(new Uri(readModelConfiguration.Uri));
+            settings.BasicAuthentication(readModelConfiguration.Username, readModelConfiguration.Password);
 
             ElasticClient = new ElasticClient(settings);
         }
