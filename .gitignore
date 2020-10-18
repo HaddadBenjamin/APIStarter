@@ -13,3 +13,6 @@ Read Model/ReadModel.Application/bin
 Read Model/ReadModel.Application/obj
 
 .vs
+Read Model/ReadModel.Domain.WriteModel/obj
+Read Model/ReadModel.Infrastructure.WriteModel/obj
+Read Model/ReadModel.Domain.WriteModel/bin
