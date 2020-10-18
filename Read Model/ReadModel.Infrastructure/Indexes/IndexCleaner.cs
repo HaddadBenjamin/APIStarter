@@ -42,6 +42,5 @@ namespace ReadModel.Infrastructure.Indexes
 
         private async Task<DeleteResponse> CleanIndexAsync<TIndex>(Guid id) where TIndex : class =>
             await _client.DeleteAsync<TIndex>(id);
-
     }
 }

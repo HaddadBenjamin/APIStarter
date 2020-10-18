@@ -34,16 +34,21 @@ namespace ReadModel.Infrastructure.Indexes
         {
             await _indexCleaner.CleanIndexAsync(indexType);
 
-            // get elements from index
+            // get elements from write model
+            // map views to indexes
             // update data from index
-            // Refresh Index.
+
             throw new NotImplementedException();
         }
 
         public async Task RefreshDocumentAsync(IndexType indexType, Guid id)
         {
             await _indexCleaner.CleanIndexAsync(indexType, id);
-            // Delete document of this index
+
+            // get element from write model
+            // map view to index
+            // update data from index
+
             throw new NotImplementedException();
         }
     }

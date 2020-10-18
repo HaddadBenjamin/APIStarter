@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ReadModel.Domain
+namespace ReadModel.Domain.Readers
 {
     public interface IWriteModelReader
     {
