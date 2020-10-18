@@ -9,7 +9,7 @@ namespace ReadModel.Infrastructure
 {
     public class IndexMapper : IIndexMapper
     {
-        private readonly Dictionary<IndexType, Func<CreateIndexDescriptor, CreateIndexDescriptor>> Mappers = new Dictionary<IndexType, Func<CreateIndexDescriptor, CreateIndexDescriptor>>
+        private static readonly Dictionary<IndexType, Func<CreateIndexDescriptor, CreateIndexDescriptor>> Mappers = new Dictionary<IndexType, Func<CreateIndexDescriptor, CreateIndexDescriptor>>
         {
             { IndexType.Item, ItemMapper },
             { IndexType.AuditRequest, AuditRequestMapper }
