@@ -17,17 +17,16 @@ namespace ReadModel.Infrastructure
         {
             switch (indexType)
             {
-                case IndexType.AuditRequest: await DeleteIndexAsync<AuditRequest>(); break;
-                case IndexType.Item: await DeleteIndexAsync<Item>(); break;
+                case IndexType.AuditRequest: await CleanIndexAsync<AuditRequest>(); break;
+                case IndexType.Item: await CleanIndexAsync<Item>(); break;
                 default: throw new NotImplementedException();
             }
         }
 
-        private async Task<DeleteByQueryResponse> DeleteIndexAsync<TIndex>() where TIndex : class =>
+        private async Task<DeleteByQueryResponse> CleanIndexAsync<TIndex>() where TIndex : class =>
             await _client.DeleteByQueryAsync<TIndex>(deleteByQueryDescriptor =>
                 deleteByQueryDescriptor.Query(queryContainerDescriptor =>
                     queryContainerDescriptor.QueryString(queryStringQueryDescriptor =>
                         queryStringQueryDescriptor.Query("*"))));
-
     }
 }
