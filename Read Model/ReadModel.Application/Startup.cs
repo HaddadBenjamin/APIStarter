@@ -25,6 +25,7 @@ namespace ReadModel.Application
             .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.AddSingleton(new WriteModelConfiguration { ConnectionString = _configuration.GetConnectionString("WriteModel") });
+            services.AddSingleton(new AuditConfiguration { ConnectionString = _configuration.GetConnectionString("Audit") });
             services.AddSingleton(_configuration.GetSection("ReadModel").Get<ReadModelConfiguration>());
         }
 
