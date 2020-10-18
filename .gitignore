@@ -5,14 +5,15 @@ Write Model/WriteModel.Infrastructure/bin
 Write Model/WriteModel.Application/obj
 Write Model/WriteModel.Application/bin
 
-Read Model/ReadModel.Domain/bin
 Read Model/ReadModel.Domain/obj
-Read Model/ReadModel.Infrastructure/bin
+Read Model/ReadModel.Domain/bin
+Read Model/ReadModel.Domain.WriteModel/obj
+Read Model/ReadModel.Domain.WriteModel/bin
 Read Model/ReadModel.Infrastructure/obj
-Read Model/ReadModel.Application/bin
+Read Model/ReadModel.Infrastructure/bin
+Read Model/ReadModel.Infrastructure.WriteModel/obj
+Read Model/ReadModel.Infrastructure.WriteModel/bin
 Read Model/ReadModel.Application/obj
+Read Model/ReadModel.Application/bin
 
 .vs
-Read Model/ReadModel.Domain.WriteModel/obj
-Read Model/ReadModel.Infrastructure.WriteModel/obj
-Read Model/ReadModel.Domain.WriteModel/bin
