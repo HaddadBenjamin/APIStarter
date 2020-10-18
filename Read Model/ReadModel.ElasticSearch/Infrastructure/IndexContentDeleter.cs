@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Nest;
 using ReadModel.ElasticSearch.Domain;
+using ReadModel.ElasticSearch.Domain.Interfaces;
 using ReadModel.ElasticSearch.Domain.Models;
 
 namespace ReadModel.ElasticSearch.Infrastructure

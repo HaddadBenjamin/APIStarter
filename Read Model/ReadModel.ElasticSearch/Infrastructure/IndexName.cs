@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ReadModel.ElasticSearch.Domain;
+using ReadModel.ElasticSearch.Domain.Interfaces;
 
 namespace ReadModel.ElasticSearch.Infrastructure
 {

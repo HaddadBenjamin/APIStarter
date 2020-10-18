@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ben.Demystifier" Version="0.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ReadModel.ElasticSearch\ReadModel.ElasticSearch.csproj" />
   </ItemGroup>
 

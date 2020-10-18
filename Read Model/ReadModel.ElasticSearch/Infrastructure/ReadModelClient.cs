@@ -1,7 +1,7 @@
 ﻿using System;
 using Nest;
-using ReadModel.ElasticSearch.Domain;
 using ReadModel.ElasticSearch.Domain.Configurations;
+using ReadModel.ElasticSearch.Domain.Interfaces;
 
 namespace ReadModel.ElasticSearch.Infrastructure
 {

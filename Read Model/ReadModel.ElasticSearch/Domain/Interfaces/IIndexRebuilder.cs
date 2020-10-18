@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ReadModel.ElasticSearch.Domain
+namespace ReadModel.ElasticSearch.Domain.Interfaces
 {
     public interface IIndexRebuilder
     {

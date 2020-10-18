@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ReadModel.ElasticSearch.Domain;
+using ReadModel.ElasticSearch.Domain.Interfaces;
 
 namespace ReadModel.API.Controllers
 {
