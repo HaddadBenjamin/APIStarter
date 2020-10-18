@@ -24,7 +24,10 @@ namespace ReadModel.ElasticSearch.Infrastructure
         }
 
         private async Task<DeleteByQueryResponse> DeleteIndexAsync<TIndex>() where TIndex : class =>
-            await _client.DeleteByQueryAsync<TIndex>(selector => selector.Query(q => q.QueryString(qs => qs.Query("*"))));
+            await _client.DeleteByQueryAsync<TIndex>(deleteByQueryDescriptor =>
+                deleteByQueryDescriptor.Query(queryContainerDescriptor =>
+                    queryContainerDescriptor.QueryString(queryStringQueryDescriptor =>
+                        queryStringQueryDescriptor.Query("*"))));
 
     }
 }
