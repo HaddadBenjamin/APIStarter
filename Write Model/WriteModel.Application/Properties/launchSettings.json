@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Learning.AggregateRoot.Application": {
+    "WriteModel.Application": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "items",
