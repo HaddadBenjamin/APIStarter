@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 
-namespace ReadModel.ElasticSearch
+namespace ReadModel.ElasticSearch.Domain
 {
     public interface IIndexRebuilder
     {
-        Task RebuildAllAsync();
-        Task RebuildAsync(IndexType indexType);
+        Task RebuildAllIndexesAsync();
+        Task RebuildIndexAsync(IndexType indexType);
     }
 }

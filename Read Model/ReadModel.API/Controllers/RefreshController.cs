@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ReadModel.ElasticSearch;
+using ReadModel.ElasticSearch.Domain;
 
 namespace ReadModel.API.Controllers
 {
@@ -17,7 +17,7 @@ namespace ReadModel.API.Controllers
         [Route("indexes")]
         public async Task<IActionResult> RefreshAllIndexes()
         {
-            await _indexRebuilder.RebuildAllAsync();
+            await _indexRebuilder.RebuildAllIndexesAsync();
             // remettre toutes les données de tout les indexes.
 
             return Ok();
@@ -27,7 +27,7 @@ namespace ReadModel.API.Controllers
         [Route("indexes/{indexType}")]
         public async Task<IActionResult> RefreshIndex([FromRoute] IndexType indexType)
         {
-            await _indexRebuilder.RebuildAsync(indexType);
+            await _indexRebuilder.RebuildIndexAsync(indexType);
             // remettre toutes les données de l'index correspondant.
 
             return Ok();

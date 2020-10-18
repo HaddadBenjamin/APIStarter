@@ -1,4 +1,4 @@
-﻿namespace ReadModel.ElasticSearch
+﻿namespace ReadModel.ElasticSearch.Domain.Configurations
 {
     public class ReadModelClientConfiguration
     {

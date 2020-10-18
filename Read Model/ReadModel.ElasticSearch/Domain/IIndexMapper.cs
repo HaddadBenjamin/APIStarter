@@ -1,6 +1,6 @@
 ﻿using Nest;
 
-namespace ReadModel.ElasticSearch
+namespace ReadModel.ElasticSearch.Domain
 {
     public interface IIndexMapper
     {

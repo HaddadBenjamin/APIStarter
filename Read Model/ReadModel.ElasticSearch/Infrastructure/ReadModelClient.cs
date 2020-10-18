@@ -1,7 +1,9 @@
 ﻿using System;
 using Nest;
+using ReadModel.ElasticSearch.Domain;
+using ReadModel.ElasticSearch.Domain.Configurations;
 
-namespace ReadModel.ElasticSearch
+namespace ReadModel.ElasticSearch.Infrastructure
 {
     public class ReadModelClient : IReadModelClient
     {

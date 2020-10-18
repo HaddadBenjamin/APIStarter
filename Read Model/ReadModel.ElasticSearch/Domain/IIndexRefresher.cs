@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace ReadModel.ElasticSearch
+namespace ReadModel.ElasticSearch.Domain
 {
     public interface IIndexRefresher
     {
-        Task RefreshAllAsync();
-        Task RefreshAsync(IndexType indexType);
-        Task RefreshAsync(IndexType indexType, Guid id);
+        Task RefreshAllIndexesAsync();
+        Task RefreshIndexAsync(IndexType indexType);
+        Task RefreshDocumentAsync(IndexType indexType, Guid id);
     }
 }

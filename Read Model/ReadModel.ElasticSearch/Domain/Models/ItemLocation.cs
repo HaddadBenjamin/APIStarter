@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReadModel.ElasticSearch
+namespace ReadModel.ElasticSearch.Domain.Models
 {
     public class ItemLocation
     {

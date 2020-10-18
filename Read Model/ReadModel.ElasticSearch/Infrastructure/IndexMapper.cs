@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Nest;
+using ReadModel.ElasticSearch.Domain;
+using ReadModel.ElasticSearch.Domain.Models;
 
-namespace ReadModel.ElasticSearch
+namespace ReadModel.ElasticSearch.Infrastructure
 {
     public class IndexMapper : IIndexMapper
     {

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nest;
+using ReadModel.ElasticSearch.Domain;
 
-namespace ReadModel.ElasticSearch
+namespace ReadModel.ElasticSearch.Infrastructure
 {
     public class IndexRebuilder : IIndexRebuilder
     {
@@ -22,14 +23,14 @@ namespace ReadModel.ElasticSearch
             _client = client.ElasticClient;
         }
 
-        public async Task RebuildAllAsync()
+        public async Task RebuildAllIndexesAsync()
         {
-            var refreshTasks = ((IndexType[])Enum.GetValues(typeof(IndexType))).Select(RebuildAsync).ToArray();
+            var refreshTasks = ((IndexType[])Enum.GetValues(typeof(IndexType))).Select(RebuildIndexAsync).ToArray();
 
             Task.WaitAll(refreshTasks);
         }
 
-        public async Task RebuildAsync(IndexType indexType)
+        public async Task RebuildIndexAsync(IndexType indexType)
         {
             var indexName = _indexNames[indexType];
 
