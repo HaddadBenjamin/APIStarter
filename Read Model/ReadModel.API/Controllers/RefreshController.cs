@@ -11,15 +11,20 @@ namespace ReadModel.API.Controllers
     public class RefreshController : ControllerBase
     {
         private readonly IIndexRebuilder _indexRebuilder;
+        private readonly IIndexRefresher _indexRefresher;
 
-        public RefreshController(IIndexRebuilder indexRebuilder) => _indexRebuilder = indexRebuilder;
+        public RefreshController(IIndexRebuilder indexRebuilder, IIndexRefresher indexRefresher)
+        {
+            _indexRebuilder = indexRebuilder;
+            _indexRefresher = indexRefresher;
+        }
 
         [HttpPost]
         [Route("indexes")]
         public async Task<IActionResult> RefreshAllIndexes()
         {
             await _indexRebuilder.RebuildAllIndexesAsync();
-            // remettre toutes les données de tout les indexes.
+            await _indexRefresher.RefreshAllIndexesAsync();
 
             return Ok();
         }
@@ -29,7 +34,7 @@ namespace ReadModel.API.Controllers
         public async Task<IActionResult> RefreshIndex([FromRoute] IndexType indexType)
         {
             await _indexRebuilder.RebuildIndexAsync(indexType);
-            // remettre toutes les données de l'index correspondant.
+            await _indexRefresher.RefreshIndexAsync(indexType);
 
             return Ok();
         }
@@ -38,7 +43,8 @@ namespace ReadModel.API.Controllers
         [Route("indexes/{indexType}/{id:guid}")]
         public async Task<IActionResult> RefreshDocument([FromRoute] IndexType indexType, [FromRoute] Guid id)
         {
-            // await delete(type/id), await refresh(type/id)
+            await _indexRefresher.RefreshDocumentAsync(indexType, id);
+
             return Ok();
         }
     }
