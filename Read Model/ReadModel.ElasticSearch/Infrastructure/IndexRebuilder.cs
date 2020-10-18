@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nest;
@@ -10,29 +9,26 @@ namespace ReadModel.ElasticSearch.Infrastructure
     public class IndexRebuilder : IIndexRebuilder
     {
         private readonly IIndexMapper _indexMapper;
+        private readonly IIndexName _indexName;
         private readonly ElasticClient _client;
-        private Dictionary<IndexType, string> _indexNames = new Dictionary<IndexType, string>
-        {
-            {IndexType.Item, "items"},
-            {IndexType.AuditRequest, "auditrequests"},
-        };
 
-        public IndexRebuilder(IReadModelClient client, IIndexMapper indexMapper)
+        public IndexRebuilder(IReadModelClient client, IIndexMapper indexMapper, IIndexName indexName)
         {
             _indexMapper = indexMapper;
+            _indexName = indexName;
             _client = client.ElasticClient;
         }
 
         public async Task RebuildAllIndexesAsync()
         {
-            var refreshTasks = ((IndexType[])Enum.GetValues(typeof(IndexType))).Select(RebuildIndexAsync).ToArray();
+            var rebuildIndexesTasks = ((IndexType[])Enum.GetValues(typeof(IndexType))).Select(RebuildIndexAsync).ToArray();
 
-            Task.WaitAll(refreshTasks);
+            Task.WaitAll(rebuildIndexesTasks);
         }
 
         public async Task RebuildIndexAsync(IndexType indexType)
         {
-            var indexName = _indexNames[indexType];
+            var indexName = _indexName.GetIndexName(indexType);
 
             var indexDeleteResponse = await _client.Indices.DeleteAsync(indexName);
             var indexCreateResponse = await _client.Indices.CreateAsync(indexName, createIndexDescriptor => _indexMapper.Map(indexType, createIndexDescriptor));

@@ -8,10 +8,10 @@ namespace ReadModel.ElasticSearch.Infrastructure
 {
     public class IndexMapper : IIndexMapper
     {
-        private Dictionary<IndexType, Func<CreateIndexDescriptor, CreateIndexDescriptor>> Mappers = new Dictionary<IndexType, Func<CreateIndexDescriptor, CreateIndexDescriptor>>
+        private readonly Dictionary<IndexType, Func<CreateIndexDescriptor, CreateIndexDescriptor>> Mappers = new Dictionary<IndexType, Func<CreateIndexDescriptor, CreateIndexDescriptor>>
         {
-            {IndexType.Item, ItemMapper },
-            {IndexType.AuditRequest, AuditRequestMapper }
+            { IndexType.Item, ItemMapper },
+            { IndexType.AuditRequest, AuditRequestMapper }
         };
 
         public CreateIndexDescriptor Map(IndexType indexType, CreateIndexDescriptor createIndexDescriptor) => Mappers[indexType](createIndexDescriptor);
