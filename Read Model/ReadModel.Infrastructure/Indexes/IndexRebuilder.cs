@@ -3,9 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Nest;
 using ReadModel.Domain;
-using ReadModel.Domain.Interfaces;
+using ReadModel.Domain.Clients;
+using ReadModel.Domain.Indexes;
 
-namespace ReadModel.Infrastructure
+namespace ReadModel.Infrastructure.Indexes
 {
     public class IndexRebuilder : IIndexRebuilder
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using Nest;
+using ReadModel.Domain.Clients;
 using ReadModel.Domain.Configurations;
-using ReadModel.Domain.Interfaces;
 
-namespace ReadModel.Infrastructure
+namespace ReadModel.Infrastructure.Clients
 {
     public class ReadModelClient : IReadModelClient
     {

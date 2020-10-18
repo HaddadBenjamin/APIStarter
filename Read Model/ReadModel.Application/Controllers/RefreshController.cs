@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ReadModel.Domain;
-using ReadModel.Domain.Interfaces;
+using ReadModel.Domain.Indexes;
 
 namespace ReadModel.Application.Controllers
 {

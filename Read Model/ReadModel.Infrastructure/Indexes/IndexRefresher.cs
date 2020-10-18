@@ -3,9 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Nest;
 using ReadModel.Domain;
-using ReadModel.Domain.Interfaces;
+using ReadModel.Domain.Clients;
+using ReadModel.Domain.Indexes;
 
-namespace ReadModel.Infrastructure
+namespace ReadModel.Infrastructure.Indexes
 {
     public class IndexRefresher : IIndexRefresher
     {
@@ -33,12 +34,15 @@ namespace ReadModel.Infrastructure
         {
             await _indexCleaner.CleanIndexAsync(indexType);
 
+            // get elements from index
+            // update data from index
             // Refresh Index.
             throw new NotImplementedException();
         }
 
-        public Task RefreshDocumentAsync(IndexType indexType, Guid id)
+        public async Task RefreshDocumentAsync(IndexType indexType, Guid id)
         {
+            await _indexCleaner.CleanIndexAsync(indexType, id);
             // Delete document of this index
             throw new NotImplementedException();
         }

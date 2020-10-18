@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ReadModel.Domain.Models
+namespace ReadModel.Domain.WriteModel.Views
 {
-    public class HttpRequest
+    public class HttpRequestView
     {
         public Guid Id { get; set; }
         public string HttpMethod { get; set; }
@@ -11,8 +11,6 @@ namespace ReadModel.Domain.Models
         public string RequestBody { get; set; }
         public int HttpStatus { get; set; }
         public string ResponseBody { get; set; }
-        //TODO : FILL IT.
-        public string ClientApplication { get; set; }
         public TimeSpan Duration { get; set; }
         public Guid CorrelationId { get; set; }
         public DateTime Date { get; set; }

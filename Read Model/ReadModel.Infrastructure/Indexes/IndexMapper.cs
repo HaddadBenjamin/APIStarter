@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Nest;
 using ReadModel.Domain;
-using ReadModel.Domain.Interfaces;
-using ReadModel.Domain.Models;
+using ReadModel.Domain.Index;
+using ReadModel.Domain.Indexes;
 
-namespace ReadModel.Infrastructure
+namespace ReadModel.Infrastructure.Indexes
 {
     public class IndexMapper : IIndexMapper
     {

@@ -5,14 +5,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using ReadModel.Application.Filters;
+using ReadModel.Domain.Configurations;
 
 namespace ReadModel.Application
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) => Configuration = configuration;
+        private readonly IConfiguration _configuration;
 
-        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration) => _configuration = configuration;
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -22,6 +23,9 @@ namespace ReadModel.Application
                 options.Filters.Add(new ExceptionHandlerFilter());
             })// J'ai besoin d'appeler cette méthode pour fixer l'erreur JsonException: A possible object cycle was detected which is not supported. This can either be due t
             .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            services.AddSingleton(new WriteModelConfiguration { ConnectionString = _configuration.GetConnectionString("WriteModel") });
+            services.AddSingleton(_configuration.GetSection("ReadModel").Get<ReadModelConfiguration>());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ReadModel.Domain.Models
+namespace ReadModel.Domain.Index
 {
     public class Item
     {

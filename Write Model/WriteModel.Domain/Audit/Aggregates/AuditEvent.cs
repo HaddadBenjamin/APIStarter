@@ -17,6 +17,7 @@ namespace WriteModel.Domain.Audit.Aggregates
         public Guid Id { get; set; }
         public string EventName { get; set; }
         public string Event { get; set; }
+        public Guid EventId { get; set; }
         public Guid CorrelationId { get; set; }
         public DateTime Date { get; set; }
         public Guid UserId { get; set; }
@@ -37,7 +38,8 @@ namespace WriteModel.Domain.Audit.Aggregates
             Date = DateTime.UtcNow,
             ImpersonatedUserId = authentificationContext.ImpersonatedUser.Id,
             UserId = authentificationContext.User.Id,
-            AggregateRootVersion = @event.Version
+            AggregateRootVersion = @event.Version,
+            EventId = @event.Id
         };
     }
 }

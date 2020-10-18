@@ -1,4 +1,4 @@
-﻿namespace ReadModel.Domain.Configurations
+﻿namespace ReadModel.Domain.WriteModel.Configurations
 {
     public class WriteModelConfiguration
     {

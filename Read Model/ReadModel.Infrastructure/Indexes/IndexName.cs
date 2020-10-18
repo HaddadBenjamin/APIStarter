@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using ReadModel.Domain;
-using ReadModel.Domain.Interfaces;
+using ReadModel.Domain.Indexes;
 
-namespace ReadModel.Infrastructure
+namespace ReadModel.Infrastructure.Indexes
 {
     public class IndexName : IIndexName
     {

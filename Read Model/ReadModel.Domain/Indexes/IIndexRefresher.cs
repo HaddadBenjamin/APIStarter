@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace ReadModel.Domain.Interfaces
+namespace ReadModel.Domain.Indexes
 {
     public interface IIndexRefresher
     {

@@ -2,10 +2,11 @@
 using System.Threading.Tasks;
 using Nest;
 using ReadModel.Domain;
-using ReadModel.Domain.Interfaces;
-using ReadModel.Domain.Models;
+using ReadModel.Domain.Clients;
+using ReadModel.Domain.Index;
+using ReadModel.Domain.Indexes;
 
-namespace ReadModel.Infrastructure
+namespace ReadModel.Infrastructure.Indexes
 {
     public class IndexCleaner : IIndexCleaner
     {
@@ -23,10 +24,24 @@ namespace ReadModel.Infrastructure
             }
         }
 
+        public async Task CleanIndexAsync(IndexType indexType, Guid id)
+        {
+            switch (indexType)
+            {
+                case IndexType.HttpRequest: await CleanIndexAsync<HttpRequest>(id); break;
+                case IndexType.Item: await CleanIndexAsync<Item>(id); break;
+                default: throw new NotImplementedException();
+            }
+        }
+
         private async Task<DeleteByQueryResponse> CleanIndexAsync<TIndex>() where TIndex : class =>
             await _client.DeleteByQueryAsync<TIndex>(deleteByQueryDescriptor =>
                 deleteByQueryDescriptor.Query(queryContainerDescriptor =>
                     queryContainerDescriptor.QueryString(queryStringQueryDescriptor =>
                         queryStringQueryDescriptor.Query("*"))));
+
+        private async Task<DeleteResponse> CleanIndexAsync<TIndex>(Guid id) where TIndex : class =>
+            await _client.DeleteAsync<TIndex>(id);
+
     }
 }

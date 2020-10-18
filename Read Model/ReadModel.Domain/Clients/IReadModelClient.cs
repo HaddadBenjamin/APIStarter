@@ -1,6 +1,6 @@
 ﻿using Nest;
 
-namespace ReadModel.Domain.Interfaces
+namespace ReadModel.Domain.Clients
 {
     public interface IReadModelClient
     {
