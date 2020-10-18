@@ -1,11 +1,15 @@
-﻿APIStarter.Application/bin
-APIStarter.Application/obj
-APIStarter.Domain/bin
-APIStarter.Domain/obj
-APIStarter.Infrastructure/obj
-APIStarter.Infrastructure/bin
+﻿Write Model/WriteModel.Domain/obj
+Write Model/WriteModel.Domain/bin
+Write Model/WriteModel.Infrastructure/obj
+Write Model/WriteModel.Infrastructure/bin
+Write Model/WriteModel.Application/obj
+Write Model/WriteModel.Application/bin
+
+Read Model/ReadModel.Domain/bin
+Read Model/ReadModel.Domain/obj
+Read Model/ReadModel.Infrastructure/bin
+Read Model/ReadModel.Infrastructure/obj
+Read Model/ReadModel.Application/bin
+Read Model/ReadModel.Application/obj
+
 .vs
-Read Model/ReadModel.ElasticSearch/bin
-Read Model/ReadModel.ElasticSearch/obj
-Read Model/ReadModel.API/obj
-Read Model/ReadModel.API/bin
