@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ReadModel.Domain.WriteModel.Readers;
 using ReadModel.Domain.WriteModel.Views;
 using ReadModel.Infrastructure.WriteModel.Clients;
@@ -12,12 +13,12 @@ namespace ReadModel.Infrastructure.WriteModel.Readers
 
         public HttpRequestReader(WriteModelClient client) => _client = client;
 
-        public IReadOnlyCollection<HttpRequestView> GetAll()
+        public async Task<IReadOnlyCollection<HttpRequestView>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public IReadOnlyCollection<HttpRequestView> GetById(Guid id)
+        public async Task<HttpRequestView> GetById(Guid id)
         {
             throw new NotImplementedException();
         }

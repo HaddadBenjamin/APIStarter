@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReadModel.Domain.WriteModel.Readers
 {
-    public interface IWriteModelReader<TIndex>
+    public interface IWriteModelReader<TEntityView>
     {
-        IReadOnlyCollection<TIndex> GetAll();
-        IReadOnlyCollection<TIndex> GetById(Guid id);
+        Task<IReadOnlyCollection<TEntityView>> GetAll();
+        Task<TEntityView> GetById(Guid id);
     }
 }
