@@ -18,24 +18,24 @@ namespace ReadModel.Infrastructure.Readers
             _httpRequestReader = httpRequestReader;
         }
 
-        public async Task<IReadOnlyCollection<dynamic>> GetAll(IndexType indexType)
+        public async Task<IReadOnlyCollection<dynamic>> GetAllAsync(IndexType indexType)
         {
             switch (indexType)
             {
-                case IndexType.HttpRequest: await _httpRequestReader.GetAll(); break;
-                case IndexType.Item: await _itemReader.GetAll(); break;
+                case IndexType.HttpRequest: await _httpRequestReader.GetAllAsync(); break;
+                case IndexType.Item: await _itemReader.GetAllAsync(); break;
                 default: throw new NotImplementedException();
             }
 
             throw new NotImplementedException();
         }
 
-        public async Task<dynamic> GetById(IndexType indexType, Guid id)
+        public async Task<dynamic> GetByIdAsync(IndexType indexType, Guid id)
         {
             switch (indexType)
             {
-                case IndexType.HttpRequest: await _httpRequestReader.GetById(id); break;
-                case IndexType.Item: await _itemReader.GetById(id); break;
+                case IndexType.HttpRequest: await _httpRequestReader.GetByIdAsync(id); break;
+                case IndexType.Item: await _itemReader.GetByIdAsync(id); break;
                 default: throw new NotImplementedException();
             }
 

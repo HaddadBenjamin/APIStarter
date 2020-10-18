@@ -5,16 +5,7 @@
 		public static string SearchHttpRequests = @"
             --DECLARE @Id UNIQUEIDENTIFIER
 
-            SELECT 
-	            Id
-	            ,QueryName
-	            ,Query
-	            ,QueryResultName
-	            ,QueryResult
-	            ,CorrelationId
-	            ,Date
-	            ,UserId
-	            ,ImpersonatedUserId
+            SELECT Id, QueryName, Query, QueryResultName, QueryResult, CorrelationId, Date, UserId, ImpersonatedUserId
             FROM AuditQueries
             WHERE @Id IS NULL OR @Id = Id";
 	}

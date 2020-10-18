@@ -29,7 +29,7 @@ namespace ReadModel.Infrastructure.Indexes
         {
             await _indexCleaner.CleanIndexAsync(indexType);
 
-            var views = await _writeModelReader.GetAll(indexType);
+            var views = await _writeModelReader.GetAllAsync(indexType);
             // map views to indexes
             // update data from index
 
@@ -40,7 +40,7 @@ namespace ReadModel.Infrastructure.Indexes
         {
             await _indexCleaner.CleanIndexAsync(indexType, id);
 
-            var view = await _writeModelReader.GetById(indexType, id);
+            var view = await _writeModelReader.GetByIdAsync(indexType, id);
             // map view to index
             // update data from index
 

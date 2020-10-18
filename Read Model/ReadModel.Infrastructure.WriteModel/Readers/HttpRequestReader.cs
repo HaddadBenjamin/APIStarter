@@ -17,9 +17,9 @@ namespace ReadModel.Infrastructure.WriteModel.Readers
 
         public HttpRequestReader(AuditClient client) => _client = client;
 
-        public async Task<IReadOnlyCollection<HttpRequestView>> GetAll() => await Search(new SearchParameters());
+        public async Task<IReadOnlyCollection<HttpRequestView>> GetAllAsync() => await Search(new SearchParameters());
 
-        public async Task<HttpRequestView> GetById(Guid id)
+        public async Task<HttpRequestView> GetByIdAsync(Guid id)
         {
             var httpRequestView = (await Search(new SearchParameters { Id = id })).FirstOrDefault();
 

@@ -17,9 +17,9 @@ namespace ReadModel.Infrastructure.WriteModel.Readers
 
         public ItemReader(WriteModelClient client) => _client = client;
 
-        public async Task<IReadOnlyCollection<ItemView>> GetAll() => await Search(new SearchParameters());
+        public async Task<IReadOnlyCollection<ItemView>> GetAllAsync() => await Search(new SearchParameters());
 
-        public async Task<ItemView> GetById(Guid id)
+        public async Task<ItemView> GetByIdAsync(Guid id)
         {
             var itemView = (await Search(new SearchParameters { Id = id })).FirstOrDefault();
 
