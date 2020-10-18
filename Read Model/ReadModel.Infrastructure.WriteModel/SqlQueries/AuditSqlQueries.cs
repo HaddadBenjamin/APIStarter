@@ -1,8 +1,8 @@
-﻿namespace ReadModel.Infrastructure.WriteModel
+﻿namespace ReadModel.Infrastructure.WriteModel.SqlQueries
 {
-    public static class AuditSqlQueries
-    {
-        public static string SearchHttpRequests = @"
+	public static class AuditSqlQueries
+	{
+		public static string SearchHttpRequests = @"
             --DECLARE @Id UNIQUEIDENTIFIER
 
             SELECT 
@@ -17,5 +17,5 @@
 	            ,ImpersonatedUserId
             FROM AuditQueries
             WHERE @Id IS NULL OR @Id = Id";
-    }
+	}
 }

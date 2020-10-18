@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using ReadModel.Application.Filters;
 using ReadModel.Domain.Configurations;
+using ReadModel.Domain.WriteModel.Configurations;
 
 namespace ReadModel.Application
 {

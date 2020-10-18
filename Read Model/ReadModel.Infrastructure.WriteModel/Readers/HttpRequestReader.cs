@@ -7,6 +7,7 @@ using ReadModel.Domain.Exceptions;
 using ReadModel.Domain.WriteModel.Readers;
 using ReadModel.Domain.WriteModel.Views;
 using ReadModel.Infrastructure.WriteModel.Clients;
+using ReadModel.Infrastructure.WriteModel.SqlQueries;
 
 namespace ReadModel.Infrastructure.WriteModel.Readers
 {
@@ -20,7 +21,7 @@ namespace ReadModel.Infrastructure.WriteModel.Readers
 
         public async Task<HttpRequestView> GetById(Guid id)
         {
-            var httpRequestView = (await Search(new SearchParameters {Id = id})).FirstOrDefault();
+            var httpRequestView = (await Search(new SearchParameters { Id = id })).FirstOrDefault();
 
             if (httpRequestView is null)
                 throw new NotFoundException(nameof(HttpRequestView));

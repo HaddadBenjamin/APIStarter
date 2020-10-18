@@ -7,6 +7,7 @@ using ReadModel.Domain.Exceptions;
 using ReadModel.Domain.WriteModel.Readers;
 using ReadModel.Domain.WriteModel.Views;
 using ReadModel.Infrastructure.WriteModel.Clients;
+using ReadModel.Infrastructure.WriteModel.SqlQueries;
 
 namespace ReadModel.Infrastructure.WriteModel.Readers
 {
@@ -17,7 +18,7 @@ namespace ReadModel.Infrastructure.WriteModel.Readers
         public ItemReader(WriteModelClient client) => _client = client;
 
         public async Task<IReadOnlyCollection<ItemView>> GetAll() => await Search(new SearchParameters());
-       
+
         public async Task<ItemView> GetById(Guid id)
         {
             var itemView = (await Search(new SearchParameters { Id = id })).FirstOrDefault();

@@ -1,4 +1,4 @@
-﻿namespace ReadModel.Infrastructure.WriteModel
+﻿namespace ReadModel.Infrastructure.WriteModel.SqlQueries
 {
     public static class WriteModelSqlQueries
     {
