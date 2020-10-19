@@ -72,19 +72,21 @@ namespace APIStarter.Application.Middlewares
 
         private async Task<string> GetResponseBody(HttpContext httpContext, HttpResponse response)
         {
-            await using var responseStream = _recyclableMemoryStreamManager.GetStream();
-
-            response.Body = responseStream;
+            await using var requestStream = _recyclableMemoryStreamManager.GetStream();
+            var responseStream = response.Body;
+            
+            response.Body = requestStream;
 
             await _requestDelegate(httpContext);
 
-            response.Body.Seek(0, SeekOrigin.Begin);
+            requestStream.Position = 0;
+            
+            var responseBody = new StreamReader(requestStream).ReadToEnd();
+            
+            requestStream.Position = 0;
 
-            var responseBody = await new StreamReader(response.Body).ReadToEndAsync();
-
-            response.Body.Seek(0, SeekOrigin.Begin);
-
-            await responseStream.CopyToAsync(response.Body);
+            await requestStream.CopyToAsync(responseStream);
+            response.Body = responseStream;
 
             return responseBody == "" ? null : responseBody;
         }

@@ -79,8 +79,8 @@ namespace APIStarter.Application
                 serviceScope.ServiceProvider.GetRequiredService<AuditDbContext>().Database.Migrate();
             }
 
-            app.UseMvc();
             app.UseMiddleware<AuditRequestMiddleware>();
+            app.UseMvc();
         }
     }
 }
