@@ -11,7 +11,6 @@ namespace ReadModel.Domain.Index
         public string RequestBody { get; set; }
         public int HttpStatus { get; set; }
         public string ResponseBody { get; set; }
-        //TODO : FILL IT.
         public string ClientApplication { get; set; }
         public TimeSpan Duration { get; set; }
         public Guid CorrelationId { get; set; }
