@@ -30,12 +30,7 @@ namespace ReadModel.Infrastructure.Indexes
         {
             var documents = new[] { document };
 
-            switch (indexType)
-            {
-                case IndexType.HttpRequest: await IndexManyAsync<HttpRequest>(documents); break;
-                case IndexType.Item: await IndexManyAsync<Item>(documents); break;
-                default: throw new NotImplementedException();
-            }
+            await InsertAsync(documents, indexType);
         }
 
         private async Task IndexManyAsync<TDocument>(IReadOnlyCollection<dynamic> documents) where TDocument : class =>
