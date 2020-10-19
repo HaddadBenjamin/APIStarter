@@ -92,23 +92,5 @@ namespace APIStarter.Application.Middlewares
 
             return responseBody  == "" ? null : responseBody;
         }
-
-        private static string ReadStreamByChunks(Stream stream, int readChunkBufferLength = 4096)
-        {
-            stream.Seek(0, SeekOrigin.Begin);
-
-            using var stringWriter = new StringWriter();
-            using var stringReader = new StreamReader(stream);
-            var readChunk = new char[readChunkBufferLength];
-            int readChunkLength;
-
-            do
-            {
-                readChunkLength = stringReader.ReadBlock(readChunk, 0, readChunkBufferLength);
-                stringWriter.Write(readChunk, 0, readChunkLength);
-            } while (readChunkLength > 0);
-
-            return stringWriter.ToString();
-        }
     }
 }

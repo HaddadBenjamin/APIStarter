@@ -36,7 +36,8 @@ namespace ReadModel.Infrastructure.Indexes
             var views = await _writeModelReader.GetAllAsync(indexType);
             var documents = _viewToDocumentMapper.Map(views, indexType);
 
-            await _documentInserter.InsertAsync(documents, indexType);
+            if (documents.Any())
+                await _documentInserter.InsertAsync(documents, indexType);
         }
 
         public async Task RefreshDocumentAsync(IndexType indexType, Guid id)
