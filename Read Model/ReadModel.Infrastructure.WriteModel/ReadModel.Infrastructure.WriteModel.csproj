@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.35" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReadModel.Domain.WriteModel\ReadModel.Domain.WriteModel.csproj" />
+    <ProjectReference Include="..\ReadModel.Domain\ReadModel.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

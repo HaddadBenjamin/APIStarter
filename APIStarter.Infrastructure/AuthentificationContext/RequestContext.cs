@@ -1,4 +1,0 @@
-﻿namespace APIStarter.Infrastructure.AuthentificationContext
-{
-
-}
