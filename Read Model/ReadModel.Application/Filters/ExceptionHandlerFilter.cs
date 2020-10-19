@@ -15,7 +15,6 @@ namespace ReadModel.Application.Filters
         {
             { typeof(NotFoundException), HttpStatusCode.NotFound },
             { typeof(UnauthorizedException), HttpStatusCode.Unauthorized },
-            { typeof(GoneException), HttpStatusCode.Gone },
             { typeof(BadRequestException), HttpStatusCode.BadRequest },
         };
 
