@@ -18,14 +18,12 @@ namespace ReadModel.Application.Filters
             { typeof(BadRequestException), HttpStatusCode.BadRequest },
         };
 
-        public override async Task OnExceptionAsync(ExceptionContext exceptionContext)
+        public override void OnException(ExceptionContext exceptionContext)
         {
             var exception = exceptionContext.Exception.Demystify();
             var responseHttpStatus = ExceptionTypeToHttpStatus.GetValueOrDefault(exception.GetType(), HttpStatusCode.InternalServerError);
 
             exceptionContext.Result = new JsonResult(exception.ToString()) { StatusCode = (int)responseHttpStatus };
-
-            await Task.CompletedTask;
         }
     }
 }
