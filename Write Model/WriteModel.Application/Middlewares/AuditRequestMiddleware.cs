@@ -63,7 +63,8 @@ namespace APIStarter.Application.Middlewares
             await using var requestStream = _recyclableMemoryStreamManager.GetStream();
             await request.Body.CopyToAsync(requestStream);
 
-            var requestBody = ReadStreamByChunks(requestStream);
+            using var streamReader = new StreamReader(requestStream);
+            var requestBody = streamReader.ReadToEnd();
 
             request.Body.Position = 0;
 
@@ -80,15 +81,16 @@ namespace APIStarter.Application.Middlewares
             await _requestDelegate(httpContext);
 
             requestStream.Position = 0;
-            
-            var responseBody = new StreamReader(requestStream).ReadToEnd();
+
+            using var streamReader = new StreamReader(requestStream);
+            var responseBody = streamReader.ReadToEnd();
             
             requestStream.Position = 0;
 
             await requestStream.CopyToAsync(responseStream);
             response.Body = responseStream;
 
-            return responseBody == "" ? null : responseBody;
+            return responseBody  == "" ? null : responseBody;
         }
 
         private static string ReadStreamByChunks(Stream stream, int readChunkBufferLength = 4096)
