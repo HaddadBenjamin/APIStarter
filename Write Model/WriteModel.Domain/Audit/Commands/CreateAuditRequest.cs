@@ -13,6 +13,7 @@ namespace WriteModel.Domain.Audit.Commands
         public string RequestBody { get; set; }
         public int HttpStatus { get; set; }
         public string ResponseBody { get; set; }
+        public string ClientApplication { get; set; }
         public TimeSpan Duration { get; set; }
     }
 }

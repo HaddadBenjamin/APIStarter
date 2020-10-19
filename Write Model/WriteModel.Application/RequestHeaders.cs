@@ -11,7 +11,7 @@ namespace APIStarter.Application
         {
             var request = httpContextAccessor.HttpContext.Request;
 
-            ClientApplication = request.GetHeaderOrDefault("clientApplication", "UNKNOWN");
+            ClientApplication = request.GetHeaderOrDefault("clientApplication", "WriteModel");
             CorrelationId = Guid.Parse(request.GetHeaderOrDefault("correlationId", Guid.NewGuid().ToString()));
             UserEmail = request.GetHeaderOrDefault("userEmail");
             ImpersonatedUserEmail = request.GetHeaderOrDefault("impersonatedUserEmail");

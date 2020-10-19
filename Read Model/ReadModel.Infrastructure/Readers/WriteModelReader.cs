@@ -22,24 +22,20 @@ namespace ReadModel.Infrastructure.Readers
         {
             switch (indexType)
             {
-                case IndexType.HttpRequest: await _httpRequestReader.GetAllAsync(); break;
-                case IndexType.Item: await _itemReader.GetAllAsync(); break;
+                case IndexType.HttpRequest: return await _httpRequestReader.GetAllAsync();
+                case IndexType.Item: return await _itemReader.GetAllAsync();
                 default: throw new NotImplementedException();
             }
-
-            throw new NotImplementedException();
         }
 
         public async Task<dynamic> GetByIdAsync(IndexType indexType, Guid id)
         {
             switch (indexType)
             {
-                case IndexType.HttpRequest: await _httpRequestReader.GetByIdAsync(id); break;
-                case IndexType.Item: await _itemReader.GetByIdAsync(id); break;
+                case IndexType.HttpRequest: return await _httpRequestReader.GetByIdAsync(id);
+                case IndexType.Item: return await _itemReader.GetByIdAsync(id);
                 default: throw new NotImplementedException();
             }
-
-            throw new NotImplementedException();
         }
     }
 }

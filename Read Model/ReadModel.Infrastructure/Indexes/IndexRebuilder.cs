@@ -32,8 +32,8 @@ namespace ReadModel.Infrastructure.Indexes
         {
             var indexName = _indexName.GetIndexName(indexType);
 
-            var indexDeleteResponse = await _client.Indices.DeleteAsync(indexName);
-            var indexCreateResponse = await _client.Indices.CreateAsync(indexName, createIndexDescriptor => _indexMapper.Map(indexType, createIndexDescriptor));
+            await _client.Indices.DeleteAsync(indexName);
+            await _client.Indices.CreateAsync(indexName, createIndexDescriptor => _indexMapper.Map(indexType, createIndexDescriptor));
         }
     }
 }

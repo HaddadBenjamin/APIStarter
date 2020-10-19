@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
 using WriteModel.Domain.Audit.Commands;
 using WriteModel.Domain.Audit.Configuration;
+using WriteModel.Domain.AuthentificationContext;
 using WriteModel.Domain.CQRS.Interfaces;
 
 namespace APIStarter.Application.Middlewares
@@ -24,7 +25,7 @@ namespace APIStarter.Application.Middlewares
             _recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
         }
 
-        public async Task Invoke(HttpContext httpContext, IMediator mediator)
+        public async Task Invoke(HttpContext httpContext, IMediator mediator, IRequestHeaders requestHeaders)
         {
             if (!_auditConfiguration.AuditRequests)
             {
@@ -48,7 +49,8 @@ namespace APIStarter.Application.Middlewares
                 ResponseBody = responseBody,
                 HttpMethod = request.Method,
                 HttpStatus = response.StatusCode,
-                Uri = $"{request.Host}{request.Path}{request.QueryString}"
+                Uri = $"{request.Host}{request.Path}{request.QueryString}",
+                ClientApplication = requestHeaders.ClientApplication
             };
 
             await mediator.SendCommandAsync(createAuditRequest);

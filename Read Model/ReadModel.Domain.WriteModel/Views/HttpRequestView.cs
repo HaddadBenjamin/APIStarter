@@ -11,6 +11,7 @@ namespace ReadModel.Domain.WriteModel.Views
         public string RequestBody { get; set; }
         public int HttpStatus { get; set; }
         public string ResponseBody { get; set; }
+        public string ClientApplication { get; set; }
         public TimeSpan Duration { get; set; }
         public Guid CorrelationId { get; set; }
         public DateTime Date { get; set; }

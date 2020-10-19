@@ -50,10 +50,12 @@ namespace WriteModel.Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     EventName = table.Column<string>(maxLength: 50, nullable: true),
                     Event = table.Column<string>(type: "text", nullable: true),
+                    EventId = table.Column<Guid>(nullable: false),
                     CorrelationId = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    ImpersonatedUserId = table.Column<Guid>(nullable: false)
+                    ImpersonatedUserId = table.Column<Guid>(nullable: false),
+                    AggregateRootVersion = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,6 +92,7 @@ namespace WriteModel.Infrastructure.Migrations
                     RequestBody = table.Column<string>(type: "text", nullable: true),
                     HttpStatus = table.Column<int>(nullable: false),
                     ResponseBody = table.Column<string>(type: "text", nullable: true),
+                    ClientApplication = table.Column<string>(maxLength: 100, nullable: true),
                     Duration = table.Column<TimeSpan>(nullable: false),
                     CorrelationId = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
@@ -177,6 +180,11 @@ namespace WriteModel.Infrastructure.Migrations
                 column: "WriteAction");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AuditEvents_AggregateRootVersion",
+                table: "AuditEvents",
+                column: "AggregateRootVersion");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AuditEvents_CorrelationId",
                 table: "AuditEvents",
                 column: "CorrelationId");
@@ -185,6 +193,11 @@ namespace WriteModel.Infrastructure.Migrations
                 name: "IX_AuditEvents_Date",
                 table: "AuditEvents",
                 column: "Date");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditEvents_EventId",
+                table: "AuditEvents",
+                column: "EventId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuditEvents_EventName",
@@ -240,6 +253,11 @@ namespace WriteModel.Infrastructure.Migrations
                 name: "IX_AuditQueries_UserId",
                 table: "AuditQueries",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditRequests_ClientApplication",
+                table: "AuditRequests",
+                column: "ClientApplication");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuditRequests_CorrelationId",

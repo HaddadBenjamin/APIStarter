@@ -11,11 +11,15 @@ namespace ReadModel.Infrastructure.Indexes
     {
         private readonly IIndexCleaner _indexCleaner;
         private readonly IWriteModelReader _writeModelReader;
+        private readonly IViewToDocumentMapper _viewToDocumentMapper;
+        private readonly IDocumentInserter _documentInserter;
 
-        public IndexRefresher(IIndexCleaner indexCleaner, IWriteModelReader writeModelReader)
+        public IndexRefresher(IIndexCleaner indexCleaner, IWriteModelReader writeModelReader, IViewToDocumentMapper viewToDocumentMapper, IDocumentInserter documentInserter)
         {
             _indexCleaner = indexCleaner;
             _writeModelReader = writeModelReader;
+            _viewToDocumentMapper = viewToDocumentMapper;
+            _documentInserter = documentInserter;
         }
 
         public async Task RefreshAllIndexesAsync()
@@ -30,10 +34,9 @@ namespace ReadModel.Infrastructure.Indexes
             await _indexCleaner.CleanIndexAsync(indexType);
 
             var views = await _writeModelReader.GetAllAsync(indexType);
-            // map views to indexes
-            // update data from index
+            var documents = _viewToDocumentMapper.Map(views, indexType);
 
-            throw new NotImplementedException();
+            await _documentInserter.InsertAsync(documents, indexType);
         }
 
         public async Task RefreshDocumentAsync(IndexType indexType, Guid id)
@@ -41,10 +44,9 @@ namespace ReadModel.Infrastructure.Indexes
             await _indexCleaner.CleanIndexAsync(indexType, id);
 
             var view = await _writeModelReader.GetByIdAsync(indexType, id);
-            // map view to index
-            // update data from index
-
-            throw new NotImplementedException();
+            var document = _viewToDocumentMapper.Map(view, indexType);
+           
+            await _documentInserter.InsertAsync(document, indexType);
         }
     }
 }

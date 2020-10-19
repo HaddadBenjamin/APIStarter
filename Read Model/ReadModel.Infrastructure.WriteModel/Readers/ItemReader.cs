@@ -6,16 +6,16 @@ using Dapper;
 using ReadModel.Domain.Exceptions;
 using ReadModel.Domain.WriteModel.Readers;
 using ReadModel.Domain.WriteModel.Views;
-using ReadModel.Infrastructure.WriteModel.Clients;
+using ReadModel.Infrastructure.WriteModel.SqlConnections;
 using ReadModel.Infrastructure.WriteModel.SqlQueries;
 
 namespace ReadModel.Infrastructure.WriteModel.Readers
 {
     public class ItemReader : IItemReader
     {
-        private readonly WriteModelClient _client;
+        private readonly WriteModelSqlConnection _sqlConnection;
 
-        public ItemReader(WriteModelClient client) => _client = client;
+        public ItemReader(WriteModelSqlConnection sqlConnection) => _sqlConnection = sqlConnection;
 
         public async Task<IReadOnlyCollection<ItemView>> GetAllAsync() => await Search(new SearchParameters());
 
@@ -31,7 +31,7 @@ namespace ReadModel.Infrastructure.WriteModel.Readers
 
         private async Task<IReadOnlyCollection<ItemView>> Search(SearchParameters searchParameters)
         {
-            await using var sqlConnection = _client.CreateConnection();
+            await using var sqlConnection = _sqlConnection.CreateConnection();
             using var queryMultiple = await sqlConnection.QueryMultipleAsync(WriteModelSqlQueries.SearchItems, searchParameters);
 
             var itemsViews = (await queryMultiple.ReadAsync<ItemView>()).ToList();
