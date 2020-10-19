@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 using Dapper;
 using ReadModel.Domain.Exceptions;
 using ReadModel.Domain.WriteModel.Readers;
+using ReadModel.Domain.WriteModel.SqlConnections;
 using ReadModel.Domain.WriteModel.Views;
-using ReadModel.Infrastructure.WriteModel.SqlConnections;
 using ReadModel.Infrastructure.WriteModel.SqlQueries;
 
 namespace ReadModel.Infrastructure.WriteModel.Readers
 {
     public class ItemReader : IItemReader
     {
-        private readonly WriteModelSqlConnection _sqlConnection;
+        private readonly IWriteModelSqlConnection _sqlConnection;
 
-        public ItemReader(WriteModelSqlConnection sqlConnection) => _sqlConnection = sqlConnection;
+        public ItemReader(IWriteModelSqlConnection sqlConnection) => _sqlConnection = sqlConnection;
 
         public async Task<IReadOnlyCollection<ItemView>> GetAllAsync() => await Search(new SearchParameters());
 

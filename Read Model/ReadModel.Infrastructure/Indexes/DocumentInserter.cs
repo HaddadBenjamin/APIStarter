@@ -28,7 +28,7 @@ namespace ReadModel.Infrastructure.Indexes
 
         public async Task InsertAsync(dynamic document, IndexType indexType)
         {
-            var documents = new[] {document};
+            var documents = new[] { document };
 
             switch (indexType)
             {

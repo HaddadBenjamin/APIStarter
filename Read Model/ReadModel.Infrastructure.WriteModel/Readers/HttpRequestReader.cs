@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 using Dapper;
 using ReadModel.Domain.Exceptions;
 using ReadModel.Domain.WriteModel.Readers;
+using ReadModel.Domain.WriteModel.SqlConnections;
 using ReadModel.Domain.WriteModel.Views;
-using ReadModel.Infrastructure.WriteModel.SqlConnections;
 using ReadModel.Infrastructure.WriteModel.SqlQueries;
 
 namespace ReadModel.Infrastructure.WriteModel.Readers
 {
     public class HttpRequestReader : IHttpRequestReader
     {
-        private readonly AuditSqlConnection _sqlConnection;
+        private readonly IAuditSqlConnection _sqlConnection;
 
-        public HttpRequestReader(AuditSqlConnection sqlConnection) => _sqlConnection = sqlConnection;
+        public HttpRequestReader(IAuditSqlConnection sqlConnection) => _sqlConnection = sqlConnection;
 
         public async Task<IReadOnlyCollection<HttpRequestView>> GetAllAsync() => await Search(new SearchParameters());
 

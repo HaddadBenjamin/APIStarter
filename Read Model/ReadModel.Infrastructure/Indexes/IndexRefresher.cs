@@ -45,7 +45,7 @@ namespace ReadModel.Infrastructure.Indexes
 
             var view = await _writeModelReader.GetByIdAsync(indexType, id);
             var document = _viewToDocumentMapper.Map(view, indexType);
-           
+
             await _documentInserter.InsertAsync(document, indexType);
         }
     }
