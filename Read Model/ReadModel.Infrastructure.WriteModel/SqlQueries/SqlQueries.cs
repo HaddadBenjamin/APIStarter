@@ -5,6 +5,8 @@
         public static string SearchItems = @"
             --DECLARE @Id UNIQUEIDENTIFIER
 
+            SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED 
+            
             DROP TABLE IF EXISTS  #TempItems
 
             SELECT Id, Name
