@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReadModel.Infrastructure.WriteModel.Readers
+namespace ReadModel.Domain.WriteModel.Readers
 {
     public class SearchParameters
     {

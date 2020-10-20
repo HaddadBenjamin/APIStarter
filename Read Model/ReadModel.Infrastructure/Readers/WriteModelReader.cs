@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ReadModel.Domain;
 using ReadModel.Domain.Readers;
-using ReadModel.Domain.WriteModel.Readers;
+using ReadModel.Infrastructure.WriteModel.Readers;
 
 namespace ReadModel.Infrastructure.Readers
 {
     public class WriteModelReader : IWriteModelReader
     {
-        private readonly IItemReader _itemReader;
-        private readonly IHttpRequestReader _httpRequestReader;
+        private readonly ItemReader _itemReader;
+        private readonly HttpRequestReader _httpRequestReader;
 
-        public WriteModelReader(IItemReader itemReader, IHttpRequestReader httpRequestReader)
+        public WriteModelReader(ItemReader itemReader, HttpRequestReader httpRequestReader)
         {
             _itemReader = itemReader;
             _httpRequestReader = httpRequestReader;

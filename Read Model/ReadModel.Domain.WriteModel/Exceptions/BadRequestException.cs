@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReadModel.Domain.Exceptions
+namespace ReadModel.Domain.WriteModel.Exceptions
 {
     public class BadRequestException : Exception
     {

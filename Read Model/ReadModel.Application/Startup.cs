@@ -12,7 +12,6 @@ using ReadModel.Domain.Configurations;
 using ReadModel.Domain.Indexes;
 using ReadModel.Domain.Readers;
 using ReadModel.Domain.WriteModel.Configurations;
-using ReadModel.Domain.WriteModel.Readers;
 using ReadModel.Domain.WriteModel.SqlConnections;
 using ReadModel.Infrastructure.Clients;
 using ReadModel.Infrastructure.Indexes;
@@ -61,11 +60,10 @@ namespace ReadModel.Application
 
             // Infrastructure.WriteModel.
             services
-                .AddScoped<IHttpRequestReader, HttpRequestReader>()
-                .AddScoped<IItemReader, ItemReader>()
+                .AddScoped<HttpRequestReader>()
+                .AddScoped<ItemReader>()
                 .AddScoped<IAuditSqlConnection, AuditSqlConnection>()
-                .AddScoped<IWriteModelSqlConnection, WriteModelSqlConnection>()
-                .AddScoped<IItemReader, ItemReader>();
+                .AddScoped<IWriteModelSqlConnection, WriteModelSqlConnection>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
