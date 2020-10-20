@@ -8,7 +8,7 @@ namespace WriteModel.Infrastructure.ReadModel.Apis
 {
     public static class ResilientPolicies
     {
-        public static async Task<(HttpStatusCode, HttpRequestMessage)> ExponentialRetryPolicy(Task<HttpResponseMessage> task, int numberOfRetries = 6)
+        public static async Task<(HttpStatusCode statusCode, HttpRequestMessage requestMessage)> ExponentialRetryPolicy(Task<HttpResponseMessage> task, int numberOfRetries = 6)
         {
             HttpStatusCode httpStatusCode = HttpStatusCode.OK;
             HttpRequestMessage httpRequestMessage = null;

@@ -25,7 +25,5 @@ namespace WriteModel.Infrastructure.ReadModel.Apis
 
         public async Task RefreshDocumentAsync(IndexType indexType, Guid id) =>
             await ResilientPolicies.ExponentialRetryPolicy(_flurlClient.Request($"refresh/indexes/{(int)indexType}/{id}").PostAsync(null));
-
-
     }
 }
