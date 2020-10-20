@@ -119,8 +119,8 @@ namespace WriteModel.Infrastructure.CQRS
             foreach (var @event in events)
                 @event.CorrelationId = _authentificationContext.CorrelationId;
 
-            await _mediator.PublishEventsAsync(events);
             await Repository.UnitOfWork.SaveChangesAsync();
+            await _mediator.PublishEventsAsync(events);
 
             _trackedAggregates.Clear();
 
