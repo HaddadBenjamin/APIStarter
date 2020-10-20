@@ -31,7 +31,7 @@ namespace ReadModel.Infrastructure.Indexes
             return views.Select(indexMapper).ToList();
         }
 
-        public object Map(object view, IndexType indexType) => _indexMappers[indexType];
+        public object Map(object view, IndexType indexType) => _indexMappers[indexType](view);
 
         private HttpRequest ToHttpRequest(object view) => _mapper.Map<HttpRequest>((HttpRequestView)view);
 

@@ -12,7 +12,7 @@
             SELECT Id, Name
             INTO #TempItems
             FROM Items
-            WHERE @Id IS NULL OR @Id = Id
+            WHERE (@Id IS NULL OR @Id = Id) AND IsActive = 1 
 
             ALTER TABLE #TempItems ADD PRIMARY KEY (ID);
 

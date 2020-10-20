@@ -15,7 +15,7 @@ namespace ReadModel.Domain.WriteModel.Readers
             var httpRequestView = (await Search(new SearchParameters { Id = id })).FirstOrDefault();
 
             if (httpRequestView is null)
-                throw new NotFoundException(nameof(TEntityView));
+                throw new NotFoundException(typeof(TEntityView).Name);
 
             return httpRequestView;
         }

@@ -23,6 +23,6 @@ namespace ReadModel.Infrastructure.Readers
 
         public async Task<object> GetByIdAsync(IndexType indexType, Guid id) => await GetReader(indexType).GetByIdAsync(id);
 
-        private IWriteModelReader<object> GetReader(IndexType indexType) => (IWriteModelReader<object>)_writeModelReaders[indexType];
+        private dynamic GetReader(IndexType indexType) => _writeModelReaders[indexType];
     }
 }

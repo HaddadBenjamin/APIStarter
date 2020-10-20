@@ -1,3 +1,4 @@
+using System;
 using APIStarter.Application.Filters;
 using APIStarter.Application.Middlewares;
 using MediatR;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using WriteModel.Domain.Audit.Configuration;
 using WriteModel.Domain.Audit.Services;
@@ -43,6 +45,23 @@ namespace APIStarter.Application
                 options.Filters.Add(new ExceptionHandlerFilter());
             })// J'ai besoin d'appeler cette méthode pour fixer l'erreur JsonException: A possible object cycle was detected which is not supported. This can either be due t
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            services
+                .AddSwaggerGen(options =>
+                {
+                    options.SwaggerDoc("v1", new OpenApiInfo
+                    {
+                        Version = "v1",
+                        Title = "CQRS - Write Model",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Un passionné dans la foule (alias Firefouks)",
+                            Url = new Uri("https://github.com/HaddadBenjamin")
+                        }
+                    });
+
+                    options.DescribeAllEnumsAsStrings();
+                });
 
             services
                 // Register CQRS : mediator / session / repository / unit of work.
@@ -81,6 +100,14 @@ namespace APIStarter.Application
 
             app.UseMiddleware<AuditRequestMiddleware>();
             app.UseMvc();
+
+            app
+                .UseSwagger()
+                .UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    options.RoutePrefix = string.Empty;
+                });
         }
     }
 }

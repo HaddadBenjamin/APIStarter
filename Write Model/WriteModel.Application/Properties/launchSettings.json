@@ -12,7 +12,6 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "items",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +19,6 @@
     "WriteModel.Application": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "items",
       "applicationUrl": "http://localhost:55270",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -10,7 +10,7 @@ using WriteModel.Domain.ExampleToDelete.Queries;
 namespace APIStarter.Application.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class ItemsController : ControllerBase
     {
         private readonly IMediator _mediator;

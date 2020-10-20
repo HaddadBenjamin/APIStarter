@@ -7,6 +7,9 @@ Pour réutiliser ce projet il vous faut :
 - Supprimer les répertoires WriteModel.Domain.ExampleToDelete et WriteModel.Infrastructure.ExampleToDelete.
 - Modifier le nom, le contenu et la chaîne de connection de votre DbContext.
 
+![Image of Yaktocat](https://imgur.com/rwzs9Cb.png)
+![Image of Yaktocat](https://imgur.com/NiUCwwf.png)
+
 ![Image of Yaktocat](https://imgur.com/1PCxn6x.png)
 ![Image of Yaktocat](https://imgur.com/vHtTAOv.png)
 ![Image of Yaktocat](https://imgur.com/dP5wgBz.png)
