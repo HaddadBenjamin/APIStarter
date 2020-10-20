@@ -27,15 +27,11 @@ namespace ReadModel.Infrastructure.Indexes
         public async Task CleanIndexAsync(IndexType indexType) => await _indexCleaners[indexType](null);
         public async Task CleanIndexAsync(IndexType indexType, Guid id) => await _indexCleaners[indexType](id);
 
-        private async Task<ResponseBase> CleanIndexAsync<TIndex>(Guid? id) where TIndex : class
-        {
-            if (id is null)
-                return await _client.DeleteByQueryAsync<TIndex>(deleteByQueryDescriptor =>
-                    deleteByQueryDescriptor.Query(queryContainerDescriptor =>
-                        queryContainerDescriptor.QueryString(queryStringQueryDescriptor =>
-                            queryStringQueryDescriptor.Query("*"))));
-
-            return await _client.DeleteAsync<TIndex>(id);
-        }
+        private async Task<ResponseBase> CleanIndexAsync<TIndex>(Guid? id) where TIndex : class =>
+            id != null ? await _client.DeleteAsync<TIndex>(id) :
+            (ResponseBase)await _client.DeleteByQueryAsync<TIndex>(deleteByQueryDescriptor =>
+                deleteByQueryDescriptor.Query(queryContainerDescriptor =>
+                    queryContainerDescriptor.QueryString(queryStringQueryDescriptor =>
+                        queryStringQueryDescriptor.Query("*"))));
     }
 }
