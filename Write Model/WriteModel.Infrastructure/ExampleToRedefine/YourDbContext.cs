@@ -2,7 +2,7 @@
 using WriteModel.Domain.ExampleToDelete.Aggregates;
 using WriteModel.Infrastructure.ExampleToRemove.DbContext;
 
-namespace WriteModel.Infrastructure.DbContext
+namespace WriteModel.Infrastructure.ExampleToRedefine
 {
     public class YourDbContext : Microsoft.EntityFrameworkCore.DbContext
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WriteModel.Domain.Exceptions
+namespace WriteModel.Domain.Tools.Exceptions
 {
     public class UnauthorizedException : Exception
     {

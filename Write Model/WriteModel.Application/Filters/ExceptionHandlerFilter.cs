@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using WriteModel.Domain.CQRS.Exceptions;
-using WriteModel.Domain.Exceptions;
+using WriteModel.Domain.Tools.Exceptions;
 
 namespace APIStarter.Application.Filters
 {

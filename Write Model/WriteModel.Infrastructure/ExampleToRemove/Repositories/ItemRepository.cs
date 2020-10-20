@@ -4,7 +4,7 @@ using WriteModel.Domain.CQRS.Interfaces;
 using WriteModel.Domain.ExampleToDelete.Aggregates;
 using WriteModel.Domain.ExampleToDelete.Repositories;
 using WriteModel.Infrastructure.CQRS;
-using WriteModel.Infrastructure.DbContext;
+using WriteModel.Infrastructure.ExampleToRedefine;
 
 namespace WriteModel.Infrastructure.ExampleToRemove.Repositories
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace WriteModel.Infrastructure.DbContext.Mappers
+namespace WriteModel.Infrastructure.Tools.DbContext.Mappers
 {
     public abstract class AggregateMap<TAggregate> where TAggregate : class
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WriteModel.Domain.ExampleToDelete.Aggregates;
-using WriteModel.Infrastructure.DbContext.Mappers;
+using WriteModel.Infrastructure.Tools.DbContext.Mappers;
 
 namespace WriteModel.Infrastructure.ExampleToRemove.DbContext
 {

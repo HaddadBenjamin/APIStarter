@@ -75,7 +75,7 @@ namespace APIStarter.Application.Middlewares
         {
             await using var requestStream = _recyclableMemoryStreamManager.GetStream();
             var responseStream = response.Body;
-            
+
             response.Body = requestStream;
 
             await _requestDelegate(httpContext);
@@ -84,13 +84,13 @@ namespace APIStarter.Application.Middlewares
 
             using var streamReader = new StreamReader(requestStream);
             var responseBody = streamReader.ReadToEnd();
-            
+
             requestStream.Position = 0;
 
             await requestStream.CopyToAsync(responseStream);
             response.Body = responseStream;
 
-            return responseBody  == "" ? null : responseBody;
+            return responseBody == "" ? null : responseBody;
         }
     }
 }

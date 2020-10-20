@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WriteModel.Domain.Helpers
+namespace WriteModel.Domain.Tools.Helpers
 {
     public static class EnumerationHelpers
     {

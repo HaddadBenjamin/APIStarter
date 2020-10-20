@@ -1,6 +1,7 @@
 using System;
 using APIStarter.Application.Filters;
 using APIStarter.Application.Middlewares;
+using Flurl.Http.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,15 +18,18 @@ using WriteModel.Domain.AuthentificationContext;
 using WriteModel.Domain.CQRS.Interfaces;
 using WriteModel.Domain.ExampleToDelete.Builders;
 using WriteModel.Domain.ExampleToDelete.Repositories;
+using WriteModel.Domain.ReadModel.Apis;
+using WriteModel.Domain.ReadModel.Configurations;
 using WriteModel.Infrastructure.Audit;
 using WriteModel.Infrastructure.Audit.DbContext;
 using WriteModel.Infrastructure.Audit.Services;
 using WriteModel.Infrastructure.AuthentificationContext;
 using WriteModel.Infrastructure.CQRS;
-using WriteModel.Infrastructure.DbContext;
+using WriteModel.Infrastructure.ExampleToRedefine;
 using WriteModel.Infrastructure.ExampleToRedefine.AuthentificationContext;
 using WriteModel.Infrastructure.ExampleToRemove.Mappers;
 using WriteModel.Infrastructure.ExampleToRemove.Repositories;
+using WriteModel.Infrastructure.ReadModel.Apis;
 using IMediator = WriteModel.Domain.CQRS.Interfaces.IMediator;
 using Mediator = WriteModel.Infrastructure.CQRS.Mediator;
 
@@ -81,6 +85,11 @@ namespace APIStarter.Application
                 // Register Db context.
                 .AddDbContextPool<AuditDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("Audit"), builder => builder.MigrationsHistoryTable("MigrationHistory", "dbo")))
                 .AddDbContextPool<YourDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("WriteModel"), builder => builder.MigrationsHistoryTable("MigrationHistory", "dbo")))
+                // Read Model.
+                .AddSingleton(_configuration.GetSection("ReadModel").Get<ReadModelConfiguration>())
+                .AddScoped<IReadModelApi, ReadModelApi>()
+                // Tools.
+                .AddSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>()
                 // Ces injections sont juste là pour l'exemple, il faudra les supprimer
                 .AddScoped<IAuthentificationContextUserProvider, FakeAuthentificationContextUserProvider>()
                 .AddScoped<IItemViewMapper, ItemViewMapper>()

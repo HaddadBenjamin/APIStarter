@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WriteModel.Domain.ExampleToDelete.Commands;
 using WriteModel.Domain.ExampleToDelete.Events;
-using WriteModel.Domain.Extensions;
+using WriteModel.Domain.Tools.Extensions;
 
 namespace WriteModel.Domain.ExampleToDelete.Aggregates
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WriteModel.Domain.REST
+namespace WriteModel.Domain.Tools.REST
 {
     public class CreatedRestResource
     {

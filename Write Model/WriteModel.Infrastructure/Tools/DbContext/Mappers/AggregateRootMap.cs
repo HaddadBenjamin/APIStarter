@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WriteModel.Domain.CQRS;
 
-namespace WriteModel.Infrastructure.DbContext.Mappers
+namespace WriteModel.Infrastructure.Tools.DbContext.Mappers
 {
     public abstract class AggregateRootMap<TAggregate> where TAggregate : AggregateRoot
     {

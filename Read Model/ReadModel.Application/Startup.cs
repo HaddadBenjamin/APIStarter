@@ -91,6 +91,7 @@ namespace ReadModel.Application
                 app.UseDeveloperExceptionPage();
 
             app.UseMvc();
+
             app
                 .UseSwagger()
                 .UseSwaggerUI(options =>

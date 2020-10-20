@@ -4,7 +4,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using WriteModel.Infrastructure.DbContext;
+using WriteModel.Infrastructure.ExampleToRedefine;
 
 namespace WriteModel.Infrastructure.Migrations.YourDb
 {

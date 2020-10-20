@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace WriteModel.Infrastructure.Extensions
+namespace WriteModel.Infrastructure.Tools.DbContext.Extensions
 {
     public static class DbContextExtensions
     {

@@ -1,5 +1,5 @@
 ﻿using WriteModel.Domain.Audit.Services;
-using WriteModel.Infrastructure.DbContext;
+using WriteModel.Infrastructure.ExampleToRedefine;
 
 namespace WriteModel.Infrastructure.CQRS
 {

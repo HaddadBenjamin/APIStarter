@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WriteModel.Domain.Extensions
+namespace WriteModel.Domain.Tools.Extensions
 {
     public static class HashSetExtensions
     {

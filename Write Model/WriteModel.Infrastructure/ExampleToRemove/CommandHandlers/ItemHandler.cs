@@ -4,7 +4,7 @@ using MediatR;
 using WriteModel.Domain.CQRS.Interfaces;
 using WriteModel.Domain.ExampleToDelete.Aggregates;
 using WriteModel.Domain.ExampleToDelete.Commands;
-using WriteModel.Domain.Exceptions;
+using WriteModel.Domain.Tools.Exceptions;
 
 namespace WriteModel.Infrastructure.ExampleToRemove.CommandHandlers
 {
