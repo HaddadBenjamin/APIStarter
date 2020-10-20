@@ -17,8 +17,8 @@ namespace ReadModel.Infrastructure.Indexes
 
         public CreateIndexDescriptor Map(IndexType indexType, CreateIndexDescriptor createIndexDescriptor) => Mappers[indexType](createIndexDescriptor);
 
-        public static CreateIndexDescriptor ItemMapper(CreateIndexDescriptor createIndexDescriptor) => createIndexDescriptor
-            .Map<Item>(typeMappingDescriptor => typeMappingDescriptor.AutoMap());
+        public static CreateIndexDescriptor ItemMapper(CreateIndexDescriptor createIndexDescriptor) =>
+            createIndexDescriptor.Map<Item>(typeMappingDescriptor => typeMappingDescriptor.AutoMap());
 
         public static CreateIndexDescriptor HttpRequestMapper(CreateIndexDescriptor createIndexDescriptor) =>
             createIndexDescriptor.Map<HttpRequest>(typeMappingDescriptor => typeMappingDescriptor.AutoMap());
