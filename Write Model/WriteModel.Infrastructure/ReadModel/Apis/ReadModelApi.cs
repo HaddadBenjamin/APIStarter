@@ -5,6 +5,7 @@ using Flurl.Http.Configuration;
 using WriteModel.Domain.ReadModel;
 using WriteModel.Domain.ReadModel.Apis;
 using WriteModel.Domain.ReadModel.Configurations;
+using WriteModel.Infrastructure.Polly;
 
 namespace WriteModel.Infrastructure.ReadModel.Apis
 {
@@ -18,12 +19,12 @@ namespace WriteModel.Infrastructure.ReadModel.Apis
                 .WithHeader("Content-Type", "application/json");
 
         public async Task RefreshAllAsync() =>
-            await ResilientPolicies.ExponentialRetryPolicy(_flurlClient.Request("refresh/indexes").PostAsync(null));
+            await ResilientPolicies.ExponentialRetry(_flurlClient.Request("refresh/indexes").PostAsync(null));
 
         public async Task RefreshIndexAsync(IndexType indexType) =>
-            await ResilientPolicies.ExponentialRetryPolicy(_flurlClient.Request($"refresh/indexes/{(int)indexType}").PostAsync(null));
+            await ResilientPolicies.ExponentialRetry(_flurlClient.Request($"refresh/indexes/{(int)indexType}").PostAsync(null));
 
         public async Task RefreshDocumentAsync(IndexType indexType, Guid id) =>
-            await ResilientPolicies.ExponentialRetryPolicy(_flurlClient.Request($"refresh/indexes/{(int)indexType}/{id}").PostAsync(null));
+            await ResilientPolicies.ExponentialRetry(_flurlClient.Request($"refresh/indexes/{(int)indexType}/{id}").PostAsync(null));
     }
 }

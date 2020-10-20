@@ -12,7 +12,7 @@ namespace ReadModel.Domain.Index
         public int HttpStatus { get; set; }
         public string ResponseBody { get; set; }
         public string ClientApplication { get; set; }
-        public TimeSpan Duration { get; set; }
+        public string Duration { get; set; }
         public Guid CorrelationId { get; set; }
         public DateTime Date { get; set; }
         public Guid UserId { get; set; }

@@ -4,11 +4,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Polly;
 
-namespace WriteModel.Infrastructure.ReadModel.Apis
+namespace WriteModel.Infrastructure.Polly
 {
     public static class ResilientPolicies
     {
-        public static async Task<(HttpStatusCode statusCode, HttpRequestMessage requestMessage)> ExponentialRetryPolicy(Task<HttpResponseMessage> task, int numberOfRetries = 6)
+        public static async Task<(HttpStatusCode statusCode, HttpRequestMessage requestMessage)> ExponentialRetry(Task<HttpResponseMessage> task, int numberOfRetries = 6)
         {
             HttpStatusCode httpStatusCode = HttpStatusCode.OK;
             HttpRequestMessage httpRequestMessage = null;
