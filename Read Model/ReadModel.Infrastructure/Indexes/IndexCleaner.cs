@@ -34,7 +34,7 @@ namespace ReadModel.Infrastructure.Indexes
                     deleteByQueryDescriptor.Query(queryContainerDescriptor =>
                         queryContainerDescriptor.QueryString(queryStringQueryDescriptor =>
                             queryStringQueryDescriptor.Query("*"))));
-            
+
             return await _client.DeleteAsync<TIndex>(id);
         }
     }

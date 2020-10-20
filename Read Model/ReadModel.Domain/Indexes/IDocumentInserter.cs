@@ -5,7 +5,7 @@ namespace ReadModel.Domain.Indexes
 {
     public interface IDocumentInserter
     {
-        Task InsertAsync(IReadOnlyCollection<dynamic> documents, IndexType indexType);
-        Task InsertAsync(dynamic document, IndexType indexType);
+        Task InsertAsync(IReadOnlyCollection<object> documents, IndexType indexType);
+        Task InsertAsync(object document, IndexType indexType);
     }
 }

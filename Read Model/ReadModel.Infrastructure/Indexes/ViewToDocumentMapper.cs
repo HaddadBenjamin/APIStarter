@@ -12,29 +12,29 @@ namespace ReadModel.Infrastructure.Indexes
     public class ViewToDocumentMapper : IViewToDocumentMapper
     {
         private readonly IMapper _mapper;
-        private readonly Dictionary<IndexType, Func<dynamic, dynamic>> _indexMappers;
+        private readonly Dictionary<IndexType, Func<object, object>> _indexMappers;
 
         public ViewToDocumentMapper(IMapper mapper)
         {
             _mapper = mapper;
-            _indexMappers = new Dictionary<IndexType, Func<dynamic, dynamic>>
+            _indexMappers = new Dictionary<IndexType, Func<object, object>>
             {
                 { IndexType.HttpRequest, ToHttpRequest },
                 { IndexType.Item, ToItem }
             };
         }
 
-        public IReadOnlyCollection<dynamic> Map(IReadOnlyCollection<dynamic> views, IndexType indexType)
+        public IReadOnlyCollection<object> Map(IReadOnlyCollection<object> views, IndexType indexType)
         {
             var indexMapper = _indexMappers[indexType];
 
             return views.Select(indexMapper).ToList();
         }
 
-        public dynamic Map(dynamic view, IndexType indexType) => _indexMappers[indexType];
+        public object Map(object view, IndexType indexType) => _indexMappers[indexType];
 
-        private HttpRequest ToHttpRequest(dynamic view) => _mapper.Map<HttpRequest>((HttpRequestView)view);
+        private HttpRequest ToHttpRequest(object view) => _mapper.Map<HttpRequest>((HttpRequestView)view);
 
-        private Item ToItem(dynamic view) => _mapper.Map<Item>((ItemView)view);
+        private Item ToItem(object view) => _mapper.Map<Item>((ItemView)view);
     }
 }

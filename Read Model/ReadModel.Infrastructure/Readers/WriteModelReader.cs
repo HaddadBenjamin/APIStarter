@@ -19,10 +19,10 @@ namespace ReadModel.Infrastructure.Readers
                 { IndexType.Item, itemReader },
             };
 
-        public async Task<IReadOnlyCollection<dynamic>> GetAllAsync(IndexType indexType) => await GetReader(indexType).GetAllAsync();
+        public async Task<IReadOnlyCollection<object>> GetAllAsync(IndexType indexType) => await GetReader(indexType).GetAllAsync();
 
-        public async Task<dynamic> GetByIdAsync(IndexType indexType, Guid id) => await GetReader(indexType).GetByIdAsync(id);
+        public async Task<object> GetByIdAsync(IndexType indexType, Guid id) => await GetReader(indexType).GetByIdAsync(id);
 
-        private IWriteModelReader<dynamic> GetReader(IndexType indexType) => (IWriteModelReader<dynamic>)_writeModelReaders[indexType];
+        private IWriteModelReader<object> GetReader(IndexType indexType) => (IWriteModelReader<object>)_writeModelReaders[indexType];
     }
 }

@@ -4,7 +4,7 @@ namespace ReadModel.Domain.Indexes
 {
     public interface IViewToDocumentMapper
     {
-        IReadOnlyCollection<dynamic> Map(IReadOnlyCollection<dynamic> views, IndexType indexType);
-        dynamic Map(dynamic view, IndexType indexType);
+        IReadOnlyCollection<object> Map(IReadOnlyCollection<object> views, IndexType indexType);
+        object Map(object view, IndexType indexType);
     }
 }

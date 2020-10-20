@@ -16,7 +16,7 @@ namespace ReadModel.Infrastructure.Indexes
 
         public DocumentInserter(IReadModelClient client) => _elasticClient = client.ElasticClient;
 
-        public async Task InsertAsync(IReadOnlyCollection<dynamic> documents, IndexType indexType)
+        public async Task InsertAsync(IReadOnlyCollection<object> documents, IndexType indexType)
         {
             switch (indexType)
             {
@@ -26,14 +26,14 @@ namespace ReadModel.Infrastructure.Indexes
             }
         }
 
-        public async Task InsertAsync(dynamic document, IndexType indexType)
+        public async Task InsertAsync(object document, IndexType indexType)
         {
             var documents = new[] { document };
 
             await InsertAsync(documents, indexType);
         }
 
-        private async Task IndexManyAsync<TDocument>(IReadOnlyCollection<dynamic> documents) where TDocument : class =>
+        private async Task IndexManyAsync<TDocument>(IReadOnlyCollection<object> documents) where TDocument : class =>
             await _elasticClient.IndexManyAsync(documents.Cast<TDocument>());
     }
 }
