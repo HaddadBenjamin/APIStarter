@@ -17,13 +17,15 @@ namespace WriteModel.Infrastructure.ReadModel.Apis
                 .Get(readModelConfiguration.Uri)
                 .WithHeader("Content-Type", "application/json");
 
-        public async Task RefreshAllAsync() => await _flurlClient.Request("refresh/indexes").PostAsync(null);
+        public async Task RefreshAllAsync() =>
+            await ResilientPolicies.ExponentialRetryPolicy(_flurlClient.Request("refresh/indexes").PostAsync(null));
 
         public async Task RefreshIndexAsync(IndexType indexType) =>
-            await _flurlClient.Request($"refresh/indexes/{(int)indexType}").PostAsync(null);
+            await ResilientPolicies.ExponentialRetryPolicy(_flurlClient.Request($"refresh/indexes/{(int)indexType}").PostAsync(null));
 
         public async Task RefreshDocumentAsync(IndexType indexType, Guid id) =>
-            await _flurlClient.Request($"refresh/indexes/{(int)indexType}/{id}").PostAsync(null);
+            await ResilientPolicies.ExponentialRetryPolicy(_flurlClient.Request($"refresh/indexes/{(int)indexType}/{id}").PostAsync(null));
+
 
     }
 }
