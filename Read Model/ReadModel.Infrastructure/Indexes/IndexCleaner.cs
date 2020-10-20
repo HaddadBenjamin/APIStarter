@@ -19,8 +19,8 @@ namespace ReadModel.Infrastructure.Indexes
             _client = readModelClient.ElasticClient;
             _indexCleaners = new Dictionary<IndexType, Func<Guid?, Task<ResponseBase>>>
             {
-                { IndexType.Item, id => CleanIndexAsync<Item>(id) },
-                { IndexType.HttpRequest, id => CleanIndexAsync<HttpRequest>(id) },
+                { IndexType.Item, CleanIndexAsync<Item> },
+                { IndexType.HttpRequest, CleanIndexAsync<HttpRequest> },
             };
         }
 
