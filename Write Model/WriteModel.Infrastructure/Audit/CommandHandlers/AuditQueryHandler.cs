@@ -2,22 +2,23 @@
 using System.Threading.Tasks;
 using MediatR;
 using WriteModel.Domain.Audit.Aggregates;
+using WriteModel.Domain.Audit.Attributes;
 using WriteModel.Domain.Audit.Commands;
 using WriteModel.Domain.Audit.Configuration;
 using WriteModel.Domain.Audit.Services;
 using WriteModel.Domain.AuthentificationContext;
 using WriteModel.Infrastructure.Audit.DbContext;
 
-namespace WriteModel.Infrastructure.Audit.Handlers
+namespace WriteModel.Infrastructure.Audit.CommandHandlers
 {
-    public class AuditRequestHandler : IRequestHandler<CreateAuditRequest>
+    public class AuditQueryHandler : IRequestHandler<CreateAuditQuery>
     {
         private readonly IAuthentificationContext _authentificationContext;
         private readonly AuditDbContext _dbContext;
         private readonly IAuditSerializer _auditSerializer;
         private readonly AuditConfiguration _auditConfiguration;
 
-        public AuditRequestHandler(IAuthentificationContext authentificationContext, AuditDbContext dbContext, IAuditSerializer auditSerializer, AuditConfiguration auditConfiguration)
+        public AuditQueryHandler(IAuthentificationContext authentificationContext, AuditDbContext dbContext, IAuditSerializer auditSerializer, AuditConfiguration auditConfiguration)
         {
             _authentificationContext = authentificationContext;
             _dbContext = dbContext;
@@ -25,14 +26,14 @@ namespace WriteModel.Infrastructure.Audit.Handlers
             _auditConfiguration = auditConfiguration;
         }
 
-        public async Task<Unit> Handle(CreateAuditRequest command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateAuditQuery query, CancellationToken cancellationToken)
         {
-            if (!(_auditConfiguration.AuditRequests && _authentificationContext.IsValid()))
+            if (!(_auditConfiguration.AuditQueries && query.Query.GetType().ShouldAuditQuery() && _authentificationContext.IsValid()))
                 return Unit.Value;
 
-            var auditRequest = AuditRequest.Create(command, _authentificationContext, _auditSerializer);
+            var auditQuery = AuditQuery.Create(query, _authentificationContext, _auditSerializer);
 
-            _dbContext.AuditRequests.Add(auditRequest);
+            _dbContext.AuditQueries.Add(auditQuery);
             await _dbContext.SaveChangesAsync();
 
             return Unit.Value;

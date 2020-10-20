@@ -11,7 +11,7 @@ using WriteModel.Domain.Audit.Services;
 using WriteModel.Domain.AuthentificationContext;
 using WriteModel.Infrastructure.Audit.DbContext;
 
-namespace WriteModel.Infrastructure.Audit.Handlers
+namespace WriteModel.Infrastructure.Audit.CommandHandlers
 {
     public class AuditEventHandler : IRequestHandler<CreateAuditEvents>
     {
