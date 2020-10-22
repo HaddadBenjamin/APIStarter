@@ -96,31 +96,25 @@ namespace WriteModel.Infrastructure.CQRS
             Track(aggregate);
         }
 
-        public void Remove(TAggregate aggregate)
+        public void Remove(TAggregate aggregate) => BaseRemove(aggregate, () => Repository.Remove((aggregate)));
+
+        public void Deactivate(TAggregate aggregate) => BaseRemove(aggregate, () =>
         {
-            if (aggregate is null)
-                throw new ArgumentNullException(nameof(aggregate));
-
-            if (!_trackedAggregates.ContainsKey(aggregate.Id))
-                throw new AggregateNotFoundException(aggregate.Id);
-
-            Repository.Remove(aggregate);
-
-            Track(aggregate);
-        }
-
-        public void Deactivate(TAggregate aggregate)
-        {
-            if (aggregate is null)
-                throw new ArgumentNullException(nameof(aggregate));
-
-            if (!_trackedAggregates.ContainsKey(aggregate.Id))
-                throw new AggregateNotFoundException(aggregate.Id);
-
             if (!aggregate.IsActive)
                 throw new GoneException(aggregate.Id);
 
             Repository.Deactivate(aggregate);
+        });
+
+        private void BaseRemove(TAggregate aggregate, Action removeAction)
+        {
+            if (aggregate is null)
+                throw new ArgumentNullException(nameof(aggregate));
+
+            if (!_trackedAggregates.ContainsKey(aggregate.Id))
+                throw new AggregateNotFoundException(aggregate.Id);
+
+            removeAction?.Invoke();
 
             Track(aggregate);
         }

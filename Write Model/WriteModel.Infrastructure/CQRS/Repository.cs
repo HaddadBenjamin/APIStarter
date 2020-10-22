@@ -39,5 +39,6 @@ namespace WriteModel.Infrastructure.CQRS
         public void Add(TAggregate aggregate) => DbSet.Add(aggregate);
         public void Update(TAggregate aggregate) => DbSet.Update(aggregate);
         public void Remove(TAggregate aggregate) => DbSet.Remove(aggregate);
+        public void Deactivate(TAggregate aggregate) => aggregate.IsActive = false;
     }
 }
