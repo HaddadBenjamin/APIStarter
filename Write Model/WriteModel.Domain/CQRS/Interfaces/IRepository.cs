@@ -23,5 +23,7 @@ namespace WriteModel.Domain.CQRS.Interfaces
         void Add(TAggregate aggregate);
         void Update(TAggregate aggregate);
         void Remove(TAggregate aggregate);
+
+        void Deactivate(TAggregate aggregate);
     }
 }

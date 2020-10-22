@@ -23,7 +23,6 @@ namespace WriteModel.Infrastructure.CQRS
         where TAggregate : AggregateRoot
     {
         public Session(IRepository<TAggregate> repository, IAuthentificationContext authentificationContext, IMediator mediator) :
-            base(repository, authentificationContext, mediator)
-        { }
+            base(repository, authentificationContext, mediator) { }
     }
 }

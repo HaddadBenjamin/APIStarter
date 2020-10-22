@@ -13,7 +13,7 @@ namespace WriteModel.Infrastructure.CQRS
     /// </summary>
     public abstract class Repository<TAggregate, TDbContext> : IRepository<TAggregate>
         where TAggregate : AggregateRoot
-        where TDbContext : Microsoft.EntityFrameworkCore.DbContext
+        where TDbContext : DbContext
     {
         public IUnitOfWork UnitOfWork { get; }
         public IQueryable<TAggregate> Queryable => DbContext.Set<TAggregate>();

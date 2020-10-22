@@ -42,11 +42,6 @@ namespace WriteModel.Domain.ExampleToDelete.Aggregates
             RaiseEvent(new ItemWriteEvent(Id));
         }
 
-        public void Deactivate(DeleteItem command)
-        {
-            IsActive = false;
-
-            RaiseEvent(new ItemWriteEvent(Id));
-        }
+        public void Deactivate(DeleteItem command) => RaiseEvent(new ItemWriteEvent(Id));
     }
 }

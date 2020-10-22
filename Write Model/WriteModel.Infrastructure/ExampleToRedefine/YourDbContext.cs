@@ -4,7 +4,7 @@ using WriteModel.Infrastructure.ExampleToRemove.DbContext;
 
 namespace WriteModel.Infrastructure.ExampleToRedefine
 {
-    public class YourDbContext : Microsoft.EntityFrameworkCore.DbContext
+    public class YourDbContext : DbContext
     {
         public DbSet<Item> Items { get; set; }
 

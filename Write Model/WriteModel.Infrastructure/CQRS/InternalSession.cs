@@ -8,6 +8,7 @@ using WriteModel.Domain.AuthentificationContext;
 using WriteModel.Domain.CQRS;
 using WriteModel.Domain.CQRS.Exceptions;
 using WriteModel.Domain.CQRS.Interfaces;
+using WriteModel.Domain.Tools.Exceptions;
 
 namespace WriteModel.Infrastructure.CQRS
 {
@@ -104,6 +105,22 @@ namespace WriteModel.Infrastructure.CQRS
                 throw new AggregateNotFoundException(aggregate.Id);
 
             Repository.Remove(aggregate);
+
+            Track(aggregate);
+        }
+
+        public void Deactivate(TAggregate aggregate)
+        {
+            if (aggregate is null)
+                throw new ArgumentNullException(nameof(aggregate));
+
+            if (!_trackedAggregates.ContainsKey(aggregate.Id))
+                throw new AggregateNotFoundException(aggregate.Id);
+
+            if (!aggregate.IsActive)
+                throw new GoneException(aggregate.Id);
+
+            Repository.Deactivate(aggregate);
 
             Track(aggregate);
         }
