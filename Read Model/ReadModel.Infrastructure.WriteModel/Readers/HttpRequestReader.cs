@@ -17,7 +17,7 @@ namespace ReadModel.Infrastructure.WriteModel.Readers
 
         protected override async Task<IReadOnlyCollection<HttpRequestView>> Search(SearchParameters searchParameters)
         {
-            await using var sqlConnection = _sqlConnection.CreateConnection();
+            await using var sqlConnection = _sqlConnection.CreateSqlConnection();
 
             return (await sqlConnection.QueryAsync<HttpRequestView>(AuditSqlQueries.SearchHttpRequests, searchParameters)).ToList();
         }

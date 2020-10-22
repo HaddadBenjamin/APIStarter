@@ -19,12 +19,12 @@ namespace WriteModel.Infrastructure.ReadModel.Apis
                 .WithHeader("Content-Type", "application/json");
 
         public async Task RefreshAllAsync() =>
-            await ResilientPolicies.ExponentialRetry(_flurlClient.Request("refresh/indexes").PostAsync(null));
+            await ResilientPolicies.ExponentialRetryAsync(_flurlClient.Request("refresh/indexes").PostAsync(null));
 
         public async Task RefreshIndexAsync(IndexType indexType) =>
-            await ResilientPolicies.ExponentialRetry(_flurlClient.Request($"refresh/indexes/{(int)indexType}").PostAsync(null));
+            await ResilientPolicies.ExponentialRetryAsync(_flurlClient.Request($"refresh/indexes/{(int)indexType}").PostAsync(null));
 
         public async Task RefreshDocumentAsync(IndexType indexType, Guid id) =>
-            await ResilientPolicies.ExponentialRetry(_flurlClient.Request($"refresh/indexes/{(int)indexType}/{id}").PostAsync(null));
+            await ResilientPolicies.ExponentialRetryAsync(_flurlClient.Request($"refresh/indexes/{(int)indexType}/{id}").PostAsync(null));
     }
 }

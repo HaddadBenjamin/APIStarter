@@ -8,7 +8,7 @@ namespace WriteModel.Infrastructure.Polly
 {
     public static class ResilientPolicies
     {
-        public static async Task<(HttpStatusCode statusCode, HttpRequestMessage requestMessage)> ExponentialRetry(Task<HttpResponseMessage> task, int numberOfRetries = 6)
+        public static async Task<(HttpStatusCode statusCode, HttpRequestMessage requestMessage)> ExponentialRetryAsync(Task<HttpResponseMessage> task, int numberOfRetries = 6)
         {
             HttpStatusCode httpStatusCode = HttpStatusCode.OK;
             HttpRequestMessage httpRequestMessage = null;

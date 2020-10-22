@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,9 +60,10 @@ namespace ReadModel.Application
                 });
 
             // Configurations.
-            services.AddSingleton(new WriteModelConfiguration { ConnectionString = _configuration.GetConnectionString("WriteModel") });
-            services.AddSingleton(new AuditConfiguration { ConnectionString = _configuration.GetConnectionString("Audit") });
-            services.AddSingleton(_configuration.GetSection("ReadModel").Get<ReadModelConfiguration>());
+            services
+                .AddSingleton(new WriteModelConfiguration { ConnectionString = _configuration.GetConnectionString("WriteModel") })
+                .AddSingleton(new AuditConfiguration { ConnectionString = _configuration.GetConnectionString("Audit") })
+                .AddSingleton(_configuration.GetSection("ReadModel").Get<ReadModelConfiguration>());
 
             // Infrastructure.
             services

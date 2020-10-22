@@ -14,7 +14,7 @@ namespace ReadModel.Domain.Index
         public string ClientApplication { get; set; }
         public string Duration { get; set; }
         public Guid CorrelationId { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public Guid UserId { get; set; }
         public Guid ImpersonatedUserId { get; set; }
     }

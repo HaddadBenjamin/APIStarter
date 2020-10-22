@@ -17,7 +17,7 @@ namespace ReadModel.Infrastructure.WriteModel.Readers
 
         protected override async Task<IReadOnlyCollection<ItemView>> Search(SearchParameters searchParameters)
         {
-            await using var sqlConnection = _sqlConnection.CreateConnection();
+            await using var sqlConnection = _sqlConnection.CreateSqlConnection();
             using var queryMultiple = await sqlConnection.QueryMultipleAsync(WriteModelSqlQueries.SearchItems, searchParameters);
 
             var itemsViews = (await queryMultiple.ReadAsync<ItemView>()).ToList();

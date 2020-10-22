@@ -30,8 +30,8 @@ namespace ReadModel.Infrastructure.Indexes
         private async Task<ResponseBase> CleanIndexAsync<TIndex>(Guid? id) where TIndex : class =>
             id != null ? await _client.DeleteAsync<TIndex>(id) :
             (ResponseBase)await _client.DeleteByQueryAsync<TIndex>(deleteByQueryDescriptor =>
-                deleteByQueryDescriptor.Query(queryContainerDescriptor =>
-                    queryContainerDescriptor.QueryString(queryStringQueryDescriptor =>
-                        queryStringQueryDescriptor.Query("*"))));
+               deleteByQueryDescriptor.Query(queryContainerDescriptor =>
+                   queryContainerDescriptor.QueryString(queryStringQueryDescriptor =>
+                       queryStringQueryDescriptor.Query("*"))));
     }
 }

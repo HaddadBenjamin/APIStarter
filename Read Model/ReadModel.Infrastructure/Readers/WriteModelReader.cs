@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ReadModel.Domain;
 using ReadModel.Domain.Readers;
-using ReadModel.Domain.WriteModel.Readers;
 using ReadModel.Infrastructure.WriteModel.Readers;
 
 namespace ReadModel.Infrastructure.Readers
