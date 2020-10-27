@@ -3,6 +3,7 @@
 
 
 Cette solution propose un modèle de projet pour réaliser des API architecturées en CQRS qui auditent toutes les requêtes HTTP réalisées sur votre API, tous les changements appliqués sur votre base de données, l'ensemble des commandes, des requêtes et des évènements lancés par le médiateur.
+
 Ce qui permet d'afficher les informations suivantes dans des graphiques dédiés :
 - Évolution du nombre de visiteurs unique depuis le début / par mois / par semaine / aujourd'hui.
 - Évolution du nombre de requêtes faite sur votre application depuis le début / par mois / par semaine / aujourd’hui.
@@ -18,6 +19,7 @@ Ce qui permet d'afficher les informations suivantes dans des graphiques dédiés
 - Les appareils les plus utilisés par vos utilisateurs.
 - Évolution du temps moyen d'une requête de cette année / de ce mois / de la semaine / de la journée.
 
+Par ailleurs cette solution offre un modèle de lecture entièrement reproductible et sans interruption de services.
 
 Pour réutiliser ce projet il vous faut :
 - Choisir les options que votre aggregate root doit supporter, à savoir avec ou sans audit, suppression logique, event sourcing.
