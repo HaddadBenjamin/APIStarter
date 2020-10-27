@@ -23,7 +23,7 @@ Pour réutiliser ce projet il vous faut :
 - Choisir les options que votre aggregate root doit supporter, à savoir avec ou sans audit, suppression logique, event sourcing.
 - Modifier l'appsettings.json de sorte à définir le type d'audit que vous souhaitez supporter, à savoir toutes les requêtes HTTP réalisées sur votre API, tous les changements appliqués sur votre base de données, l'ensemble des commandes, des requêtes et des évènements lancés par le médiateur.
 - Supprimer les répertoires WriteModel.Domain.ExampleToDelete et WriteModel.Infrastructure.ExampleToDelete.
-- Modifier le nom, le contenu et la chaîne de connection de votre DbContext.
+- Modifier le nom, le contenu et la chaîne de connection de votre DbContext. 
 
 
 ![Image of Yaktocat](https://imgur.com/de1nouL.png)
