@@ -16,6 +16,7 @@ namespace WriteModel.Infrastructure.Audit.DbContext.Mappers
             entity.Property(auditRequest => auditRequest.Uri).HasMaxLength(500);
             entity.Property(auditRequest => auditRequest.HttpMethod).HasMaxLength(10);
             entity.Property(auditRequest => auditRequest.ClientApplication).HasMaxLength(100);
+            entity.Property(auditRequest => auditRequest.IPv4).HasMaxLength(100);
 
             entity.HasIndex(auditRequest => auditRequest.Id);
             entity.HasIndex(auditRequest => auditRequest.HttpMethod);
@@ -23,6 +24,8 @@ namespace WriteModel.Infrastructure.Audit.DbContext.Mappers
             entity.HasIndex(auditRequest => auditRequest.RequestHeaders);
             entity.HasIndex(auditRequest => auditRequest.Duration);
             entity.HasIndex(auditRequest => auditRequest.ClientApplication);
+            entity.HasIndex(auditRequest => auditRequest.IPv4);
+            entity.HasIndex(auditRequest => auditRequest.UserAgent);
             entity.HasIndex(auditEvent => auditEvent.CorrelationId);
             entity.HasIndex(auditCommand => auditCommand.Date);
             entity.HasIndex(auditCommand => auditCommand.UserId);

@@ -1,6 +1,7 @@
 using System;
 using APIStarter.Application.Filters;
 using APIStarter.Application.Middlewares;
+using APIStarter.Application.Resolvers;
 using Flurl.Http.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -20,6 +21,7 @@ using WriteModel.Domain.ExampleToDelete.Builders;
 using WriteModel.Domain.ExampleToDelete.Repositories;
 using WriteModel.Domain.ReadModel.Apis;
 using WriteModel.Domain.ReadModel.Configurations;
+using WriteModel.Domain.Tools.Resolvers;
 using WriteModel.Infrastructure.Audit;
 using WriteModel.Infrastructure.Audit.DbContext;
 using WriteModel.Infrastructure.Audit.Services;
@@ -90,6 +92,11 @@ namespace APIStarter.Application
                 .AddScoped<IReadModelApi, ReadModelApi>()
                 // Tools.
                 .AddSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>()
+                // Resolvers.
+                .AddSingleton<IIPv4Resolver, IPv4Resolver>()
+                .AddSingleton<ILocalhostIPv4Resolver, LocalhostIPv4Resolver>()
+                .AddSingleton<IRequestBodyResolver, RequestBodyResolver>()
+                .AddSingleton<IResponseBodyResolver, ResponseBodyResolver>()
                 // Ces injections sont juste là pour l'exemple, il faudra les supprimer
                 .AddScoped<IAuthentificationContextUserProvider, FakeAuthentificationContextUserProvider>()
                 .AddScoped<IItemViewMapper, ItemViewMapper>()

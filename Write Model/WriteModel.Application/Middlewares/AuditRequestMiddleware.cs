@@ -1,13 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using APIStarter.Application.Resolvers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
 using WriteModel.Domain.Audit.Commands;
 using WriteModel.Domain.Audit.Configuration;
 using WriteModel.Domain.AuthentificationContext;
 using WriteModel.Domain.CQRS.Interfaces;
+using WriteModel.Domain.Tools.Resolvers;
 
 namespace APIStarter.Application.Middlewares
 {
@@ -25,7 +26,13 @@ namespace APIStarter.Application.Middlewares
             _recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
         }
 
-        public async Task Invoke(HttpContext httpContext, IMediator mediator, IRequestHeaders requestHeaders)
+        public async Task Invoke(
+            HttpContext httpContext,
+            IMediator mediator,
+            IRequestHeaders requestHeaders,
+            IIPv4Resolver IPv4Resolver,
+            IRequestBodyResolver requestBodyResolver,
+            IResponseBodyResolver responseBodyResolver)
         {
             if (!_auditConfiguration.AuditRequests)
             {
@@ -33,64 +40,31 @@ namespace APIStarter.Application.Middlewares
                 return;
             }
 
+            responseBodyResolver.RequestDelegate = _requestDelegate;
+
             var startTime = DateTime.UtcNow;
             var request = httpContext.Request;
             var response = httpContext.Response;
-            var requestBody = await GetRequestBody(request);
-            var responseBody = await GetResponseBody(httpContext, response);
+            var requestBody = await requestBodyResolver.ResolveAsync();
+            var responseBody = await responseBodyResolver.ResolveAsync();
 
             var createAuditRequest = new CreateAuditRequest
             {
+                IPv4 = IPv4Resolver.Resolve(),
+                ClientApplication = requestHeaders.ClientApplication,
+                Uri = $"{request.Host}{request.Path}{request.QueryString}",
+                HttpMethod = request.Method,
                 RequestBody = requestBody,
                 RequestHeaders = request.Headers
                     .Where(h => !HeadersToIgnore.Contains(h.Key))
                     .ToDictionary(h => h.Key, h => string.Join(",", h.Value.Select(v => v))),
-                Duration = DateTime.UtcNow - startTime,
+                UserAgent = request.Headers.First(e => e.Key == "User-Agent").Value.FirstOrDefault(),
                 ResponseBody = responseBody,
-                HttpMethod = request.Method,
                 HttpStatus = response.StatusCode,
-                Uri = $"{request.Host}{request.Path}{request.QueryString}",
-                ClientApplication = requestHeaders.ClientApplication
+                Duration = DateTime.UtcNow - startTime,
             };
 
             await mediator.SendCommandAsync(createAuditRequest);
-        }
-
-        private async Task<string> GetRequestBody(HttpRequest request)
-        {
-            request.EnableBuffering();
-
-            await using var requestStream = _recyclableMemoryStreamManager.GetStream();
-            await request.Body.CopyToAsync(requestStream);
-
-            using var streamReader = new StreamReader(requestStream);
-            var requestBody = streamReader.ReadToEnd();
-
-            request.Body.Position = 0;
-
-            return requestBody == "" ? null : requestBody;
-        }
-
-        private async Task<string> GetResponseBody(HttpContext httpContext, HttpResponse response)
-        {
-            await using var requestStream = _recyclableMemoryStreamManager.GetStream();
-            var responseStream = response.Body;
-
-            response.Body = requestStream;
-
-            await _requestDelegate(httpContext);
-
-            requestStream.Position = 0;
-
-            using var streamReader = new StreamReader(requestStream);
-            var responseBody = streamReader.ReadToEnd();
-
-            requestStream.Position = 0;
-
-            await requestStream.CopyToAsync(responseStream);
-            response.Body = responseStream;
-
-            return responseBody == "" ? null : responseBody;
         }
     }
 }

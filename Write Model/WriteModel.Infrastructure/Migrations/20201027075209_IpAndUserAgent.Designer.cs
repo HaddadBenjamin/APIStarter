@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WriteModel.Infrastructure.Audit.DbContext;
 
 namespace WriteModel.Infrastructure.Migrations
 {
     [DbContext(typeof(AuditDbContext))]
-    partial class AuditDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201027075209_IpAndUserAgent")]
+    partial class IpAndUserAgent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

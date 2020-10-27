@@ -1,3 +1,7 @@
+# API Starter
+**Année de développement :** 2020.</br>
+
+
 Cette solution propose un modèle de projet pour réaliser des API architecturées en CQRS qui auditent toutes les requêtes HTTP réalisées sur votre API, tous les changements appliqués sur votre base de données, l'ensemble des commandes, des requêtes et des évènements lancés par le médiateur.
 
 

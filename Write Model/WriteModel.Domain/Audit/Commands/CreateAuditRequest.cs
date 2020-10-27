@@ -14,6 +14,8 @@ namespace WriteModel.Domain.Audit.Commands
         public int HttpStatus { get; set; }
         public string ResponseBody { get; set; }
         public string ClientApplication { get; set; }
+        public string IPv4 { get; set; }
+        public string UserAgent { get; set; }
         public TimeSpan Duration { get; set; }
     }
 }

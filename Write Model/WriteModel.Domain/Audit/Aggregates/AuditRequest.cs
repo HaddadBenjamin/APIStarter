@@ -18,6 +18,8 @@ namespace WriteModel.Domain.Audit.Aggregates
         public int HttpStatus { get; set; }
         public string ResponseBody { get; set; }
         public string ClientApplication { get; set; }
+        public string IPv4 { get; set; }
+        public string UserAgent { get; set; }
         public TimeSpan Duration { get; set; }
         public Guid CorrelationId { get; set; }
         public DateTime Date { get; set; }
@@ -34,6 +36,8 @@ namespace WriteModel.Domain.Audit.Aggregates
             HttpStatus = command.HttpStatus,
             ResponseBody = command.ResponseBody,
             ClientApplication = command.ClientApplication,
+            IPv4 = command.IPv4,
+            UserAgent = command.UserAgent,
             Duration = command.Duration,
             CorrelationId = authentificationContext.CorrelationId,
             Date = DateTime.UtcNow,
