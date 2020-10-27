@@ -13,7 +13,7 @@ namespace ReadModel.Infrastructure.MappingConfigurations
             {
                 document.FormattedDuration = $"{(view.Duration.Minutes * 60) + view.Duration.Seconds}.{view.Duration.ToString("fff")}s";
                 document.FormattedDate = $"{view.Date.ToString("G")}.{view.Date.ToString("fff")}";
-               
+
                 document.GeoIp = new GeoIp
                 {
                     IPv4 = view.IPv4,
@@ -31,13 +31,13 @@ namespace ReadModel.Infrastructure.MappingConfigurations
                     Device = userAgent.Device.Family,
                     Browser = userAgent.UserAgent.Family
                 };
-                
+
                 document.Response = new HttpRequestResponse
                 {
                     Body = view.ResponseBody,
                     HttpStatus = view.HttpStatus
                 };
-               
+
                 document.Audit = new HttpRequestAudit
                 {
                     ClientApplication = view.ClientApplication,

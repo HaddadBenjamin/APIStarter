@@ -11,7 +11,6 @@ namespace ReadModel.Domain.WriteModel.Views
         public double Longitude { get; set; }
         public double Latitude { get; set; }
 
-
         public string HttpMethod { get; set; }
         public string Uri { get; set; }
         public string RequestHeaders { get; set; }
