@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 using Nest;
 using ReadModel.Domain;
 using ReadModel.Domain.Clients;
-using ReadModel.Domain.Index;
+using ReadModel.Domain.Index.HttpRequest;
+using ReadModel.Domain.Index.Item;
 using ReadModel.Domain.Indexes;
 
 namespace ReadModel.Infrastructure.Indexes

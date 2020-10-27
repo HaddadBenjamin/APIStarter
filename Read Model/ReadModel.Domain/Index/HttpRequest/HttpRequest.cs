@@ -1,17 +1,13 @@
 ﻿using System;
-using Nest;
 
-namespace ReadModel.Domain.Index
+namespace ReadModel.Domain.Index.HttpRequest
 {
     public class HttpRequest
     {
         public Guid Id { get; set; }
 
         public string ClientApplication { get; set; }
-        public string IPv4 { get; set; }
-        public GeoLocation Location { get; set; }
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
+        public GeoIp GeoIp { get; set; }
 
         public string HttpMethod { get; set; }
         public string Uri { get; set; }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ReadModel.Domain;
-using ReadModel.Domain.Index;
+using ReadModel.Domain.Index.HttpRequest;
+using ReadModel.Domain.Index.Item;
 using ReadModel.Domain.Indexes;
 using ReadModel.Domain.WriteModel.Views;
 

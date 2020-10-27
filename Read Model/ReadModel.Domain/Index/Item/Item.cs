@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ReadModel.Domain.Index
+namespace ReadModel.Domain.Index.Item
 {
     public class Item
     {

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using Nest;
 using ReadModel.Domain;
-using ReadModel.Domain.Index;
+using ReadModel.Domain.Index.HttpRequest;
+using ReadModel.Domain.Index.Item;
 using ReadModel.Domain.Indexes;
 
 namespace ReadModel.Infrastructure.Indexes
@@ -22,8 +23,9 @@ namespace ReadModel.Infrastructure.Indexes
 
         private static CreateIndexDescriptor HttpRequestMapper(CreateIndexDescriptor createIndexDescriptor) =>
             createIndexDescriptor.Map<HttpRequest>(typeMappingDescriptor => typeMappingDescriptor.AutoMap().Properties(p => p
-                .Ip(s => s.Name(n => n.IPv4))
-                .GeoPoint(s => s.Name(n => n.Location))
+                .Nested<GeoIp>(n => n.Name(x => x.GeoIp).AutoMap())
+                .Ip(s => s.Name(n => n.GeoIp.IPv4))
+                .GeoPoint(s => s.Name(n => n.GeoIp.Location))
                 .Keyword(s => s.Name(n => n.Duration.Suffix("keyword")))
                 .Keyword(s => s.Name(n => n.Date.Suffix("keyword")))));
     }
