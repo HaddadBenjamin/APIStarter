@@ -23,8 +23,6 @@ namespace ReadModel.Infrastructure.Indexes
 
         private static CreateIndexDescriptor HttpRequestMapper(CreateIndexDescriptor createIndexDescriptor) =>
             createIndexDescriptor.Map<HttpRequest>(typeMappingDescriptor => typeMappingDescriptor.AutoMap().Properties(p => p
-                .Nested<GeoIp>(n => n.Name(x => x.GeoIp).AutoMap())
-                .Ip(s => s.Name(n => n.GeoIp.IPv4))
                 .GeoPoint(s => s.Name(n => n.GeoIp.Location))
                 .Keyword(s => s.Name(n => n.Duration.Suffix("keyword")))
                 .Keyword(s => s.Name(n => n.Date.Suffix("keyword")))));
