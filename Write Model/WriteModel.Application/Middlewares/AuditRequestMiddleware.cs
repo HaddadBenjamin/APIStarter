@@ -8,7 +8,8 @@ using WriteModel.Domain.Audit.Commands;
 using WriteModel.Domain.Audit.Configuration;
 using WriteModel.Domain.AuthentificationContext;
 using WriteModel.Domain.CQRS.Interfaces;
-using WriteModel.Domain.Tools.Resolvers;
+using WriteModel.Domain.IpLocation;
+using WriteModel.Domain.Resolvers;
 
 namespace APIStarter.Application.Middlewares
 {
@@ -32,7 +33,8 @@ namespace APIStarter.Application.Middlewares
             IRequestHeaders requestHeaders,
             IIPv4Resolver IPv4Resolver,
             IRequestBodyResolver requestBodyResolver,
-            IResponseBodyResolver responseBodyResolver)
+            IResponseBodyResolver responseBodyResolver,
+            IGeoLocationResolverByIp geoLocationResolverByIp)
         {
             if (!_auditConfiguration.AuditRequests)
             {
@@ -44,14 +46,18 @@ namespace APIStarter.Application.Middlewares
 
             var startTime = DateTime.UtcNow;
             var request = httpContext.Request;
-            var response = httpContext.Response;
             var requestBody = await requestBodyResolver.ResolveAsync();
             var responseBody = await responseBodyResolver.ResolveAsync();
+            var IPv4 = IPv4Resolver.Resolve();
+            var geoLocation = await geoLocationResolverByIp.ResolveAsync(IPv4);
 
             var createAuditRequest = new CreateAuditRequest
             {
-                IPv4 = IPv4Resolver.Resolve(),
                 ClientApplication = requestHeaders.ClientApplication,
+                IPv4 = IPv4,
+                Latitude = geoLocation.Latitude,
+                Longitude = geoLocation.Longitude,
+
                 Uri = $"{request.Host}{request.Path}{request.QueryString}",
                 HttpMethod = request.Method,
                 RequestBody = requestBody,
@@ -59,8 +65,10 @@ namespace APIStarter.Application.Middlewares
                     .Where(h => !HeadersToIgnore.Contains(h.Key))
                     .ToDictionary(h => h.Key, h => string.Join(",", h.Value.Select(v => v))),
                 UserAgent = request.Headers.First(e => e.Key == "User-Agent").Value.FirstOrDefault(),
+
                 ResponseBody = responseBody,
-                HttpStatus = response.StatusCode,
+                HttpStatus = httpContext.Response.StatusCode,
+
                 Duration = DateTime.UtcNow - startTime,
             };
 

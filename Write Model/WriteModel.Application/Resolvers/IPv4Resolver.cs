@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Http;
-using WriteModel.Domain.Tools.Resolvers;
+using WriteModel.Domain.Resolvers;
 
 namespace APIStarter.Application.Resolvers
 {
@@ -17,9 +17,7 @@ namespace APIStarter.Application.Resolvers
         public string Resolve()
         {
             var IP = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress;
-            var IPv4 = IP.IsIPv4MappedToIPv6
-                ? IP.MapToIPv4().ToString()
-                : IP.ToString();
+            var IPv4 = IP.IsIPv4MappedToIPv6 ? IP.MapToIPv4().ToString() : IP.ToString();
             var isLocalHost = IPv4 == "::1";
 
             IPv4 = isLocalHost ? _localhostIPv4Resolver.Resolve() : IPv4;

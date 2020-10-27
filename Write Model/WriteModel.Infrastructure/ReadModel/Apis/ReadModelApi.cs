@@ -13,10 +13,9 @@ namespace WriteModel.Infrastructure.ReadModel.Apis
     {
         private readonly IFlurlClient _flurlClient;
 
-        public ReadModelApi(IFlurlClientFactory flurlClientFactory, ReadModelConfiguration readModelConfiguration) =>
-            _flurlClient = flurlClientFactory
-                .Get(readModelConfiguration.Uri)
-                .WithHeader("Content-Type", "application/json");
+        public ReadModelApi(IFlurlClientFactory flurlClientFactory, ReadModelConfiguration readModelConfiguration) => _flurlClient = flurlClientFactory
+            .Get(readModelConfiguration.Uri)
+            .WithHeader("Content-Type", "application/json");
 
         public async Task RefreshAllAsync() =>
             await ResilientPolicies.ExponentialRetryAsync(_flurlClient.Request("refresh/indexes").PostAsync(null));

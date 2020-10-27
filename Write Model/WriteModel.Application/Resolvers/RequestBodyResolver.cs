@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using WriteModel.Domain.Tools.Resolvers;
+using WriteModel.Domain.Resolvers;
 
 namespace APIStarter.Application.Resolvers
 {

@@ -2,8 +2,13 @@
 
 namespace WriteModel.Domain.Tools.Resolvers
 {
-    public interface IResolverAsync<ResolveResult>
+    public interface IResolverAsync<TResolveResult>
     {
-        Task<ResolveResult> ResolveAsync();
+        Task<TResolveResult> ResolveAsync();
+    }
+
+    public interface IResolverAsync<in TResolverParameter, TResolveResult>
+    {
+        Task<TResolveResult> ResolveAsync(TResolverParameter parameters);
     }
 }

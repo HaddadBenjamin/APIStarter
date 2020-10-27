@@ -1,6 +1,6 @@
 using System.IO;
 using System.Net;
-using WriteModel.Domain.Tools.Resolvers;
+using WriteModel.Domain.Resolvers;
 
 namespace APIStarter.Application.Resolvers
 {

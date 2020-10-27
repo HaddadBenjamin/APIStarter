@@ -1,7 +1,12 @@
 ﻿namespace WriteModel.Domain.Tools.Resolvers
 {
-    public interface IResolver<ResolveResult>
+    public interface IResolver<TResolveResult>
     {
-        ResolveResult Resolve();
+        TResolveResult Resolve();
+    }
+
+    public interface IResolver<in TResolverParameter, TResolveResult>
+    {
+        TResolveResult Resolve(TResolverParameter parameters);
     }
 }

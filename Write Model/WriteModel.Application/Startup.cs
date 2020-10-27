@@ -19,9 +19,10 @@ using WriteModel.Domain.AuthentificationContext;
 using WriteModel.Domain.CQRS.Interfaces;
 using WriteModel.Domain.ExampleToDelete.Builders;
 using WriteModel.Domain.ExampleToDelete.Repositories;
+using WriteModel.Domain.IpLocation;
 using WriteModel.Domain.ReadModel.Apis;
 using WriteModel.Domain.ReadModel.Configurations;
-using WriteModel.Domain.Tools.Resolvers;
+using WriteModel.Domain.Resolvers;
 using WriteModel.Infrastructure.Audit;
 using WriteModel.Infrastructure.Audit.DbContext;
 using WriteModel.Infrastructure.Audit.Services;
@@ -31,6 +32,7 @@ using WriteModel.Infrastructure.ExampleToRedefine;
 using WriteModel.Infrastructure.ExampleToRedefine.AuthentificationContext;
 using WriteModel.Infrastructure.ExampleToRemove.Mappers;
 using WriteModel.Infrastructure.ExampleToRemove.Repositories;
+using WriteModel.Infrastructure.GeoLocation;
 using WriteModel.Infrastructure.ReadModel.Apis;
 using IMediator = WriteModel.Domain.CQRS.Interfaces.IMediator;
 using Mediator = WriteModel.Infrastructure.CQRS.Mediator;
@@ -90,6 +92,8 @@ namespace APIStarter.Application
                 // Read Model.
                 .AddSingleton(_configuration.GetSection("ReadModel").Get<ReadModelConfiguration>())
                 .AddScoped<IReadModelApi, ReadModelApi>()
+                // Geo location
+                .AddSingleton<IGeoLocationResolverByIp, GeoLocationResolverByIp>()
                 // Tools.
                 .AddSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>()
                 // Resolvers.
