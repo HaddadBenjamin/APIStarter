@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WriteModel.Domain.Audit.Aggregates;
-using WriteModel.Infrastructure.DbContext.Mappers;
+using WriteModel.Infrastructure.Tools.DbContext.Mappers;
 
 namespace WriteModel.Infrastructure.Audit.DbContext.Mappers
 {

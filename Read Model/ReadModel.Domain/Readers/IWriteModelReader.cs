@@ -6,7 +6,7 @@ namespace ReadModel.Domain.Readers
 {
     public interface IWriteModelReader
     {
-        Task<IReadOnlyCollection<dynamic>> GetAllAsync(IndexType indexType);
-        Task<dynamic> GetByIdAsync(IndexType indexType, Guid id);
+        Task<IReadOnlyCollection<object>> GetAllAsync(IndexType indexType);
+        Task<object> GetByIdAsync(IndexType indexType, Guid id);
     }
 }

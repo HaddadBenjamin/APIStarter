@@ -26,7 +26,7 @@ namespace ReadModel.Infrastructure.Indexes
         {
             var refreshIndexesTasks = ((IndexType[])Enum.GetValues(typeof(IndexType))).Select(RefreshIndexAsync).ToArray();
 
-            Task.WaitAll(refreshIndexesTasks);
+            await Task.WhenAll(refreshIndexesTasks);
         }
 
         public async Task RefreshIndexAsync(IndexType indexType)

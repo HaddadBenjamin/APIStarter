@@ -246,8 +246,18 @@ namespace WriteModel.Infrastructure.Migrations
                     b.Property<int>("HttpStatus")
                         .HasColumnType("int");
 
+                    b.Property<string>("IPv4")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
                     b.Property<Guid>("ImpersonatedUserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
 
                     b.Property<string>("RequestBody")
                         .HasColumnType("text");
@@ -261,6 +271,9 @@ namespace WriteModel.Infrastructure.Migrations
                     b.Property<string>("Uri")
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
+
+                    b.Property<string>("UserAgent")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -277,6 +290,8 @@ namespace WriteModel.Infrastructure.Migrations
 
                     b.HasIndex("HttpMethod");
 
+                    b.HasIndex("IPv4");
+
                     b.HasIndex("Id");
 
                     b.HasIndex("ImpersonatedUserId");
@@ -284,6 +299,8 @@ namespace WriteModel.Infrastructure.Migrations
                     b.HasIndex("RequestHeaders");
 
                     b.HasIndex("Uri");
+
+                    b.HasIndex("UserAgent");
 
                     b.HasIndex("UserId");
 

@@ -11,14 +11,22 @@ namespace WriteModel.Domain.Audit.Aggregates
     public class AuditRequest
     {
         public Guid Id { get; set; }
+
+        public string ClientApplication { get; set; }
+        public string IPv4 { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+
         public string HttpMethod { get; set; }
         public string Uri { get; set; }
         public string RequestHeaders { get; set; }
         public string RequestBody { get; set; }
-        public int HttpStatus { get; set; }
+        public string UserAgent { get; set; }
+
         public string ResponseBody { get; set; }
-        public string ClientApplication { get; set; }
+        public int HttpStatus { get; set; }
         public TimeSpan Duration { get; set; }
+
         public Guid CorrelationId { get; set; }
         public DateTime Date { get; set; }
         public Guid UserId { get; set; }
@@ -27,14 +35,22 @@ namespace WriteModel.Domain.Audit.Aggregates
         public static AuditRequest Create(CreateAuditRequest command, IAuthentificationContext authentificationContext, IAuditSerializer auditSerializer) => new AuditRequest
         {
             Id = Guid.NewGuid(),
+
+            ClientApplication = command.ClientApplication,
+            IPv4 = command.IPv4,
+            Longitude = command.Longitude,
+            Latitude = command.Latitude,
+
             HttpMethod = command.HttpMethod,
             Uri = command.Uri,
             RequestHeaders = auditSerializer.Serialize(command.RequestHeaders),
             RequestBody = command.RequestBody,
-            HttpStatus = command.HttpStatus,
+            UserAgent = command.UserAgent,
+
             ResponseBody = command.ResponseBody,
-            ClientApplication = command.ClientApplication,
+            HttpStatus = command.HttpStatus,
             Duration = command.Duration,
+
             CorrelationId = authentificationContext.CorrelationId,
             Date = DateTime.UtcNow,
             ImpersonatedUserId = authentificationContext.ImpersonatedUser.Id,

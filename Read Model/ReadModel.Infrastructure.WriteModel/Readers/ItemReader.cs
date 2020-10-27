@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using ReadModel.Domain.Exceptions;
 using ReadModel.Domain.WriteModel.Readers;
 using ReadModel.Domain.WriteModel.SqlConnections;
 using ReadModel.Domain.WriteModel.Views;
@@ -11,27 +9,15 @@ using ReadModel.Infrastructure.WriteModel.SqlQueries;
 
 namespace ReadModel.Infrastructure.WriteModel.Readers
 {
-    public class ItemReader : IItemReader
+    public class ItemReader : BaseWriteModelReader<ItemView>
     {
         private readonly IWriteModelSqlConnection _sqlConnection;
 
         public ItemReader(IWriteModelSqlConnection sqlConnection) => _sqlConnection = sqlConnection;
 
-        public async Task<IReadOnlyCollection<ItemView>> GetAllAsync() => await Search(new SearchParameters());
-
-        public async Task<ItemView> GetByIdAsync(Guid id)
+        protected override async Task<IReadOnlyCollection<ItemView>> Search(SearchParameters searchParameters)
         {
-            var itemView = (await Search(new SearchParameters { Id = id })).FirstOrDefault();
-
-            if (itemView is null)
-                throw new NotFoundException(nameof(ItemView));
-
-            return itemView;
-        }
-
-        private async Task<IReadOnlyCollection<ItemView>> Search(SearchParameters searchParameters)
-        {
-            await using var sqlConnection = _sqlConnection.CreateConnection();
+            await using var sqlConnection = _sqlConnection.CreateSqlConnection();
             using var queryMultiple = await sqlConnection.QueryMultipleAsync(WriteModelSqlQueries.SearchItems, searchParameters);
 
             var itemsViews = (await queryMultiple.ReadAsync<ItemView>()).ToList();

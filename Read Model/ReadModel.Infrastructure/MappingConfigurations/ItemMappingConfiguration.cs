@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ReadModel.Domain.Index;
+using ReadModel.Domain.Index.Item;
 using ReadModel.Domain.WriteModel.Views;
 
 namespace ReadModel.Infrastructure.MappingConfigurations

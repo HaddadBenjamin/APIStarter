@@ -10,6 +10,6 @@ namespace ReadModel.Infrastructure.WriteModel.SqlConnections
 
         public WriteModelSqlConnection(WriteModelConfiguration configuration) => _configuration = configuration;
 
-        public SqlConnection CreateConnection() => new SqlConnection(_configuration.ConnectionString);
+        public SqlConnection CreateSqlConnection() => new SqlConnection(_configuration.ConnectionString);
     }
 }

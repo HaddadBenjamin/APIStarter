@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nest;
 using ReadModel.Domain;
 using ReadModel.Domain.Clients;
-using ReadModel.Domain.Index;
+using ReadModel.Domain.Index.HttpRequest;
+using ReadModel.Domain.Index.Item;
 using ReadModel.Domain.Indexes;
 
 namespace ReadModel.Infrastructure.Indexes
@@ -11,36 +13,26 @@ namespace ReadModel.Infrastructure.Indexes
     public class IndexCleaner : IIndexCleaner
     {
         private readonly ElasticClient _client;
+        private Dictionary<IndexType, Func<Guid?, Task<ResponseBase>>> _indexCleaners;
 
-        public IndexCleaner(IReadModelClient readModelClient) => _client = readModelClient.ElasticClient;
-
-        public async Task CleanIndexAsync(IndexType indexType)
+        public IndexCleaner(IReadModelClient readModelClient)
         {
-            switch (indexType)
+            _client = readModelClient.ElasticClient;
+            _indexCleaners = new Dictionary<IndexType, Func<Guid?, Task<ResponseBase>>>
             {
-                case IndexType.HttpRequest: await CleanIndexAsync<HttpRequest>(); break;
-                case IndexType.Item: await CleanIndexAsync<Item>(); break;
-                default: throw new NotImplementedException();
-            }
+                { IndexType.Item, CleanIndexAsync<Item> },
+                { IndexType.HttpRequest, CleanIndexAsync<HttpRequest> },
+            };
         }
 
-        public async Task CleanIndexAsync(IndexType indexType, Guid id)
-        {
-            switch (indexType)
-            {
-                case IndexType.HttpRequest: await CleanIndexAsync<HttpRequest>(id); break;
-                case IndexType.Item: await CleanIndexAsync<Item>(id); break;
-                default: throw new NotImplementedException();
-            }
-        }
+        public async Task CleanIndexAsync(IndexType indexType) => await _indexCleaners[indexType](null);
+        public async Task CleanIndexAsync(IndexType indexType, Guid id) => await _indexCleaners[indexType](id);
 
-        private async Task<DeleteByQueryResponse> CleanIndexAsync<TIndex>() where TIndex : class =>
-            await _client.DeleteByQueryAsync<TIndex>(deleteByQueryDescriptor =>
-                deleteByQueryDescriptor.Query(queryContainerDescriptor =>
-                    queryContainerDescriptor.QueryString(queryStringQueryDescriptor =>
-                        queryStringQueryDescriptor.Query("*"))));
-
-        private async Task<DeleteResponse> CleanIndexAsync<TIndex>(Guid id) where TIndex : class =>
-            await _client.DeleteAsync<TIndex>(id);
+        private async Task<ResponseBase> CleanIndexAsync<TIndex>(Guid? id) where TIndex : class =>
+            id != null ? await _client.DeleteAsync<TIndex>(id) :
+            (ResponseBase)await _client.DeleteByQueryAsync<TIndex>(deleteByQueryDescriptor =>
+               deleteByQueryDescriptor.Query(queryContainerDescriptor =>
+                   queryContainerDescriptor.QueryString(queryStringQueryDescriptor =>
+                       queryStringQueryDescriptor.Query("*"))));
     }
 }

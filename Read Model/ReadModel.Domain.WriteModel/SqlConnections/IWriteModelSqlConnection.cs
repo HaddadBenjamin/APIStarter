@@ -1,9 +1,4 @@
-﻿using System.Data.SqlClient;
-
-namespace ReadModel.Domain.WriteModel.SqlConnections
+﻿namespace ReadModel.Domain.WriteModel.SqlConnections
 {
-    public interface IWriteModelSqlConnection
-    {
-        SqlConnection CreateConnection();
-    }
+    public interface IWriteModelSqlConnection : ICreateSqlConnection { }
 }

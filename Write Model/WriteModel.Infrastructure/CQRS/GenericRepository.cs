@@ -1,6 +1,6 @@
 ﻿using WriteModel.Domain.CQRS;
 using WriteModel.Domain.CQRS.Interfaces;
-using WriteModel.Infrastructure.DbContext;
+using WriteModel.Infrastructure.ExampleToRedefine;
 
 namespace WriteModel.Infrastructure.CQRS
 {

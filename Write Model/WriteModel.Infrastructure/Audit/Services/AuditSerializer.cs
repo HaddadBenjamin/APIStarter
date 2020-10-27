@@ -8,7 +8,8 @@ namespace WriteModel.Infrastructure.Audit.Services
         private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
-            DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         };
 
         public string Serialize(object @object) => JsonConvert.SerializeObject(@object, Formatting.Indented, SerializerSettings);

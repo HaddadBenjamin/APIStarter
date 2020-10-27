@@ -4,7 +4,6 @@ using MediatR;
 using WriteModel.Domain.CQRS.Interfaces;
 using WriteModel.Domain.ExampleToDelete.Aggregates;
 using WriteModel.Domain.ExampleToDelete.Commands;
-using WriteModel.Domain.Exceptions;
 
 namespace WriteModel.Infrastructure.ExampleToRemove.CommandHandlers
 {
@@ -40,10 +39,9 @@ namespace WriteModel.Infrastructure.ExampleToRemove.CommandHandlers
 
         public async Task<Unit> Handle(DeleteItem command, CancellationToken cancellationToken)
         {
-            var aggregate = _session.Get(command.Id, _ => _.Locations);
+            var aggregate = _session.Get(command.Id);
 
-            if (!aggregate.IsActive)
-                throw new GoneException(command.Id);
+            _session.Deactivate(aggregate);
 
             aggregate.Deactivate(command);
 

@@ -8,6 +8,7 @@ using WriteModel.Domain.AuthentificationContext;
 using WriteModel.Domain.CQRS;
 using WriteModel.Domain.CQRS.Exceptions;
 using WriteModel.Domain.CQRS.Interfaces;
+using WriteModel.Domain.Tools.Exceptions;
 
 namespace WriteModel.Infrastructure.CQRS
 {
@@ -95,7 +96,17 @@ namespace WriteModel.Infrastructure.CQRS
             Track(aggregate);
         }
 
-        public void Remove(TAggregate aggregate)
+        public void Remove(TAggregate aggregate) => BaseRemove(aggregate, () => Repository.Remove((aggregate)));
+
+        public void Deactivate(TAggregate aggregate) => BaseRemove(aggregate, () =>
+        {
+            if (!aggregate.IsActive)
+                throw new GoneException(aggregate.Id);
+
+            Repository.Deactivate(aggregate);
+        });
+
+        private void BaseRemove(TAggregate aggregate, Action removeAction)
         {
             if (aggregate is null)
                 throw new ArgumentNullException(nameof(aggregate));
@@ -103,7 +114,7 @@ namespace WriteModel.Infrastructure.CQRS
             if (!_trackedAggregates.ContainsKey(aggregate.Id))
                 throw new AggregateNotFoundException(aggregate.Id);
 
-            Repository.Remove(aggregate);
+            removeAction?.Invoke();
 
             Track(aggregate);
         }
@@ -119,8 +130,8 @@ namespace WriteModel.Infrastructure.CQRS
             foreach (var @event in events)
                 @event.CorrelationId = _authentificationContext.CorrelationId;
 
-            await _mediator.PublishEventsAsync(events);
             await Repository.UnitOfWork.SaveChangesAsync();
+            await _mediator.PublishEventsAsync(events);
 
             _trackedAggregates.Clear();
 

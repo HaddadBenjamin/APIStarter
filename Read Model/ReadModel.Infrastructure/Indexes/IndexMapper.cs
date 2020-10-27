@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using Nest;
 using ReadModel.Domain;
-using ReadModel.Domain.Index;
+using ReadModel.Domain.Index.HttpRequest;
+using ReadModel.Domain.Index.Item;
 using ReadModel.Domain.Indexes;
 
 namespace ReadModel.Infrastructure.Indexes
@@ -17,10 +18,15 @@ namespace ReadModel.Infrastructure.Indexes
 
         public CreateIndexDescriptor Map(IndexType indexType, CreateIndexDescriptor createIndexDescriptor) => Mappers[indexType](createIndexDescriptor);
 
-        public static CreateIndexDescriptor ItemMapper(CreateIndexDescriptor createIndexDescriptor) => createIndexDescriptor
-            .Map<Item>(typeMappingDescriptor => typeMappingDescriptor.AutoMap());
+        private static CreateIndexDescriptor ItemMapper(CreateIndexDescriptor createIndexDescriptor) =>
+            createIndexDescriptor.Map<Item>(typeMappingDescriptor => typeMappingDescriptor.AutoMap());
 
-        public static CreateIndexDescriptor HttpRequestMapper(CreateIndexDescriptor createIndexDescriptor) =>
-            createIndexDescriptor.Map<HttpRequest>(typeMappingDescriptor => typeMappingDescriptor.AutoMap());
+        private static CreateIndexDescriptor HttpRequestMapper(CreateIndexDescriptor createIndexDescriptor) =>
+            createIndexDescriptor.Map<HttpRequest>(typeMappingDescriptor => typeMappingDescriptor.AutoMap().Properties(p => p
+                .GeoPoint(s => s.Name(n => n.GeoIp.Location))
+                .Keyword(s => s.Name(n => n.Duration.Suffix("keyword")))
+                .Keyword(s => s.Name(n => n.FormattedDate))
+                .Keyword(s => s.Name(n => n.FormattedDuration))
+                .Keyword(s => s.Name(n => n.Date.Suffix("keyword")))));
     }
 }

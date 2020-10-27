@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using ReadModel.Application.Filters;
 using ReadModel.Domain.Clients;
@@ -12,7 +13,6 @@ using ReadModel.Domain.Configurations;
 using ReadModel.Domain.Indexes;
 using ReadModel.Domain.Readers;
 using ReadModel.Domain.WriteModel.Configurations;
-using ReadModel.Domain.WriteModel.Readers;
 using ReadModel.Domain.WriteModel.SqlConnections;
 using ReadModel.Infrastructure.Clients;
 using ReadModel.Infrastructure.Indexes;
@@ -42,10 +42,28 @@ namespace ReadModel.Application
 
             services.AddAutoMapper(InfrastructureType, InfrastructureWriteModelType);
 
+            services
+                .AddSwaggerGen(options =>
+                {
+                    options.SwaggerDoc("v1", new OpenApiInfo
+                    {
+                        Version = "v1",
+                        Title = "CQRS - Read Model",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Un passionné dans la foule (alias Firefouks)",
+                            Url = new Uri("https://github.com/HaddadBenjamin")
+                        }
+                    });
+
+                    options.DescribeAllEnumsAsStrings();
+                });
+
             // Configurations.
-            services.AddSingleton(new WriteModelConfiguration { ConnectionString = _configuration.GetConnectionString("WriteModel") });
-            services.AddSingleton(new AuditConfiguration { ConnectionString = _configuration.GetConnectionString("Audit") });
-            services.AddSingleton(_configuration.GetSection("ReadModel").Get<ReadModelConfiguration>());
+            services
+                .AddSingleton(new WriteModelConfiguration { ConnectionString = _configuration.GetConnectionString("WriteModel") })
+                .AddSingleton(new AuditConfiguration { ConnectionString = _configuration.GetConnectionString("Audit") })
+                .AddSingleton(_configuration.GetSection("ReadModel").Get<ReadModelConfiguration>());
 
             // Infrastructure.
             services
@@ -61,11 +79,10 @@ namespace ReadModel.Application
 
             // Infrastructure.WriteModel.
             services
-                .AddScoped<IHttpRequestReader, HttpRequestReader>()
-                .AddScoped<IItemReader, ItemReader>()
+                .AddScoped<HttpRequestReader>()
+                .AddScoped<ItemReader>()
                 .AddScoped<IAuditSqlConnection, AuditSqlConnection>()
-                .AddScoped<IWriteModelSqlConnection, WriteModelSqlConnection>()
-                .AddScoped<IItemReader, ItemReader>();
+                .AddScoped<IWriteModelSqlConnection, WriteModelSqlConnection>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -74,6 +91,14 @@ namespace ReadModel.Application
                 app.UseDeveloperExceptionPage();
 
             app.UseMvc();
+
+            app
+                .UseSwagger()
+                .UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    options.RoutePrefix = string.Empty;
+                });
         }
     }
 }

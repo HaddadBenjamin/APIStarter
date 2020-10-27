@@ -13,7 +13,7 @@ namespace WriteModel.Infrastructure.CQRS
     /// </summary>
     public abstract class Repository<TAggregate, TDbContext> : IRepository<TAggregate>
         where TAggregate : AggregateRoot
-        where TDbContext : Microsoft.EntityFrameworkCore.DbContext
+        where TDbContext : DbContext
     {
         public IUnitOfWork UnitOfWork { get; }
         public IQueryable<TAggregate> Queryable => DbContext.Set<TAggregate>();
@@ -39,5 +39,6 @@ namespace WriteModel.Infrastructure.CQRS
         public void Add(TAggregate aggregate) => DbSet.Add(aggregate);
         public void Update(TAggregate aggregate) => DbSet.Update(aggregate);
         public void Remove(TAggregate aggregate) => DbSet.Remove(aggregate);
+        public void Deactivate(TAggregate aggregate) => aggregate.IsActive = false;
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WriteModel.Domain.ExampleToDelete.Commands;
 using WriteModel.Domain.ExampleToDelete.Events;
-using WriteModel.Domain.Extensions;
+using WriteModel.Domain.Tools.Extensions;
 
 namespace WriteModel.Domain.ExampleToDelete.Aggregates
 {
@@ -42,11 +42,6 @@ namespace WriteModel.Domain.ExampleToDelete.Aggregates
             RaiseEvent(new ItemWriteEvent(Id));
         }
 
-        public void Deactivate(DeleteItem command)
-        {
-            IsActive = false;
-
-            RaiseEvent(new ItemWriteEvent(Id));
-        }
+        public void Deactivate(DeleteItem command) => RaiseEvent(new ItemWriteEvent(Id));
     }
 }

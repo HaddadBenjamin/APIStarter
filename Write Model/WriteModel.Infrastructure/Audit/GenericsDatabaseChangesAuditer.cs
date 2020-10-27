@@ -3,7 +3,7 @@ using WriteModel.Domain.Audit.Services;
 using WriteModel.Domain.AuthentificationContext;
 using WriteModel.Infrastructure.Audit.DbContext;
 using WriteModel.Infrastructure.Audit.Services;
-using WriteModel.Infrastructure.DbContext;
+using WriteModel.Infrastructure.ExampleToRedefine;
 
 namespace WriteModel.Infrastructure.Audit
 {

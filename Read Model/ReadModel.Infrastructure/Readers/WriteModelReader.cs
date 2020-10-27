@@ -3,39 +3,25 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ReadModel.Domain;
 using ReadModel.Domain.Readers;
-using ReadModel.Domain.WriteModel.Readers;
+using ReadModel.Infrastructure.WriteModel.Readers;
 
 namespace ReadModel.Infrastructure.Readers
 {
     public class WriteModelReader : IWriteModelReader
     {
-        private readonly IItemReader _itemReader;
-        private readonly IHttpRequestReader _httpRequestReader;
+        private readonly Dictionary<IndexType, object> _writeModelReaders;
 
-        public WriteModelReader(IItemReader itemReader, IHttpRequestReader httpRequestReader)
-        {
-            _itemReader = itemReader;
-            _httpRequestReader = httpRequestReader;
-        }
-
-        public async Task<IReadOnlyCollection<dynamic>> GetAllAsync(IndexType indexType)
-        {
-            switch (indexType)
+        public WriteModelReader(ItemReader itemReader, HttpRequestReader httpRequestReader) =>
+            _writeModelReaders = new Dictionary<IndexType, object>
             {
-                case IndexType.HttpRequest: return await _httpRequestReader.GetAllAsync();
-                case IndexType.Item: return await _itemReader.GetAllAsync();
-                default: throw new NotImplementedException();
-            }
-        }
+                { IndexType.HttpRequest, httpRequestReader },
+                { IndexType.Item, itemReader },
+            };
 
-        public async Task<dynamic> GetByIdAsync(IndexType indexType, Guid id)
-        {
-            switch (indexType)
-            {
-                case IndexType.HttpRequest: return await _httpRequestReader.GetByIdAsync(id);
-                case IndexType.Item: return await _itemReader.GetByIdAsync(id);
-                default: throw new NotImplementedException();
-            }
-        }
+        public async Task<IReadOnlyCollection<object>> GetAllAsync(IndexType indexType) => await GetReader(indexType).GetAllAsync();
+
+        public async Task<object> GetByIdAsync(IndexType indexType, Guid id) => await GetReader(indexType).GetByIdAsync(id);
+
+        private dynamic GetReader(IndexType indexType) => _writeModelReaders[indexType];
     }
 }

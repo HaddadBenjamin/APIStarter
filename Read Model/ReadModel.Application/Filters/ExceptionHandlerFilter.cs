@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using ReadModel.Domain.Exceptions;
+using ReadModel.Domain.WriteModel.Exceptions;
 
 namespace ReadModel.Application.Filters
 {

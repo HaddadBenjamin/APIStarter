@@ -7,7 +7,7 @@ using ReadModel.Domain.Indexes;
 namespace ReadModel.Application.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class RefreshController : ControllerBase
     {
         private readonly IIndexRebuilder _indexRebuilder;
