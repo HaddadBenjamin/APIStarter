@@ -1,6 +1,7 @@
 ﻿using Nest;
 using ReadModel.Domain.Index.HttpRequest;
 using ReadModel.Domain.WriteModel.Views;
+using UAParser;
 using Profile = AutoMapper.Profile;
 
 namespace ReadModel.Infrastructure.MappingConfigurations
@@ -18,14 +19,17 @@ namespace ReadModel.Infrastructure.MappingConfigurations
                     IPv4 = view.IPv4,
                     Location = new GeoLocation(view.Latitude, view.Longitude)
                 };
-               
+
+                var userAgent = Parser.GetDefault().Parse(view.UserAgent);
                 document.Request = new HttpRequestRequest
                 {
                     Method = view.HttpMethod,
                     Uri = view.Uri,
                     Body = view.RequestBody,
                     Headers = view.RequestHeaders,
-                    UserAgent = view.UserAgent
+                    Os = userAgent.OS.Family,
+                    Device = userAgent.Device.Family,
+                    Browser = userAgent.UserAgent.Family
                 };
                 
                 document.Response = new HttpRequestResponse

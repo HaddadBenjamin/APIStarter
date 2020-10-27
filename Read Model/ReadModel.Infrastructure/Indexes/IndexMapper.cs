@@ -25,6 +25,8 @@ namespace ReadModel.Infrastructure.Indexes
             createIndexDescriptor.Map<HttpRequest>(typeMappingDescriptor => typeMappingDescriptor.AutoMap().Properties(p => p
                 .GeoPoint(s => s.Name(n => n.GeoIp.Location))
                 .Keyword(s => s.Name(n => n.Duration.Suffix("keyword")))
+                .Keyword(s => s.Name(n => n.FormattedDate))
+                .Keyword(s => s.Name(n => n.FormattedDuration))
                 .Keyword(s => s.Name(n => n.Date.Suffix("keyword")))));
     }
 }
