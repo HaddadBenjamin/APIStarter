@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ReadModel.Domain;
+using ReadModel.Domain.Aliases;
 using ReadModel.Domain.Indexes;
 
 namespace ReadModel.Application.Controllers
@@ -12,11 +13,13 @@ namespace ReadModel.Application.Controllers
     {
         private readonly IIndexRebuilder _indexRebuilder;
         private readonly IIndexRefresher _indexRefresher;
+        private readonly IAliasSwapper _aliasSwapper;
 
-        public RefreshController(IIndexRebuilder indexRebuilder, IIndexRefresher indexRefresher)
+        public RefreshController(IIndexRebuilder indexRebuilder, IIndexRefresher indexRefresher, IAliasSwapper aliasSwapper)
         {
             _indexRebuilder = indexRebuilder;
             _indexRefresher = indexRefresher;
+            _aliasSwapper = aliasSwapper;
         }
 
         [HttpPost]
@@ -25,6 +28,7 @@ namespace ReadModel.Application.Controllers
         {
             await _indexRebuilder.RebuildAllIndexesAsync();
             await _indexRefresher.RefreshAllIndexesAsync();
+            await _aliasSwapper.SwapAllIndexesAsync();
 
             return Ok();
         }
@@ -35,6 +39,7 @@ namespace ReadModel.Application.Controllers
         {
             await _indexRebuilder.RebuildIndexAsync(indexType);
             await _indexRefresher.RefreshIndexAsync(indexType);
+            await _aliasSwapper.SwapIndexAsync(indexType);
 
             return Ok();
         }

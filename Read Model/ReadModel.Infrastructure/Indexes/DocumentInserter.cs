@@ -13,16 +13,18 @@ namespace ReadModel.Infrastructure.Indexes
 {
     public class DocumentInserter : IDocumentInserter
     {
-        private readonly ElasticClient _elasticClient;
+        private readonly IIndexNameWithAlias _indexName;
+        private readonly ElasticClient _client;
         private readonly Dictionary<IndexType, Func<IReadOnlyCollection<object>, Task<BulkResponse>>> _documentInserters;
 
-        public DocumentInserter(IReadModelClient client)
+        public DocumentInserter(IReadModelClient client, IIndexNameWithAlias indexName)
         {
-            _elasticClient = client.ElasticClient;
+            _indexName = indexName;
+            _client = client.ElasticClient;
             _documentInserters = new Dictionary<IndexType, Func<IReadOnlyCollection<object>, Task<BulkResponse>>>
             {
-                { IndexType.HttpRequest, IndexManyAsync<HttpRequest> },
-                { IndexType.Item, IndexManyAsync<Item> },
+                { IndexType.HttpRequest, objects => IndexManyAsync<HttpRequest>(objects, IndexType.HttpRequest) },
+                { IndexType.Item,objects => IndexManyAsync<Item>(objects, IndexType.Item) },
             };
         }
 
@@ -30,7 +32,7 @@ namespace ReadModel.Infrastructure.Indexes
 
         public async Task InsertAsync(object document, IndexType indexType) => await _documentInserters[indexType](new[] { document });
 
-        private async Task<BulkResponse> IndexManyAsync<TDocument>(IReadOnlyCollection<object> documents) where TDocument : class =>
-            await _elasticClient.IndexManyAsync(documents.Cast<TDocument>());
+        private async Task<BulkResponse> IndexManyAsync<TDocument>(IReadOnlyCollection<object> documents, IndexType indexType) where TDocument : class =>
+            await _client.IndexManyAsync(documents.Cast<TDocument>(), _indexName.TemporaryIndexName(indexType));
     }
 }

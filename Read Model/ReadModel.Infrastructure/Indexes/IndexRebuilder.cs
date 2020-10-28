@@ -11,10 +11,10 @@ namespace ReadModel.Infrastructure.Indexes
     public class IndexRebuilder : IIndexRebuilder
     {
         private readonly IIndexMapper _indexMapper;
-        private readonly IIndexName _indexName;
+        private readonly IIndexNameWithAlias _indexName;
         private readonly ElasticClient _client;
 
-        public IndexRebuilder(IReadModelClient client, IIndexMapper indexMapper, IIndexName indexName)
+        public IndexRebuilder(IReadModelClient client, IIndexMapper indexMapper, IIndexNameWithAlias indexName)
         {
             _indexMapper = indexMapper;
             _indexName = indexName;
@@ -30,10 +30,15 @@ namespace ReadModel.Infrastructure.Indexes
 
         public async Task RebuildIndexAsync(IndexType indexType)
         {
-            var indexName = _indexName.GetIndexName(indexType);
+            var temporaryIndexName = _indexName.TemporaryIndexName(indexType);
+            var indexName = _indexName.IndexName(indexType);
+            var aliasName = _indexName.AliasName(indexType);
 
-            await _client.Indices.DeleteAsync(indexName);
-            await _client.Indices.CreateAsync(indexName, createIndexDescriptor => _indexMapper.Map(indexType, createIndexDescriptor));
+            await _client.Indices.DeleteAsync(temporaryIndexName);
+            await _client.Indices.CreateAsync(indexName, createIndexDescriptor => _indexMapper
+                .Map(indexType, createIndexDescriptor)
+                .Aliases(descriptor => descriptor.Alias(aliasName)));
+            await _client.Indices.CreateAsync(temporaryIndexName, createIndexDescriptor => _indexMapper.Map(indexType, createIndexDescriptor));
         }
     }
 }

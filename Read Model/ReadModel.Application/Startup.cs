@@ -8,12 +8,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using ReadModel.Application.Filters;
+using ReadModel.Domain.Aliases;
 using ReadModel.Domain.Clients;
 using ReadModel.Domain.Configurations;
 using ReadModel.Domain.Indexes;
 using ReadModel.Domain.Readers;
 using ReadModel.Domain.WriteModel.Configurations;
 using ReadModel.Domain.WriteModel.SqlConnections;
+using ReadModel.Infrastructure.Aliases;
 using ReadModel.Infrastructure.Clients;
 using ReadModel.Infrastructure.Indexes;
 using ReadModel.Infrastructure.Readers;
@@ -68,12 +70,14 @@ namespace ReadModel.Application
             // Infrastructure.
             services
                 .AddScoped<IReadModelClient, ReadModelClient>()
+                .AddScoped<IIndexNameWithAlias, IndexNameWithAlias>()
                 .AddScoped<IDocumentInserter, DocumentInserter>()
                 .AddScoped<IIndexCleaner, IndexCleaner>()
                 .AddScoped<IIndexMapper, IndexMapper>()
-                .AddScoped<IIndexName, IndexName>()
                 .AddScoped<IIndexRebuilder, IndexRebuilder>()
                 .AddScoped<IIndexRefresher, IndexRefresher>()
+                .AddScoped<IAliasSwapper, AliasSwapper>()
+                .AddScoped<IAliasContains, AliasContains>()
                 .AddScoped<IViewToDocumentMapper, ViewToDocumentMapper>()
                 .AddScoped<IWriteModelReader, WriteModelReader>();
 
