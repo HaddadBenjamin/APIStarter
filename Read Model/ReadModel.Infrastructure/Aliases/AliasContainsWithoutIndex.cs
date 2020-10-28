@@ -7,22 +7,17 @@ using ReadModel.Domain.Indexes;
 
 namespace ReadModel.Infrastructure.Aliases
 {
-    public class AliasContains : IAliasContains
+    public class AliasContainsWithoutIndex : IAliasContainsWithoutIndex
     {
-        private readonly IIndexNameWithAlias _indexName;
         private readonly ElasticClient _client;
 
-        public AliasContains(IReadModelClient readModelClient, IIndexNameWithAlias indexName)
-        {
-            _indexName = indexName;
-            _client = readModelClient.ElasticClient;
-        }
+        public AliasContainsWithoutIndex(IReadModelClient readModelClient) => _client = readModelClient.ElasticClient;
 
         public bool Contains(IndexType indexType)
         {
             var indexThatContainsTheAlias = _client.Indices.GetAlias(IndexNameWithoutAlias.AliasName(IndexType.Item)).Indices.Keys.First().Name;
 
-            return indexThatContainsTheAlias == _indexName.IndexName(IndexType.Item);
+            return indexThatContainsTheAlias == IndexNameWithoutAlias.IndexName(IndexType.Item);
         }
     }
 }

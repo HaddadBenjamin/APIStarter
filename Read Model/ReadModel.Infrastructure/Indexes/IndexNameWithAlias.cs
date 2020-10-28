@@ -6,18 +6,16 @@ namespace ReadModel.Infrastructure.Indexes
 {
     public class IndexNameWithAlias : IIndexNameWithAlias
     {
-        private readonly IAliasContains _aliasContains;
+        private readonly IAliasContainsWithoutIndex _aliasContainsWithoutIndex;
 
-        public IndexNameWithAlias(IAliasContains aliasContains) => _aliasContains = aliasContains;
+        public IndexNameWithAlias(IAliasContainsWithoutIndex aliasContainsWithoutIndex) => _aliasContainsWithoutIndex = aliasContainsWithoutIndex;
 
-        public string IndexName(IndexType indexType) => _aliasContains.Contains(indexType) ?
-            IndexNameWithoutAlias.TemporaryIndexName(indexType) :
-            IndexNameWithoutAlias.IndexName(indexType);
-
-        public string TemporaryIndexName(IndexType indexType) => _aliasContains.Contains(indexType) ?
+        public string IndexName(IndexType indexType) => _aliasContainsWithoutIndex.Contains(indexType) ?
             IndexNameWithoutAlias.IndexName(indexType) :
             IndexNameWithoutAlias.TemporaryIndexName(indexType);
 
-        public string AliasName(IndexType indexType) => IndexNameWithoutAlias.AliasName(indexType);
+        public string TemporaryIndexName(IndexType indexType) => _aliasContainsWithoutIndex.Contains(indexType) ?
+            IndexNameWithoutAlias.TemporaryIndexName(indexType) :
+            IndexNameWithoutAlias.IndexName(indexType);
     }
 }

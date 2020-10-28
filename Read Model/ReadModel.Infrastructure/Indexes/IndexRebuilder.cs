@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Nest;
 using ReadModel.Domain;
+using ReadModel.Domain.Aliases;
 using ReadModel.Domain.Clients;
 using ReadModel.Domain.Indexes;
 
@@ -12,12 +13,14 @@ namespace ReadModel.Infrastructure.Indexes
     {
         private readonly IIndexMapper _indexMapper;
         private readonly IIndexNameWithAlias _indexName;
+        private readonly IAliasAdder _aliasAdder;
         private readonly ElasticClient _client;
 
-        public IndexRebuilder(IReadModelClient client, IIndexMapper indexMapper, IIndexNameWithAlias indexName)
+        public IndexRebuilder(IReadModelClient client, IIndexMapper indexMapper, IIndexNameWithAlias indexName, IAliasAdder aliasAdder)
         {
             _indexMapper = indexMapper;
             _indexName = indexName;
+            _aliasAdder = aliasAdder;
             _client = client.ElasticClient;
         }
 
@@ -32,13 +35,12 @@ namespace ReadModel.Infrastructure.Indexes
         {
             var temporaryIndexName = _indexName.TemporaryIndexName(indexType);
             var indexName = _indexName.IndexName(indexType);
-            var aliasName = _indexName.AliasName(indexType);
+            var aliasName = IndexNameWithoutAlias.AliasName(indexType);
 
             await _client.Indices.DeleteAsync(temporaryIndexName);
-            await _client.Indices.CreateAsync(indexName, createIndexDescriptor => _indexMapper
-                .Map(indexType, createIndexDescriptor)
-                .Aliases(descriptor => descriptor.Alias(aliasName)));
             await _client.Indices.CreateAsync(temporaryIndexName, createIndexDescriptor => _indexMapper.Map(indexType, createIndexDescriptor));
+            await _client.Indices.CreateAsync(indexName, createIndexDescriptor => _indexMapper.Map(indexType, createIndexDescriptor));
+            await _aliasAdder.AddAsync(indexType, indexName);
         }
     }
 }

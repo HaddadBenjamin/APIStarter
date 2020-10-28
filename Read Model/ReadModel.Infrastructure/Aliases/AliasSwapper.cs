@@ -13,13 +13,15 @@ namespace ReadModel.Infrastructure.Aliases
     {
         private readonly IIndexNameWithAlias _indexName;
         private readonly IAliasContains _aliasContains;
-        private readonly ElasticClient _client;
+        private readonly IAliasAdder _aliasAdder;
+        private readonly IAliasRemoval _aliasRemoval;
 
-        public AliasSwapper(IReadModelClient readModelClient, IIndexNameWithAlias indexName, IAliasContains aliasContains)
+        public AliasSwapper(IIndexNameWithAlias indexName, IAliasContains aliasContains, IAliasAdder aliasAdder, IAliasRemoval aliasRemoval)
         {
             _indexName = indexName;
             _aliasContains = aliasContains;
-            _client = readModelClient.ElasticClient;
+            _aliasAdder = aliasAdder;
+            _aliasRemoval = aliasRemoval;
         }
 
         public async Task SwapAllIndexesAsync()
@@ -31,17 +33,13 @@ namespace ReadModel.Infrastructure.Aliases
 
         public async Task SwapIndexAsync(IndexType indexType)
         {
-            var aliasName = _indexName.AliasName(indexType);
             var indexName = _indexName.IndexName(indexType);
             var temporaryIndexName = _indexName.TemporaryIndexName(indexType);
             var doesIndexContainsAlias = _aliasContains.Contains(indexType);
             var indexWithoutAlias = doesIndexContainsAlias ? temporaryIndexName : indexName;
 
-            await _client.Indices.BulkAliasAsync(aliases =>
-            {
-                aliases.Remove(a => a.Alias(aliasName).Index("*"));
-                return aliases.Add(a => a.Alias(aliasName).Index(indexWithoutAlias));
-            });
+            await _aliasRemoval.RemoveAsync(indexType);
+            await _aliasAdder.AddAsync(indexType, indexWithoutAlias);
         }
     }
 }

@@ -69,15 +69,18 @@ namespace ReadModel.Application
 
             // Infrastructure.
             services
-                .AddScoped<IReadModelClient, ReadModelClient>()
+                .AddSingleton<IReadModelClient, ReadModelClient>()
                 .AddScoped<IIndexNameWithAlias, IndexNameWithAlias>()
                 .AddScoped<IDocumentInserter, DocumentInserter>()
                 .AddScoped<IIndexCleaner, IndexCleaner>()
-                .AddScoped<IIndexMapper, IndexMapper>()
+                .AddSingleton<IIndexMapper, IndexMapper>()
                 .AddScoped<IIndexRebuilder, IndexRebuilder>()
                 .AddScoped<IIndexRefresher, IndexRefresher>()
                 .AddScoped<IAliasSwapper, AliasSwapper>()
+                .AddScoped<IAliasContainsWithoutIndex, AliasContainsWithoutIndex>()
                 .AddScoped<IAliasContains, AliasContains>()
+                .AddScoped<IAliasAdder, AliasAdder>()
+                .AddScoped<IAliasRemoval, AliasRemoval>()
                 .AddScoped<IViewToDocumentMapper, ViewToDocumentMapper>()
                 .AddScoped<IWriteModelReader, WriteModelReader>();
 

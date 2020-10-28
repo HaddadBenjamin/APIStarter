@@ -4,6 +4,5 @@
     {
         string IndexName(IndexType indexType);
         string TemporaryIndexName(IndexType indexType);
-        string AliasName(IndexType indexType);
     }
 }
