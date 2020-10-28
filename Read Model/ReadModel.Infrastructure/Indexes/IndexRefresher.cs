@@ -45,9 +45,15 @@ namespace ReadModel.Infrastructure.Indexes
             await _indexCleaner.CleanIndexAsync(indexType, id);
 
             var view = await _writeModelReader.GetByIdAsync(indexType, id);
-            var document = _viewToDocumentMapper.Map(view, indexType);
+           
+            if (view is null)
+                await _indexCleaner.CleanIndexAsync(indexType, id);
+            else
+            {
+                var document = _viewToDocumentMapper.Map(view, indexType);
 
-            await _documentInserter.InsertAsync(document, indexType);
+                await _documentInserter.InsertAsync(document, indexType);
+            }
         }
     }
 }
