@@ -29,7 +29,7 @@ namespace ReadModel.Infrastructure.Indexes
         }
 
         public async Task InsertAsync(IReadOnlyCollection<object> documents, IndexType indexType) => await _documentInserters[indexType](documents, indexType);
-        public async Task InsertAsync(object document, IndexType indexType) => await _documentInserters[indexType](new []{ document}, indexType);
+        public async Task InsertAsync(object document, IndexType indexType) => await _documentInserters[indexType](new[] { document }, indexType);
 
         private async Task<BulkResponse> IndexManyAsync<TDocument>(IReadOnlyCollection<object> documents, IndexType indexType) where TDocument : class =>
             await _client.IndexManyAsync(documents.Cast<TDocument>(), _indexName.TemporaryIndexName(indexType));

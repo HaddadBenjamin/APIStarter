@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Nest;
 using ReadModel.Domain;
 using ReadModel.Domain.Aliases;
-using ReadModel.Domain.Clients;
 using ReadModel.Domain.Indexes;
 
 namespace ReadModel.Infrastructure.Aliases

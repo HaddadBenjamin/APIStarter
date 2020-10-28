@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ReadModel.Domain.WriteModel.Exceptions;
 
 namespace ReadModel.Domain.WriteModel.Readers
 {
