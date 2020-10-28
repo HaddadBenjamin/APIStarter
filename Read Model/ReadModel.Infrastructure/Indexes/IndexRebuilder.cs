@@ -35,7 +35,6 @@ namespace ReadModel.Infrastructure.Indexes
         {
             var temporaryIndexName = _indexName.TemporaryIndexName(indexType);
             var indexName = _indexName.IndexName(indexType);
-            var aliasName = IndexNameWithoutAlias.AliasName(indexType);
 
             await _client.Indices.DeleteAsync(temporaryIndexName);
             await _client.Indices.CreateAsync(temporaryIndexName, createIndexDescriptor => _indexMapper.Map(indexType, createIndexDescriptor));
