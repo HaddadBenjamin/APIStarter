@@ -25,7 +25,7 @@ namespace ReadModel.Application.Controllers
         [HttpGet]
         [Route("indexes")]
         [ApiExplorerSettings(IgnoreApi = true)]
-        // Sans un refresh au lancement de l'application, le endponit indexes/{indexType}/{id:guid} ne fonctionne pas. 
+        // Sans un refresh au lancement de l'application, l'endpoint POST indexes/{indexType}/{id:guid} ne rajoute pas les documents dans l'index. 
         public async Task<IActionResult> RefreshAllIndexesAtFirstLaunch() => await RefreshAllIndexes();
 
         [HttpPost]
