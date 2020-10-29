@@ -19,6 +19,7 @@ namespace ReadModel.Infrastructure.Readers
             };
 
         public async Task<IReadOnlyCollection<object>> GetAllAsync(IndexType indexType) => await GetReader(indexType).GetAllAsync();
+
         public async Task<object> GetByIdAsync(IndexType indexType, Guid id) => await GetReader(indexType).GetByIdAsync(id);
 
         private dynamic GetReader(IndexType indexType) => _writeModelReaders[indexType];
