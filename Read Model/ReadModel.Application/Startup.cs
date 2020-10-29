@@ -76,7 +76,7 @@ namespace ReadModel.Application
                 .AddSingleton<IIndexMapper, IndexMapper>()
                 .AddSingleton<IIndexRebuilder, IndexRebuilder>()
                 .AddSingleton<IIndexRefresher, IndexRefresher>()
-                .AddSingleton<IDocumentInserter, DocumentInserter>()
+                .AddSingleton<IIndexDocumentInserter, IndexDocumentInserter>()
                 // Alias.
                 .AddSingleton<IAliasSwapper, AliasSwapper>()
                 .AddSingleton<IAliasContainsWithoutIndex, AliasContainsWithoutIndex>()

@@ -11,13 +11,13 @@ using ReadModel.Domain.Indexes;
 
 namespace ReadModel.Infrastructure.Indexes
 {
-    public class DocumentInserter : IDocumentInserter
+    public class IndexDocumentInserter : IIndexDocumentInserter
     {
         private readonly IIndexNameWithAlias _indexName;
         private readonly ElasticClient _client;
         private readonly Dictionary<IndexType, Func<IReadOnlyCollection<object>, string, Task<BulkResponse>>> _documentInserters;
 
-        public DocumentInserter(IReadModelClient client, IIndexNameWithAlias indexName)
+        public IndexDocumentInserter(IReadModelClient client, IIndexNameWithAlias indexName)
         {
             _indexName = indexName;
             _client = client.ElasticClient;

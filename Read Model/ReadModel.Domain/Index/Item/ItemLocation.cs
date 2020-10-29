@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ReadModel.Domain.Index.Item
+﻿namespace ReadModel.Domain.Index.Item
 {
     public class ItemLocation
     {
