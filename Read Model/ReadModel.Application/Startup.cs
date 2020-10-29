@@ -70,26 +70,31 @@ namespace ReadModel.Application
             // Infrastructure.
             services
                 .AddSingleton<IReadModelClient, ReadModelClient>()
-                .AddScoped<IIndexNameWithAlias, IndexNameWithAlias>()
-                .AddScoped<IDocumentInserter, DocumentInserter>()
-                .AddScoped<IIndexCleaner, IndexCleaner>()
+                // Index.
+                .AddSingleton<IIndexNameWithAlias, IndexNameWithAlias>()
+                .AddSingleton<IIndexCleaner, IndexCleaner>()
                 .AddSingleton<IIndexMapper, IndexMapper>()
-                .AddScoped<IIndexRebuilder, IndexRebuilder>()
-                .AddScoped<IIndexRefresher, IndexRefresher>()
-                .AddScoped<IAliasSwapper, AliasSwapper>()
-                .AddScoped<IAliasContainsWithoutIndex, AliasContainsWithoutIndex>()
-                .AddScoped<IAliasContains, AliasContains>()
-                .AddScoped<IAliasAdder, AliasAdder>()
-                .AddScoped<IAliasRemoval, AliasRemoval>()
-                .AddScoped<IViewToDocumentMapper, ViewToDocumentMapper>()
-                .AddScoped<IWriteModelReader, WriteModelReader>();
+                .AddSingleton<IIndexRebuilder, IndexRebuilder>()
+                .AddSingleton<IIndexRefresher, IndexRefresher>()
+                .AddSingleton<IDocumentInserter, DocumentInserter>()
+                // Alias.
+                .AddSingleton<IAliasSwapper, AliasSwapper>()
+                .AddSingleton<IAliasContainsWithoutIndex, AliasContainsWithoutIndex>()
+                .AddSingleton<IAliasContains, AliasContains>()
+                .AddSingleton<IAliasAdder, AliasAdder>()
+                .AddSingleton<IAliasRemoval, AliasRemoval>()
+                // Mapper.
+                .AddSingleton<IViewToDocumentMapper, ViewToDocumentMapper>()
+                .AddSingleton<IWriteModelReader, WriteModelReader>();
 
             // Infrastructure.WriteModel.
             services
-                .AddScoped<HttpRequestReader>()
-                .AddScoped<ItemReader>()
-                .AddScoped<IAuditSqlConnection, AuditSqlConnection>()
-                .AddScoped<IWriteModelSqlConnection, WriteModelSqlConnection>();
+                // Reader.
+                .AddSingleton<HttpRequestReader>()
+                .AddSingleton<ItemReader>()
+                // Sql Connection.
+                .AddSingleton<IAuditSqlConnection, AuditSqlConnection>()
+                .AddSingleton<IWriteModelSqlConnection, WriteModelSqlConnection>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

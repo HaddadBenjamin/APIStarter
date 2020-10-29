@@ -31,8 +31,6 @@ namespace ReadModel.Infrastructure.Indexes
 
         public async Task RefreshIndexAsync(IndexType indexType)
         {
-            await _indexCleaner.CleanIndexAsync(indexType);
-
             var views = await _writeModelReader.GetAllAsync(indexType);
             var documents = _viewToDocumentMapper.Map(views, indexType);
 
