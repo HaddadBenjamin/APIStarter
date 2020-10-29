@@ -22,6 +22,11 @@ namespace ReadModel.Application.Controllers
             _aliasSwapper = aliasSwapper;
         }
 
+        [HttpGet]
+        [Route("indexes")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task<IActionResult> RefreshAllIndexesAtFirstLaunch() => await RefreshAllIndexes();
+
         [HttpPost]
         [Route("indexes")]
         public async Task<IActionResult> RefreshAllIndexes()
