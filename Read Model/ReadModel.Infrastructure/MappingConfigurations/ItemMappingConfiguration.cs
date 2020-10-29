@@ -8,8 +8,8 @@ namespace ReadModel.Infrastructure.MappingConfigurations
     {
         public ItemMappingConfiguration()
         {
-            CreateMap<ItemView, Item>().AfterMap((view, index) => index.Id = view.Id.ToString());
-            CreateMap<ItemLocationView, ItemLocation>().AfterMap((view, index) => index.Id = view.Id.ToString());
+            CreateMap<ItemView, Item>();
+            CreateMap<ItemLocationView, ItemLocation>();
         }
     }
 }
