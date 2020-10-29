@@ -8,12 +8,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using ReadModel.Application.Filters;
+using ReadModel.Domain.Aliases;
 using ReadModel.Domain.Clients;
 using ReadModel.Domain.Configurations;
 using ReadModel.Domain.Indexes;
 using ReadModel.Domain.Readers;
 using ReadModel.Domain.WriteModel.Configurations;
 using ReadModel.Domain.WriteModel.SqlConnections;
+using ReadModel.Infrastructure.Aliases;
 using ReadModel.Infrastructure.Clients;
 using ReadModel.Infrastructure.Indexes;
 using ReadModel.Infrastructure.Readers;
@@ -67,22 +69,31 @@ namespace ReadModel.Application
 
             // Infrastructure.
             services
-                .AddScoped<IReadModelClient, ReadModelClient>()
-                .AddScoped<IDocumentInserter, DocumentInserter>()
-                .AddScoped<IIndexCleaner, IndexCleaner>()
-                .AddScoped<IIndexMapper, IndexMapper>()
-                .AddScoped<IIndexName, IndexName>()
-                .AddScoped<IIndexRebuilder, IndexRebuilder>()
-                .AddScoped<IIndexRefresher, IndexRefresher>()
-                .AddScoped<IViewToDocumentMapper, ViewToDocumentMapper>()
-                .AddScoped<IWriteModelReader, WriteModelReader>();
+                .AddSingleton<IReadModelClient, ReadModelClient>()
+                // Index.
+                .AddSingleton<IIndexNameWithAlias, IndexNameWithAlias>()
+                .AddSingleton<IIndexCleaner, IndexCleaner>()
+                .AddSingleton<IIndexMapper, IndexMapper>()
+                .AddSingleton<IIndexRebuilder, IndexRebuilder>()
+                .AddSingleton<IIndexRefresher, IndexRefresher>()
+                .AddSingleton<IIndexDocumentInserter, IndexDocumentInserter>()
+                // Alias.
+                .AddSingleton<IAliasSwapper, AliasSwapper>()
+                .AddSingleton<IAliasContainsWithoutIndex, AliasContainsWithoutIndex>()
+                .AddSingleton<IAliasAdder, AliasAdder>()
+                .AddSingleton<IAliasRemoval, AliasRemoval>()
+                // Mapper.
+                .AddSingleton<IViewToDocumentMapper, ViewToDocumentMapper>()
+                .AddSingleton<IWriteModelReader, WriteModelReader>();
 
             // Infrastructure.WriteModel.
             services
-                .AddScoped<HttpRequestReader>()
-                .AddScoped<ItemReader>()
-                .AddScoped<IAuditSqlConnection, AuditSqlConnection>()
-                .AddScoped<IWriteModelSqlConnection, WriteModelSqlConnection>();
+                // Reader.
+                .AddSingleton<HttpRequestReader>()
+                .AddSingleton<ItemReader>()
+                // Sql Connection.
+                .AddSingleton<IAuditSqlConnection, AuditSqlConnection>()
+                .AddSingleton<IWriteModelSqlConnection, WriteModelSqlConnection>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

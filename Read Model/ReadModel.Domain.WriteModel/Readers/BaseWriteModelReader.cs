@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ReadModel.Domain.WriteModel.Exceptions;
 
 namespace ReadModel.Domain.WriteModel.Readers
 {
@@ -10,15 +9,7 @@ namespace ReadModel.Domain.WriteModel.Readers
     {
         public async Task<IReadOnlyCollection<TEntityView>> GetAllAsync() => await Search(new SearchParameters());
 
-        public async Task<TEntityView> GetByIdAsync(Guid id)
-        {
-            var httpRequestView = (await Search(new SearchParameters { Id = id })).FirstOrDefault();
-
-            if (httpRequestView is null)
-                throw new NotFoundException(typeof(TEntityView).Name);
-
-            return httpRequestView;
-        }
+        public async Task<TEntityView> GetByIdAsync(Guid id) => (await Search(new SearchParameters { Id = id })).FirstOrDefault();
 
         protected abstract Task<IReadOnlyCollection<TEntityView>> Search(SearchParameters searchParameters);
     }

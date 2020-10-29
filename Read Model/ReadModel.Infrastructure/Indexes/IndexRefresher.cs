@@ -12,14 +12,14 @@ namespace ReadModel.Infrastructure.Indexes
         private readonly IIndexCleaner _indexCleaner;
         private readonly IWriteModelReader _writeModelReader;
         private readonly IViewToDocumentMapper _viewToDocumentMapper;
-        private readonly IDocumentInserter _documentInserter;
+        private readonly IIndexDocumentInserter _indexDocumentInserter;
 
-        public IndexRefresher(IIndexCleaner indexCleaner, IWriteModelReader writeModelReader, IViewToDocumentMapper viewToDocumentMapper, IDocumentInserter documentInserter)
+        public IndexRefresher(IIndexCleaner indexCleaner, IWriteModelReader writeModelReader, IViewToDocumentMapper viewToDocumentMapper, IIndexDocumentInserter indexDocumentInserter)
         {
             _indexCleaner = indexCleaner;
             _writeModelReader = writeModelReader;
             _viewToDocumentMapper = viewToDocumentMapper;
-            _documentInserter = documentInserter;
+            _indexDocumentInserter = indexDocumentInserter;
         }
 
         public async Task RefreshAllIndexesAsync()
@@ -31,13 +31,11 @@ namespace ReadModel.Infrastructure.Indexes
 
         public async Task RefreshIndexAsync(IndexType indexType)
         {
-            await _indexCleaner.CleanIndexAsync(indexType);
-
             var views = await _writeModelReader.GetAllAsync(indexType);
             var documents = _viewToDocumentMapper.Map(views, indexType);
 
             if (documents.Any())
-                await _documentInserter.InsertAsync(documents, indexType);
+                await _indexDocumentInserter.InsertAsync(documents, indexType);
         }
 
         public async Task RefreshDocumentAsync(IndexType indexType, Guid id)
@@ -45,9 +43,13 @@ namespace ReadModel.Infrastructure.Indexes
             await _indexCleaner.CleanIndexAsync(indexType, id);
 
             var view = await _writeModelReader.GetByIdAsync(indexType, id);
-            var document = _viewToDocumentMapper.Map(view, indexType);
 
-            await _documentInserter.InsertAsync(document, indexType);
+            if (view != null)
+            {
+                var document = _viewToDocumentMapper.Map(view, indexType);
+
+                await _indexDocumentInserter.InsertAsync(document, indexType);
+            }
         }
     }
 }
