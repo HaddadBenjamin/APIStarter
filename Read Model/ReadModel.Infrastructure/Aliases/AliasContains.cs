@@ -20,7 +20,8 @@ namespace ReadModel.Infrastructure.Aliases
 
         public bool Contains(IndexType indexType)
         {
-            var indexThatContainsTheAlias = _client.Indices.GetAlias(IndexNameWithoutAlias.AliasName(IndexType.Item)).Indices.Keys.First().Name;
+            var aliasName = IndexNameWithoutAlias.AliasName(IndexType.Item);
+            var indexThatContainsTheAlias = _client.Indices.GetAlias(aliasName).Indices.Keys.FirstOrDefault()?.Name ?? aliasName;
 
             return indexThatContainsTheAlias == _indexName.IndexName(IndexType.Item);
         }
