@@ -10,14 +10,12 @@ namespace ReadModel.Infrastructure.Aliases
     public class AliasSwapper : IAliasSwapper
     {
         private readonly IIndexNameWithAlias _indexName;
-        private readonly IAliasContains _aliasContains;
         private readonly IAliasAdder _aliasAdder;
         private readonly IAliasRemoval _aliasRemoval;
 
-        public AliasSwapper(IIndexNameWithAlias indexName, IAliasContains aliasContains, IAliasAdder aliasAdder, IAliasRemoval aliasRemoval)
+        public AliasSwapper(IIndexNameWithAlias indexName, IAliasAdder aliasAdder, IAliasRemoval aliasRemoval)
         {
             _indexName = indexName;
-            _aliasContains = aliasContains;
             _aliasAdder = aliasAdder;
             _aliasRemoval = aliasRemoval;
         }
@@ -31,13 +29,10 @@ namespace ReadModel.Infrastructure.Aliases
 
         public async Task SwapIndexAsync(IndexType indexType)
         {
-            var indexName = _indexName.IndexName(indexType);
             var temporaryIndexName = _indexName.TemporaryIndexName(indexType);
-            var doesIndexContainsAlias = _aliasContains.Contains(indexType);
-            var indexWithoutAlias = doesIndexContainsAlias ? temporaryIndexName : indexName;
 
             await _aliasRemoval.RemoveAsync(indexType);
-            await _aliasAdder.AddAsync(indexType, indexWithoutAlias);
+            await _aliasAdder.AddAsync(indexType, temporaryIndexName);
         }
     }
 }

@@ -80,7 +80,6 @@ namespace ReadModel.Application
                 // Alias.
                 .AddSingleton<IAliasSwapper, AliasSwapper>()
                 .AddSingleton<IAliasContainsWithoutIndex, AliasContainsWithoutIndex>()
-                .AddSingleton<IAliasContains, AliasContains>()
                 .AddSingleton<IAliasAdder, AliasAdder>()
                 .AddSingleton<IAliasRemoval, AliasRemoval>()
                 // Mapper.
