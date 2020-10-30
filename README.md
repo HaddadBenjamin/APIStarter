@@ -2,9 +2,9 @@
 **Année de développement :** 2020.</br>
 
 
-Cette solution propose un modèle de projet pour réaliser des API architecturées en CQRS qui auditent toutes les requêtes HTTP réalisées sur votre API, tous les changements appliqués sur votre base de données, l'ensemble des commandes, des requêtes et des évènements lancés par le médiateur.
+Cette solution permet propose modèle de projet avec de l'audit et du monitoring architecturé en CQRS qui permet de mieux comprendre vos utilisateurs et votre business afin d'utiliser ces informations pour le faire évoluer plus efficacement mais aussi à permettre à vos développeurs de trouver et de corriger toutes les erreurs et les latences de vos applications.
 
-Ce qui permet de monitorer vos applications et d'y rajouter les visualisations suivantes :
+Ce projet propose les visualisations suivantes :
 - Évolution du nombre de visiteurs unique depuis le début / par mois / par semaine / aujourd'hui.
 - Évolution du nombre de requêtes faite sur votre application depuis le début / par mois / par semaine / aujourd’hui.
 - Où se trouvent vos utilisateurs ?
