@@ -9,7 +9,7 @@ Ce projet propose les visualisations suivantes :
 - Où se localisent vos utilisateurs ?
 - Les fonctionnalités les plus utilisées par vos utilisateurs depuis le début / par mois / par semaine / aujourd’hui.
 - Les navigateurs / systèmes d'exploitations / appareils les plus utilisés par vos utilisateurs.
-- Évolution du nombre de visiteurs unique / du nombre de requêtes faite sur votre application depuis le début / par mois / par semaine / aujourd'hui.
+- Évolution du nombre de visiteurs unique / du nombre de requête faite sur votre application depuis le début / par mois / par semaine / aujourd'hui.
 - Évolution du temps moyen d'une requête de cette année / de ce mois / de la semaine / de la journée.
 - Toutes les erreurs côté serveur / côté client triées par date.
 - Évolution du nombre de requête en erreur côté serveur / côté client depuis le début / par mois / par semaine / aujourd’hui.
@@ -19,7 +19,7 @@ Ce projet propose les visualisations suivantes :
 Par ailleurs cette solution offre un modèle de lecture entièrement reproductible et sans interruption de services.
 
 
-Cette application audite les informations suivantes :
+Cette solution audite les informations suivantes :
 - Toutes les requêtes HTTP réalisées sur votre API.
 - Tous les changements appliqués sur votre base de données.
 - L'ensemble des commandes, des requêtes et des évènements lancés par le médiateur.
