@@ -2,7 +2,7 @@
 **Année de développement :** 2020.</br>
 
 
-Cette solution propose un modèle de projet architecturé en CQRS avec de l'audit et du monitoring ce qui permet de mieux comprendre vos utilisateurs et votre business afin d'utiliser ces informations pour le faire évoluer plus efficacement mais aussi de permettre à vos développeurs de trouver et de corriger toutes les erreurs et les latences de vos applications.
+Cette solution propose un modèle de projet architecturé en CQRS avec de l'audit et du monitoring qui permet de mieux comprendre vos utilisateurs et votre business afin d'utiliser ces informations pour le faire évoluer plus efficacement mais aussi de permettre à vos développeurs de trouver et de corriger toutes les erreurs et les latences de vos applications.
 
 Ce projet propose les visualisations suivantes :
 - Évolution du nombre de visiteurs unique depuis le début / par mois / par semaine / aujourd'hui.
