@@ -5,19 +5,14 @@
 Cette solution propose un modèle de projet architecturé en CQRS avec de l'audit et du monitoring qui permet de mieux comprendre vos utilisateurs et votre business afin d'utiliser ces informations pour le faire évoluer plus efficacement mais aussi de permettre à vos développeurs de trouver et de corriger toutes les erreurs et les latences de vos applications.
 
 Ce projet propose les visualisations suivantes :
-- Évolution du nombre de visiteurs unique depuis le début / par mois / par semaine / aujourd'hui.
-- Évolution du nombre de requêtes faite sur votre application depuis le début / par mois / par semaine / aujourd’hui.
-- Où se trouvent vos utilisateurs ?
+- Où se localisent vos utilisateurs ?
 - Les fonctionnalités les plus utilisées par vos utilisateurs depuis le début / par mois / par semaine / aujourd’hui.
-- Toutes les erreurs côté serveur triées par date.
-- Toutes les erreurs côté client triées par date.
-- Évolution du nombre de requête en erreur côté serveur depuis le début / par mois / par semaine / aujourd’hui.
-- Évolution du nombre de requête en erreur côté client depuis le début / par mois / par semaine / aujourd’hui.
-- Les requêtes les plus longues de cette année / de ce mois / de la semaine / de la journée.
-- Les navigateurs les plus utilisés par vos utilisateurs.
-- Les systèmes d’exploitations les plus utilisés par vos utilisateurs.
-- Les appareils les plus utilisés par vos utilisateurs.
+- Les navigateurs / systèmes d'exploitations / appareils les plus utilisés par vos utilisateurs.
+- Évolution du nombre de visiteurs unique / du nombre de requêtes faite sur votre application depuis le début / par mois / par semaine / aujourd'hui.
 - Évolution du temps moyen d'une requête de cette année / de ce mois / de la semaine / de la journée.
+- Toutes les erreurs côté serveur / côté client triées par date.
+- Évolution du nombre de requête en erreur côté serveur / côté client depuis le début / par mois / par semaine / aujourd’hui.
+- Les requêtes les plus longues de cette année / de ce mois / de la semaine / de la journée.
 
 Par ailleurs cette solution offre un modèle de lecture entièrement reproductible et sans interruption de services.
 
