@@ -16,6 +16,11 @@ Ce projet propose les visualisations suivantes :
 
 Par ailleurs cette solution offre un modèle de lecture entièrement reproductible et sans interruption de services.
 
+Cette application audite les informations suivantes :
+- Toutes les requêtes HTTP réalisées sur votre API.
+- Tous les changements appliqués sur votre base de données.
+- L'ensemble des commandes, des requêtes et des évènements lancés par le médiateur.
+
 Pour réutiliser ce projet il vous faut :
 - Choisir les options que votre aggregate root doit supporter, à savoir avec ou sans audit, suppression logique, event sourcing.
 - Modifier l'appsettings.json de sorte à définir le type d'audit que vous souhaitez supporter, à savoir toutes les requêtes HTTP réalisées sur votre API, tous les changements appliqués sur votre base de données, l'ensemble des commandes, des requêtes et des évènements lancés par le médiateur.
