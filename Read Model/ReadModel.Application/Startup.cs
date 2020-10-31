@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using ReadModel.Application.Filters;
 using ReadModel.Domain.Aliases;
 using ReadModel.Domain.Clients;
 using ReadModel.Domain.Configurations;
@@ -35,11 +34,8 @@ namespace ReadModel.Application
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-                options.EnableEndpointRouting = false;
-                options.Filters.Add(new ExceptionHandlerFilter());
-            })// J'ai besoin d'appeler cette méthode pour fixer l'erreur JsonException: A possible object cycle was detected which is not supported. This can either be due t
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+            // J'ai besoin d'appeler cette méthode pour fixer l'erreur JsonException: A possible object cycle was detected which is not supported.
             .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.AddAutoMapper(InfrastructureType, InfrastructureWriteModelType);
